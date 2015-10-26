@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/left_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/euro_text_view"/>
+
+            <EditText
+                    android:id="@+id/left_edit_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/euro_edit_text"
+                    android:inputType="numberDecimal"/>
+        </LinearLayout>
+
+        <ImageView
+                android:id="@+id/swap_iv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/iv_content_descr"
+                android:src="@drawable/swap3_128"
+                android:scaleType="fitStart"/>
+
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/right_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/usd_currency_text_view"/>
+
+            <TextView
+                    android:id="@+id/right_text_view_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+            android:id="@+id/convert_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/convert_btn"/>
+
+
+    <Button
+            android:id="@+id/currencies_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currencies_text_view"/>
+
+    <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+                android:id="@+id/currencies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- name of the application -->
+    <string name="app_name">iConvert</string>
+
+    <!-- Euro's text view text-->
+    <string name="euro_text_view">EUR</string>
+
+    <!-- Euro's edit text hint -->
+    <string name="euro_edit_text">Currency</string>
+
+    <!-- USD  text view text-->
+    <string name="usd_currency_text_view">USD</string>
+
+    <!-- Button for performing the conversion -->
+    <string name="convert_btn">Convert</string>
+
+    <string name="currencies_text_view">Query OpenExchangeRate</string>
+
+    <!-- button for change both text view -->
+    <string name="swap_text_view">Swap</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- Image view content description-->
+    <string name="iv_content_descr"> Swap </string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>
