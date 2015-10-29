@@ -4,11 +4,15 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="You Are In Tab 2"
-            android:id="@+id/textView"/>
+   <!--  <TextView
+        android:id="@+id/title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/currencies_title_text"
+        android:gravity="center"/> -->
+    <ListView
+        android:id="@+id/currenciesListView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
