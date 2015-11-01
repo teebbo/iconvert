@@ -115,8 +115,28 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the HomeTabFragment/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_refresh:
+               /* Button mRateBtn = (Button) findViewById(R.id.currencies_btn);
+                if(mRateBtn != null) {
+                    mRateBtn.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+
+                            RetrieveCurrencyTask retrieveCurrencyTask = new RetrieveCurrencyTask(getApplicationContext());
+                            retrieveCurrencyTask.execute(END_POINT_LATEST, END_POINT_FULL_NAME);
+                        }
+                    });
+                }*/
+
+                RetrieveCurrencyTask retrieveCurrencyTask = new RetrieveCurrencyTask(getApplicationContext());
+                retrieveCurrencyTask.execute(END_POINT_LATEST, END_POINT_FULL_NAME);
+                return true;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

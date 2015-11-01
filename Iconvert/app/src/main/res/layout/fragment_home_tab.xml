@@ -64,13 +64,6 @@
             android:layout_height="wrap_content"
             android:text="@string/convert_btn"/>
 
-
-    <Button
-            android:id="@+id/currencies_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/currencies_text_view"/>
-
     <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

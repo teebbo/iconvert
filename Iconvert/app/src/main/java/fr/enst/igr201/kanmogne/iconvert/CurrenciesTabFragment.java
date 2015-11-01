@@ -1,5 +1,6 @@
 package fr.enst.igr201.kanmogne.iconvert;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import fr.enst.igr201.kanmogne.iconvert.data.CurrencyContract;
 
@@ -75,6 +77,11 @@ public class CurrenciesTabFragment extends Fragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.currencies_menu, menu);
+
+        // associate searchable config with the SearchView
+        SearchManager manager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search);
+        searchView.setSearchableInfo(manager.getSearchableInfo(getActivity().getComponentName()));
     }
 
     @Override

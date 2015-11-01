@@ -27,6 +27,8 @@
     <!-- Image view content description-->
     <string name="iv_content_descr"> Swap </string>
 
+    <string name="refresh">Query OpenExchangeRate</string>
+    <string name="search_hint">Rechercher...</string>
     <!-- tabs titles -->
     <string-array name="tabs_title">
         <item>Home</item>
@@ -36,7 +38,8 @@
 
     <!-- numbers of tabs -->
     <string name="tabs_numbers">3</string>
-<!-- TODO: Remove or change this placeholder text -->
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="currencies_title_text">1 USD : </string>
 
