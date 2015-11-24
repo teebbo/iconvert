@@ -11,9 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,15 +30,19 @@ import fr.enst.igr201.kanmogne.iconvert.data.CurrencyContract;
  */
 public class ConvertTabFragment extends Fragment {
     // variables on the left side
-    private TextView mLeftTextView;
+    private Spinner mLeftSpinner;
     private EditText mLeftEditText;
 
 
     // variables on the right side
-    private TextView mRightTextView;
+    private Spinner mRightSpinner;
     private TextView mResult;
 
     private TextView mDisplayRateTv;
+
+    // Buttons
+    private Button mResetBtn;
+    private Button mConvertBtn;
 
     //private TextView mCurrencies;
 
@@ -65,6 +71,9 @@ public class ConvertTabFragment extends Fragment {
     Resources mRes;
     ContentResolver mResolver;
 
+    double mLeftRate;
+    double mRightRate;
+
     private double queryCurrencyTable(Uri uri){
         Log.wtf(TAG, "URI : -> " + CurrencyContract.Currency.getCurrencyNameFromURI(uri));
 
@@ -75,7 +84,7 @@ public class ConvertTabFragment extends Fragment {
                 CurrencyContract.Currency.TABLE_CURRENCY,
                 CurrencyContract.Currency.COLUMN_NAME);
 
-        Log.wtf(TAG, "getNameFromURI : -> " + CurrencyContract.Currency.getCurrencyNameFromURI(uri));
+       // Log.wtf(TAG, "getNameFromURI : -> " + CurrencyContract.Currency.getCurrencyNameFromURI(uri));
 
         String[] selectionArgs = {CurrencyContract.Currency.getCurrencyNameFromURI(uri)};
         Cursor cursor = mResolver.query(uri, projection, selection , selectionArgs, null);
@@ -88,9 +97,7 @@ public class ConvertTabFragment extends Fragment {
         finally {
             cursor.close();
         }
-
-        Log.wtf(TAG, "Rate : -->>" + rate);
-
+       // Log.wtf(TAG, "Rate : -->>" + rate);
         return rate;
     }
 
@@ -112,15 +119,14 @@ public class ConvertTabFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "Inside onActivityCreated");
 
-        Button mConvertBtn = (Button) getActivity().findViewById(R.id.convert_btn);
-        ImageView mSwapBtn = (ImageView) getActivity().findViewById(R.id.swap_iv);
-        Button resetBtn = (Button) getActivity().findViewById(R.id.reset_btn);
+        mConvertBtn = (Button) getActivity().findViewById(R.id.convert_btn);
+        //ImageView mSwapBtn = (ImageView) getActivity().findViewById(R.id.swap_iv);
+        mResetBtn = (Button) getActivity().findViewById(R.id.reset_btn);
 
-        //Button mRateBtn = (Button) getActivity().findViewById(R.id.currencies_btn);
         mLeftEditText = (EditText) getActivity().findViewById(R.id.left_edit_text);
-        mLeftTextView = (TextView) getActivity().findViewById(R.id.left_text_view);
+        mLeftSpinner = (Spinner) getActivity().findViewById(R.id.left_text_view);
 
-        mRightTextView = (TextView) getActivity().findViewById(R.id.right_text_view);
+        mRightSpinner = (Spinner) getActivity().findViewById(R.id.right_text_view);
         mResult = (TextView) getActivity().findViewById(R.id.right_text_view_result);
 
         mDisplayRateTv = (TextView) getActivity().findViewById(R.id.rateDisplay);
@@ -133,16 +139,53 @@ public class ConvertTabFragment extends Fragment {
         mLeftState =  mRes.getString(R.string.euro_text_view);
         mRightState = mRes.getString(R.string.usd_currency_text_view);
 
-        mConvertBtn.setOnClickListener(new View.OnClickListener() {
+        addListenerOnSpinners();
+        addListenerOnButtons();
+    }
 
+    private void addListenerOnSpinners() {
+        mLeftSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                Uri leftURI = CurrencyContract.Currency.buildCurrencyRateURI(selectedItem);
+                mLeftRate = queryCurrencyTable(leftURI);
+                //Log.w(TAG, "Letf rate : " + mLeftRate);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        mRightSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                Uri rightURI = CurrencyContract.Currency.buildCurrencyRateURI(selectedItem);
+                mRightRate = queryCurrencyTable(rightURI);
+                //Log.w(TAG, "right rate : " + mRightRate);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void addListenerOnButtons() {
+
+        mConvertBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 // get text view text of the left side
-                String fromStr = mLeftTextView.getText().toString();
+                String leftStr = String.valueOf(mLeftSpinner.getSelectedItem());
 
                 // get text view text of the right side
-                String toStr = mRightTextView.getText().toString();
+                //String rightStr = String.valueOf(mRightSpinner.getSelectedItem());
 
                 // get the user input
                 String amount = mLeftEditText.getText().toString();
@@ -152,51 +195,19 @@ public class ConvertTabFragment extends Fragment {
                     if (!mResult.getText().toString().isEmpty()) {
                         mResult.setText("");
                     }
-                    Toast.makeText(getActivity().getApplication(), fromStr + " field is required", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity().getApplication(), leftStr + " field is required", Toast.LENGTH_LONG).show();
                 } else {
-                    Uri builtFromURI = CurrencyContract.Currency.buildCurrencyRateURI(fromStr);
-                    double fromRate = queryCurrencyTable(builtFromURI);
-
-                    Uri toURI = CurrencyContract.Currency.buildCurrencyRateURI(toStr);
-                    double toRate = queryCurrencyTable(toURI);
-
                     // compute the rate relative to left and right side
-                    double rate = toRate / fromRate;
+                    double rate = mRightRate / mLeftRate;
 
                     double finalAmount = Double.valueOf(amount) * rate;
                     mResult.setText(String.valueOf(new DecimalFormat("#.###").format(finalAmount)));
-                    mDisplayRateTv.setText("Rate : " + String.valueOf(rate));
+                    mDisplayRateTv.setText("Rate : " + String.valueOf(new DecimalFormat("#.####").format(rate)));
                 }
             }
         });
 
-            mSwapBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    String fromStr = mLeftTextView.getText().toString();
-                    String toStr = mRightTextView.getText().toString();
-
-                    if (mLeftState.equals(fromStr) &
-                            mRightState.equals(toStr)) {
-
-                        mLeftTextView.setText(toStr);
-                        mRightTextView.setText(fromStr);
-
-                        mLeftState = toStr;
-                        mRightState = fromStr;
-                    } else {
-
-                        mLeftTextView.setText(fromStr);
-                        mRightTextView.setText(toStr);
-
-                        mLeftState = fromStr;
-                        mRightState = toStr;
-                    }
-                }
-            });
-
-        resetBtn.setOnClickListener(new View.OnClickListener() {
+        mResetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mLeftEditText.setText("");
@@ -205,17 +216,30 @@ public class ConvertTabFragment extends Fragment {
             }
         });
 
-        /*if(mRateBtn != null) {
-            mRateBtn.setOnClickListener(new View.OnClickListener() {
-
+                    /*mSwapBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    RetrieveCurrencyTask retrieveCurrencyTask = new RetrieveCurrencyTask(getActivity().getApplicationContext());
-                    retrieveCurrencyTask.execute(END_POINT_LATEST, END_POINT_FULL_NAME);
+                    String fromStr = mLeftSpinner.getSelectedItem().toString();
+                    String toStr = mRightSpinner.getSelectedItem().toString();
+
+                    if (mLeftState.equals(fromStr) &
+                            mRightState.equals(toStr)) {
+
+                        mLeftSpinner.setText(toStr);
+                        mRightSpinner.setText(fromStr);
+
+                        mLeftState = toStr;
+                        mRightState = fromStr;
+                    } else {
+
+                        mLeftSpinner.setText(fromStr);
+                        mRightSpinner.setText(toStr);
+
+                        mLeftState = fromStr;
+                        mRightState = toStr;
+                    }
                 }
-            });
-        } else
-            Log.d(TAG, "rate btn is null");*/
+            });*/
     }
 }

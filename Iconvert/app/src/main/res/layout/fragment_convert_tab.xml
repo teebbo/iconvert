@@ -15,27 +15,27 @@
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
-            <TextView
+            <Spinner
                 android:id="@+id/left_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/euro_text_view"
-                android:layout_marginTop="16sp"
-                android:layout_marginLeft="16dp"
+                android:entries="@array/currencies_list"
+                android:layout_marginTop="30sp"
+                android:layout_marginLeft="10dp"
                 android:padding="6dp"
                 android:textColor="#000000"
                 android:gravity="center_horizontal" />
 
             <EditText
-                    android:id="@+id/left_edit_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/euro_edit_text"
-                    android:inputType="numberDecimal"
+                android:id="@+id/left_edit_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/euro_edit_text"
+                android:inputType="numberDecimal"
                 android:layout_marginLeft="0dp" />
         </LinearLayout>
 
-        <ImageView
+       <!-- <ImageView
                 android:id="@+id/swap_iv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -44,22 +44,22 @@
                 android:src="@drawable/swap3_128"
                 android:scaleType="fitCenter"
                 android:maxHeight="30dp"
-                android:maxWidth="30dp"/>
+                android:maxWidth="30dp"/> -->
 
         <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical"
             android:gravity="center_horizontal">
 
-            <TextView
+            <Spinner
                 android:id="@+id/right_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/usd_currency_text_view"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
+                android:entries="@array/currencies_list"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="10dp"
                 android:padding="6dp"
                 android:textColor="#000000"
                 android:gravity="center_horizontal" />
@@ -71,7 +71,7 @@
                 android:enabled="false"
                 android:padding="6dp"
                 android:textColor="#000000"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal" />
         </LinearLayout>

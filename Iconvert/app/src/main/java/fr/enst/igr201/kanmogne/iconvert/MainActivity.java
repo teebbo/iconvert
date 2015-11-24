@@ -36,26 +36,22 @@ public class MainActivity extends AppCompatActivity {
 
     private final String TAG = MainActivity.class.getSimpleName();
 
-    static private final String BASE_URL = "https://openexchangerates.org/api/";
+    static private final String BASE_URL = "https://openexchangerates.org/api";
     static private final String APP_ID = "8c01fe27397241a78baf9ee8b72f6a37";
 
-    static private final String END_POINT_LATEST = BASE_URL + "latest.json?app_id=" + APP_ID;
-    static private final String END_POINT_FULL_NAME = BASE_URL + "currencies.json?app_id=" + APP_ID;
-
-    static private final String DISCLAIMER_KEY = "disclaimer";
-    static private final String LICENSE_KEY = "license";
-    static private final String TIMESTAMP_KEY = "timestamp";
-    static private final String BASE_KEY = "base";
-    static private final String RATES_KEY = "ratesMap";
-
+    static private final String END_POINT_LATEST = uriBuilder("latest.json");
+    static private final String END_POINT_FULL_NAME = uriBuilder("currencies.json");
 
     private Toolbar mToolbar;
     private ViewPager mViewPager;
     private ViewPagerAdapter mPagerAdapter;
     private SlidingTabLayout mTabs;
 
-    static private int mRefreshCounter = 1;
     RetrieveCurrencyTask retrieveCurrencyTask;
+
+    private static String uriBuilder (String path) {
+        return Uri.parse(BASE_URL).buildUpon().appendPath(path).appendQueryParameter("app_id", APP_ID).toString();
+    }
 
     @Override
     public void onAttachFragment(Fragment fragment) {

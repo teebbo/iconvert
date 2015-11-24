@@ -11,7 +11,7 @@ import android.util.Log;
 public class CurrencyDBHelper extends SQLiteOpenHelper {
 
     static private final String TAG = CurrencyDBHelper.class.getSimpleName();
-    static private final int DB_VERSION = 4;
+    static private final int DB_VERSION = 1;
     static private final String DB_NAME = "iconvert.db";
 
     public CurrencyDBHelper(Context context) {

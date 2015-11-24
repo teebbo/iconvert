@@ -23,9 +23,7 @@ public class CurrencyProvider extends ContentProvider {
 
     static private final int CURRENCY = 100;
     static private final int CURRENCY_RATE = 101;
-    static private final int CURRENCY_ID = 102;
     static private final int CURRENCY_FULL_NAME = 200;
-    static private final int CURRENCY_FULL_NAME_ONLY = 201;
     static private final int CURRENCY_RATE_AND_FULLNAME = 300;
 
     static private final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -34,20 +32,6 @@ public class CurrencyProvider extends ContentProvider {
 
     static {
         sCurrencyQueryBuilder = new SQLiteQueryBuilder();
-        /*String currencyTable = CurrencyContract.Currency.TABLE_CURRENCY;
-        String currencyFullNameTable = CurrencyContract.CurrencyFullName.T_CURRENCY_FULLNAME;
-
-        String currencyColumnName = CurrencyContract.Currency.TABLE_CURRENCY +
-                "." + CurrencyContract.Currency.COLUMN_NAME;
-        String currencyFullNameColumnName = CurrencyContract.CurrencyFullName.T_CURRENCY_FULLNAME +
-                "." + CurrencyContract.CurrencyFullName.COLUMN_NAME;
-
-        sCurrencyQueryBuilder.setTables(
-                String.format("%s INNER JOIN %s ON %s = %s",
-                        currencyFullNameTable,
-                        currencyTable,
-                        currencyFullNameColumnName,
-                        currencyColumnName));*/
     }
 
     // Selection criteria
@@ -95,7 +79,7 @@ public class CurrencyProvider extends ContentProvider {
 
         sURIMatcher.addURI(authority, CurrencyContract.CURRENCY_PATH, CURRENCY); // uri : content://authority/currency <-> 100
         sURIMatcher.addURI(authority,  CurrencyContract.CURRENCY_FULL_NAME_PATH, CURRENCY_FULL_NAME); // uri : content://authority/currencyFullname <-> 200
-        sURIMatcher.addURI(authority,  CurrencyContract.CURRENCY_PATH + "/*", CURRENCY_RATE); // projection du taux de change pour une monnaie donnée
+        sURIMatcher.addURI(authority,  CurrencyContract.CURRENCY_PATH + "/*", CURRENCY_RATE); // projection du taux de change pour une devise donnée
     }
 
     @Override
@@ -146,9 +130,8 @@ public class CurrencyProvider extends ContentProvider {
 
             // currency.name = ?
             case CURRENCY_RATE:
-                Log.wtf(TAG, "-->>" + CURRENCY_RATE);
-                Log.wtf(TAG, uri.getLastPathSegment());
-
+                //Log.wtf(TAG, "-->>" + CURRENCY_RATE);
+                //Log.wtf(TAG, uri.getLastPathSegment());
                 cursor = getRateRelativeToName(uri, projection, selection, selectionArgs);
                 break;
 
@@ -268,7 +251,7 @@ public class CurrencyProvider extends ContentProvider {
 
         switch(match){
             case CURRENCY:
-                Log.d(TAG, " Currency Match " + String.valueOf(match));
+                //Log.d(TAG, " Currency Match " + String.valueOf(match));
                 db.beginTransaction();
                 for(ContentValues value : values){
                     selectionsArgs = new String[] {value.getAsString(CurrencyContract.Currency.COLUMN_NAME)};
@@ -285,7 +268,7 @@ public class CurrencyProvider extends ContentProvider {
                 break;
 
             case CURRENCY_FULL_NAME:
-                Log.d(TAG, " Currency Full Name Match " + String.valueOf(match));
+                //Log.d(TAG, " Currency Full Name Match " + String.valueOf(match));
                 db.beginTransaction();
                 for(ContentValues value : values){
                     selectionsArgs = new String[] {value.getAsString(CurrencyContract.CurrencyFullName.COLUMN_NAME)};

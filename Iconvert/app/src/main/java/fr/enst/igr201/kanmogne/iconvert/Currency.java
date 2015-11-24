@@ -1,7 +1,7 @@
 package fr.enst.igr201.kanmogne.iconvert;
 
 /**
- * Created by Joffrey KanMoney on 29/10/2015.
+ * Created by joffrey on 29/10/2015.
  */
 public class Currency {
 
@@ -20,4 +20,11 @@ public class Currency {
     public String getFullname() {
         return this.mFullname;
     }
+
+    @Override
+    public String toString() {
+        return "[ " + this.mName + " - " + this.mFullname + " ]";
+    }
+
+
 }

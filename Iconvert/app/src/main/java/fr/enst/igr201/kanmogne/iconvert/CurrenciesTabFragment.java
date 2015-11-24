@@ -15,8 +15,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import fr.enst.igr201.kanmogne.iconvert.data.CurrencyContract;
 
@@ -67,6 +70,17 @@ public class CurrenciesTabFragment extends Fragment
 
         mLoader = this;
         getLoaderManager().initLoader(CURRENCY_LOADER_ID, null, mLoader);
+
+        currenciesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               String currencyName = ((TextView) view.findViewById(R.id.currency_text_view)).getText().toString();
+                String currencyFullName = ((TextView) view.findViewById(R.id.currency_full_name_text_view)).getText().toString();
+
+                Toast.makeText(getActivity(), (new Currency(currencyName, currencyFullName)).toString(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -90,7 +104,7 @@ public class CurrenciesTabFragment extends Fragment
     @Override
     public android.support.v4.content.Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
-        // Sort order:  Ascending, by date.
+        // Sort order:  Ascending.
         String sortOrder = CurrencyContract.CurrencyFullName.COLUMN_NAME + " ASC";
 
         return new CursorLoader(getActivity(),

@@ -37,7 +37,19 @@
         <item>Convert</item>
         <item>Currencies</item>
     </string-array>
-
+    <string-array name="currencies_list">
+        <item>AUD</item>
+        <item>BTC</item>
+        <item>CAD</item>
+        <item>CNY</item>
+        <item>EUR</item>
+        <item>GBP</item>
+        <item>INR</item>
+        <item>MXN</item>
+        <item>NGN</item>
+        <item>USD</item>
+        <item>XOF</item>
+    </string-array>
     <!-- numbers of tabs -->
     <string name="tabs_numbers">3</string>
 
@@ -48,7 +60,7 @@
         Description de l\'application:
             L'application iConvert est une application développé au cours de ma formation dans le cadre du module IGR201, au sein de Telecom ParisTech.
         Elle permet de convertir de la monnaie d'une devise vers une autre devise.
-        L'application est assez simple, puisqu'elle n'effectue qu\'un seul type de conversion : Euro (EUR) à Dollar US (USD) et vice-versa.
+        L'application est assez simple, puisqu'elle n'effectue qu\'un nombre fini de conversion.
         De plus l'application possède une base de données locale, qui sera remplie par les soins de l\'utilisateur.
 
         Utilisation de l\'application:
