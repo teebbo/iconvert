@@ -15,6 +15,7 @@
 
     <!-- Button for performing the conversion -->
     <string name="convert_btn">Convert</string>
+    <string name="reset_btn">Reset</string>
 
     <string name="currencies_text_view">Query OpenExchangeRate</string>
 
@@ -27,21 +28,33 @@
     <!-- Image view content description-->
     <string name="iv_content_descr"> Swap </string>
 
-    <string name="refresh">Query OpenExchangeRate</string>
+    <string name="refresh">Refresh</string>
     <string name="search_hint">Rechercher...</string>
+
     <!-- tabs titles -->
     <string-array name="tabs_title">
         <item>Home</item>
+        <item>Convert</item>
         <item>Currencies</item>
-        <item>About</item>
     </string-array>
 
     <!-- numbers of tabs -->
     <string name="tabs_numbers">3</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="currencies_title_text">1 USD : </string>
+    <!-- Projec description -->
+    <string name="project_description">
+        "Bienvenue sur iConvert
 
+        Description de l\'application:
+            L'application iConvert est une application développé au cours de ma formation dans le cadre du module IGR201, au sein de Telecom ParisTech.
+        Elle permet de convertir de la monnaie d'une devise vers une autre devise.
+        L'application est assez simple, puisqu'elle n'effectue qu\'un seul type de conversion : Euro (EUR) à Dollar US (USD) et vice-versa.
+        De plus l'application possède une base de données locale, qui sera remplie par les soins de l\'utilisateur.
+
+        Utilisation de l\'application:
+        Après avoir installé l\'application, l'utilisateur doit mettre à jour sa base. Pour ce faire, il clique sur le bouton \"Refresh\" qui se trouve dans le menu de l'application.
+        Le taux d'échange est fourni par l'Api d'OpenExchangeRate."
+    </string>
+    <string name="currencies_title_text">1 USD : </string>
 
 </resources>

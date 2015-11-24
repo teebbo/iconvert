@@ -263,15 +263,22 @@ public class CurrencyProvider extends ContentProvider {
 
         // count all items add in the database
         int count = 0;
+        String selection = "name = ?";
+        String[] selectionsArgs = null;
 
         switch(match){
             case CURRENCY:
                 Log.d(TAG, " Currency Match " + String.valueOf(match));
                 db.beginTransaction();
                 for(ContentValues value : values){
-                    long rowInserted = db.insert(CurrencyContract.Currency.TABLE_CURRENCY, null, value);
-                    if(rowInserted != 0)
-                        count++;
+                    selectionsArgs = new String[] {value.getAsString(CurrencyContract.Currency.COLUMN_NAME)};
+                    int updated = db.update(CurrencyContract.Currency.TABLE_CURRENCY,
+                            value, selection, selectionsArgs);
+                    if(updated == 0) {
+                        long rowInserted = db.insert(CurrencyContract.Currency.TABLE_CURRENCY, null, value);
+                        if (rowInserted != 0)
+                            count++;
+                    }
                 }
                 db.setTransactionSuccessful();
                 db.endTransaction();
@@ -281,9 +288,14 @@ public class CurrencyProvider extends ContentProvider {
                 Log.d(TAG, " Currency Full Name Match " + String.valueOf(match));
                 db.beginTransaction();
                 for(ContentValues value : values){
-                    long rowInserted = db.insert(CurrencyContract.CurrencyFullName.T_CURRENCY_FULLNAME, null, value);
-                    if(rowInserted != 0)
-                        count++;
+                    selectionsArgs = new String[] {value.getAsString(CurrencyContract.CurrencyFullName.COLUMN_NAME)};
+                    int updated = db.update(CurrencyContract.CurrencyFullName.T_CURRENCY_FULLNAME,
+                            value, selection, selectionsArgs);
+                    if (updated == 0) {
+                        long rowInserted = db.insert(CurrencyContract.CurrencyFullName.T_CURRENCY_FULLNAME, null, value);
+                        if (rowInserted != 0)
+                            count++;
+                    }
                 }
                 db.setTransactionSuccessful();
                 db.endTransaction();

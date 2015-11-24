@@ -75,12 +75,12 @@ public class RetrieveCurrencyTask extends AsyncTask<String, Void, String> {
 
             if(currenciesFullNameMap.size() == 0){
                 Log.d(TAG, "currenciesFullNameMap is empty");
-            }else{
-                Log.d(TAG, "currenciesFullNameMap is not empty");
-                for (String key : currenciesFullNameMap.keySet()){
-                    Log.e(TAG, key + " <-> " + currenciesFullNameMap.get(key));
-                }
-            }
+            }//else {
+                //Log.d(TAG, "currenciesFullNameMap is not empty");
+                /*for (String key : currenciesFullNameMap.keySet()){
+                    //Log.e(TAG, key + " <-> " + currenciesFullNameMap.get(key));
+                }*/
+            //}
         }
     }
 
@@ -94,18 +94,18 @@ public class RetrieveCurrencyTask extends AsyncTask<String, Void, String> {
                 continue;
 
             String[] vals = line.split(":\\s+");
-            Log.d(TAG, "" + vals.length);
+            //Log.d(TAG, "" + vals.length);
 
             if (vals.length == 2) {
-                Log.d(TAG, vals[0] + " " + vals[1]);
+                //Log.d(TAG, vals[0] + " " + vals[1]);
                 String currency = vals[0];
-                Log.d(TAG, "line -> " + line);
+                //Log.d(TAG, "line -> " + line);
 
                 String rate = vals[1];
 
                 if (Pattern.matches("\\d+(\\.\\d+)?,", rate)) {
                     rate = rate.substring(0, rate.indexOf(","));
-                    Log.d(TAG, currency + " <-->" + rate);
+                    //Log.d(TAG, currency + " <-->" + rate);
                     ratesMap.put(currency, Double.valueOf(rate));
                 }
             }
@@ -113,14 +113,18 @@ public class RetrieveCurrencyTask extends AsyncTask<String, Void, String> {
 
         if (ratesMap.size() == 0){
             Log.d(TAG, "RatesMap is empty");
-        }else{
-            for (String key : ratesMap.keySet()){
-                Log.e(TAG, key + " <<--->> " + String.valueOf(ratesMap.get(key)));
-            }
-        }
+        }//else{
+            //Log.d(TAG, "ratesMap is not empty");
+            /*for (String key : ratesMap.keySet()){
+                //Log.e(TAG, key + " <<--->> " + String.valueOf(ratesMap.get(key)));
+            }*/
+        //}
     }
 
-    // TODO: modifier la valeur de la variable key afin de faire des insertions sans les quotes
+    /**
+     * inserts all the currencies rates
+     * @param currencies
+     */
     private void insertCurrency(String currencies){
 
         Log.d(TAG, "Inside insertCurrency");
@@ -153,7 +157,6 @@ public class RetrieveCurrencyTask extends AsyncTask<String, Void, String> {
                     int inserted = mContext.getContentResolver().bulkInsert(CurrencyContract.Currency.CONTENT_URI, cvArray);
                     Log.d(TAG, "Retrieve Task Currencies Complete. " + inserted + " Inserted");
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -161,16 +164,20 @@ public class RetrieveCurrencyTask extends AsyncTask<String, Void, String> {
 
     }
 
-    // TODO: modifier la valeur de la variable key afin de faire des insertions sans les quotes
+    /**
+     * Inserts all the currencies name
+     * @param currenciesFullName
+     *
+     */
     private void insertCurrencyFullName(String currenciesFullName){
         // fill out the currencyFullName table
-        if (currenciesFullName != null){
-            Vector<ContentValues> cVVector = new Vector<ContentValues>();
 
+        if (currenciesFullName != null) {
+            Vector<ContentValues> cVVector = new Vector<ContentValues>();
             try {
                 //JSONObject obj = new JSONObject(currenciesFullNameMap);
                 getCurrenciesFullName(currenciesFullName);
-                for(String key : currenciesFullNameMap.keySet()){
+                for (String key : currenciesFullNameMap.keySet()) {
                     ContentValues cv = new ContentValues();
 
                     String name = key.trim().substring(1, 4);
@@ -178,22 +185,21 @@ public class RetrieveCurrencyTask extends AsyncTask<String, Void, String> {
                     String fullname = currenciesFullNameMap.get(key).trim();
                     fullname = fullname.substring(fullname.indexOf("\"") + 1, fullname.lastIndexOf("\""));
 
-                    Log.wtf(TAG, fullname);
+                    //Log.wtf(TAG, fullname);
 
                     cv.put(CurrencyContract.CurrencyFullName.COLUMN_NAME, name);
                     cv.put(CurrencyContract.CurrencyFullName.COLUMN_FULL_NAME, fullname);
                     cVVector.add(cv);
                 }
 
-                if(cVVector.size() > 0)
-                {
+
+                if (cVVector.size() > 0) {
                     ContentValues[] cvArray = new ContentValues[cVVector.size()];
                     cVVector.toArray(cvArray);
                     int inserted = mContext.getContentResolver().bulkInsert(CurrencyContract.CurrencyFullName.CONTENT_URI, cvArray);
                     Log.d(TAG, "Retrieve Task currencies full name Complete. " + inserted + " Inserted");
                 }
-
-            } catch(IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -230,7 +236,7 @@ public class RetrieveCurrencyTask extends AsyncTask<String, Void, String> {
             Log.d(TAG, "onPostExecute is not OK");
 
         Toast.makeText( mContext,
-                "Currencies extraction operation from OpenExchangeRates is terminated",
+                "Currencies extraction from OpenExchangeRates is terminated",
                 Toast.LENGTH_LONG).show();
     }
 

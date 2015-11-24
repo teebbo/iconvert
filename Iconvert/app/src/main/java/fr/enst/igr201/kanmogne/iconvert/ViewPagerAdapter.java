@@ -4,9 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import fr.enst.igr201.kanmogne.iconvert.CurrenciesTabFragment;
-import fr.enst.igr201.kanmogne.iconvert.HomeTabFragment;
-
 /**
  * Created by joffrey on 24/10/15.
  */
@@ -30,13 +27,13 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch (position){
             case 0:
-                 fragment = new HomeTabFragment();
+                fragment = new HomeFragment();
                 break;
             case 1:
-                fragment = new CurrenciesTabFragment();
+                fragment = new ConvertTabFragment();
                 break;
             case 2:
-                fragment = new AboutFragment();
+                fragment = new CurrenciesTabFragment();
                 break;
         }
 

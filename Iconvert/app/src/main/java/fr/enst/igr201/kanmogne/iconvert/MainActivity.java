@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPagerAdapter mPagerAdapter;
     private SlidingTabLayout mTabs;
 
+    static private int mRefreshCounter = 1;
+    RetrieveCurrencyTask retrieveCurrencyTask;
 
     @Override
     public void onAttachFragment(Fragment fragment) {
@@ -112,27 +114,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the HomeTabFragment/Up button, so long
+        // automatically handle clicks on the ConvertTabFragment/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         switch (id) {
             case R.id.action_settings:
                 return true;
             case R.id.action_refresh:
-               /* Button mRateBtn = (Button) findViewById(R.id.currencies_btn);
-                if(mRateBtn != null) {
-                    mRateBtn.setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-
-                            RetrieveCurrencyTask retrieveCurrencyTask = new RetrieveCurrencyTask(getApplicationContext());
-                            retrieveCurrencyTask.execute(END_POINT_LATEST, END_POINT_FULL_NAME);
-                        }
-                    });
-                }*/
-
-                RetrieveCurrencyTask retrieveCurrencyTask = new RetrieveCurrencyTask(getApplicationContext());
+                retrieveCurrencyTask = new RetrieveCurrencyTask(getApplicationContext());
                 retrieveCurrencyTask.execute(END_POINT_LATEST, END_POINT_FULL_NAME);
                 return true;
             default:
