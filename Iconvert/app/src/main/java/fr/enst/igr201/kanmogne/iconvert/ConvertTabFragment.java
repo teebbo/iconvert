@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+
 import fr.enst.igr201.kanmogne.iconvert.data.CurrencyContract;
 
 /**
@@ -162,7 +164,7 @@ public class ConvertTabFragment extends Fragment {
                     double rate = toRate / fromRate;
 
                     double finalAmount = Double.valueOf(amount) * rate;
-                    mResult.setText(String.valueOf(finalAmount));
+                    mResult.setText(String.valueOf(new DecimalFormat("#.###").format(finalAmount)));
                     mDisplayRateTv.setText("Rate : " + String.valueOf(rate));
                 }
             }
