@@ -62,7 +62,7 @@
             L'application iConvert est une application développé au cours de ma formation dans le cadre du module IGR201, au sein de Telecom ParisTech.
         Elle permet de convertir de la monnaie d'une devise vers une autre devise.
         L'application est assez simple, puisqu'elle n'effectue qu\'un nombre fini de conversion.
-        De plus l'application possède une base de données locale, qui sera remplie par les soins de l\'utilisateur.
+        De plus l'application possède sa propre base de données locale, qui sera remplie par les soins de l\'utilisateur.
 
         Utilisation de l\'application:
         Après avoir installé l\'application, l'utilisateur doit mettre à jour sa base. Pour ce faire, il clique sur le bouton \"Refresh\" qui se trouve dans le menu de l'application.
