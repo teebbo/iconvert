@@ -1,2 +1,2 @@
 # iConvert #
-iConvert is a currency converter application
+iConvert is a currency converter android application
