@@ -1,1 +1,2 @@
-# IGR201 - ANDROID #
+# iConvert #
+iConvert is a currency converter application
