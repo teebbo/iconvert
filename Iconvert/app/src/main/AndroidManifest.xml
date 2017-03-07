@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.enst.igr201.kanmogne.iconvert"
+    package="com.coconhub.khranyt.iconvert"
     android:versionCode="1"
-    android:versionName="3.5"
-    android:installLocation="auto">
+    android:versionName="1.6.3">
 
     <!-- Permission to access Internet -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,7 +13,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="com.coconhub.khranyt.iconvert.activity.MainActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
@@ -27,8 +26,8 @@
                 android:resource="@xml/searchable"/>
         </activity>
         <provider
-            android:authorities="fr.enst.igr201.kanmogne.iconvert.provider"
-            android:name=".data.CurrencyProvider" />
+            android:authorities="com.coconhub.khranyt.iconvert.provider"
+            android:name="com.coconhub.khranyt.iconvert.data.CurrencyProvider" />
     </application>
 
 </manifest>

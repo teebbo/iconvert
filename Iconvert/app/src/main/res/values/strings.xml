@@ -30,6 +30,9 @@
 
     <string name="refresh">Refresh</string>
     <string name="search_hint">Rechercher...</string>
+    <string name="home_tab_title">Home</string>
+    <string name="convert_tab_title">Convert</string>
+    <string name="currencies_tab_title">Currencies</string>
 
     <!-- tabs titles -->
     <string-array name="tabs_title">

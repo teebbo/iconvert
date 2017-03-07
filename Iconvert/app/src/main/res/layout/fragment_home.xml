@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.enst.igr201.kanmogne.iconvert.HomeFragment">
+    tools:context="com.coconhub.khranyt.iconvert.fragment.HomeFragment">
 
     <ScrollView
         android:layout_width="match_parent"
