@@ -1,4 +1,4 @@
-package com.coconhub.khranyt.iconvert.data;
+package com.lemonstack.khranyt.iconvert.data;
 
 import android.annotation.TargetApi;
 import android.content.ContentProvider;

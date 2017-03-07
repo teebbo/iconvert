@@ -1,4 +1,4 @@
-package com.coconhub.khranyt.iconvert.activity;
+package com.lemonstack.khranyt.iconvert.activity;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,9 +11,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.coconhub.khranyt.iconvert.R;
-import com.coconhub.khranyt.iconvert.RetrieveCurrencyTask;
-import com.coconhub.khranyt.iconvert.adapter.CurrencyViewPagerAdapter;
+import com.lemonstack.khranyt.iconvert.R;
+import com.lemonstack.khranyt.iconvert.RetrieveCurrencyTask;
+import com.lemonstack.khranyt.iconvert.adapter.CurrencyViewPagerAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main);
 
         // create a toolbar and setting it as the toolbar for the activity
-        final Toolbar toolbar = (Toolbar) super.findViewById(com.coconhub.khranyt.iconvert.R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) super.findViewById(com.lemonstack.khranyt.iconvert.R.id.toolbar);
         super.setSupportActionBar(toolbar);
 
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupTabs(final TabLayout tabLayout) {
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.home_tab_title));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.convert_tab_title));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.currencies_tab_title));
     }
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the ConvertTabFragment/Up button, so long
+        // automatically handle clicks on the ConversionFragment/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         switch (id) {

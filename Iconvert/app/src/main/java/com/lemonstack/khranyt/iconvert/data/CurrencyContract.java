@@ -1,4 +1,4 @@
-package com.coconhub.khranyt.iconvert.data;
+package com.lemonstack.khranyt.iconvert.data;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -13,7 +13,7 @@ import android.provider.BaseColumns;
 public class CurrencyContract {
 
     // the content authority
-    static public final String CONTENT_AUTORITY = "com.coconhub.khranyt.iconvert.provider";
+    static public final String CONTENT_AUTORITY = "com.lemonstack.khranyt.iconvert.provider";
 
     // base content uri
     static public final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTORITY);

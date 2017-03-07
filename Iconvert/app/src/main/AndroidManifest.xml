@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.coconhub.khranyt.iconvert"
+    package="com.lemonstack.khranyt.iconvert"
     android:versionCode="1"
     android:versionName="1.6.3">
 
@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.coconhub.khranyt.iconvert.activity.MainActivity"
+            android:name="com.lemonstack.khranyt.iconvert.activity.MainActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
@@ -26,8 +26,8 @@
                 android:resource="@xml/searchable"/>
         </activity>
         <provider
-            android:authorities="com.coconhub.khranyt.iconvert.provider"
-            android:name="com.coconhub.khranyt.iconvert.data.CurrencyProvider" />
+            android:authorities="com.lemonstack.khranyt.iconvert.provider"
+            android:name="com.lemonstack.khranyt.iconvert.data.CurrencyProvider" />
     </application>
 
 </manifest>

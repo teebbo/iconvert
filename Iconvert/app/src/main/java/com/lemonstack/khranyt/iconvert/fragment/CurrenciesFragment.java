@@ -1,8 +1,9 @@
-package com.coconhub.khranyt.iconvert.fragment;
+package com.lemonstack.khranyt.iconvert.fragment;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -17,18 +18,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.coconhub.khranyt.iconvert.R;
-import com.coconhub.khranyt.iconvert.model.Currency;
-import com.coconhub.khranyt.iconvert.adapter.CurrencyAdapter;
-import com.coconhub.khranyt.iconvert.data.CurrencyContract;
+import com.lemonstack.khranyt.iconvert.R;
+import com.lemonstack.khranyt.iconvert.model.Currency;
+import com.lemonstack.khranyt.iconvert.adapter.CurrencyAdapter;
+import com.lemonstack.khranyt.iconvert.data.CurrencyContract;
 
 /**
  * Created by khranyt on 24/10/15.
  */
-public class CurrenciesTabFragment extends Fragment
+public class CurrenciesFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    String TAG = CurrenciesTabFragment.class.getSimpleName();
+    String TAG = CurrenciesFragment.class.getSimpleName();
 
     // The Loader's unique id. Loader ids are specific
     // to the Activity or Fragment in which they reside
@@ -40,14 +41,20 @@ public class CurrenciesTabFragment extends Fragment
     private CurrencyAdapter mAdapter;
 
 
-    public CurrenciesTabFragment(){
+    public CurrenciesFragment(){
         super();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       View rootview = inflater.inflate(R.layout.fragment_currencies_tab, container, false);
-        return rootview;
+    public static CurrenciesFragment newInstance() {
+        return newInstance("");
+    }
+
+    public static CurrenciesFragment newInstance(final String param) {
+        final CurrenciesFragment fragment = new CurrenciesFragment();
+        Bundle args = new Bundle();
+        args.putString("PARAM_1", param);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -56,9 +63,25 @@ public class CurrenciesTabFragment extends Fragment
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.d(TAG, "Inside onActivityCreated");
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate() method");
+        if(getArguments() != null) {
+            final String param = getArguments().getString("PARAM_1");
+        }
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+       View view = inflater.inflate(R.layout.fragment_currencies, container, false);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.d(TAG, "Inside onViewCreated");
 
         ListView currenciesListView = (ListView) getActivity().findViewById(R.id.currenciesListView);
         mAdapter = new CurrencyAdapter(getContext() ,null, 0);
@@ -73,7 +96,7 @@ public class CurrenciesTabFragment extends Fragment
         currenciesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               String currencyName = ((TextView) view.findViewById(R.id.currency_text_view)).getText().toString();
+                String currencyName = ((TextView) view.findViewById(R.id.currency_text_view)).getText().toString();
                 String currencyFullName = ((TextView) view.findViewById(R.id.currency_full_name_text_view)).getText().toString();
 
                 Toast.makeText(getActivity(), (new Currency(currencyName, currencyFullName)).toString(),
@@ -83,9 +106,10 @@ public class CurrenciesTabFragment extends Fragment
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d(TAG, "Inside onActivityCreated");
+
     }
 
     @Override

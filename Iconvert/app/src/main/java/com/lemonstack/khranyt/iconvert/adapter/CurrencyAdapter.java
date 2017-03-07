@@ -1,4 +1,4 @@
-package com.coconhub.khranyt.iconvert.adapter;
+package com.lemonstack.khranyt.iconvert.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.coconhub.khranyt.iconvert.R;
-import com.coconhub.khranyt.iconvert.data.CurrencyContract;
+import com.lemonstack.khranyt.iconvert.R;
+import com.lemonstack.khranyt.iconvert.data.CurrencyContract;
 
 /**
  * Created by khranyt on 29/10/2015.

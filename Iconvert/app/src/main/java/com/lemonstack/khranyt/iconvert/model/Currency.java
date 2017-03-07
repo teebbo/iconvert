@@ -1,4 +1,4 @@
-package com.coconhub.khranyt.iconvert.model;
+package com.lemonstack.khranyt.iconvert.model;
 
 /**
  * Created by khranyt on 29/10/2015.

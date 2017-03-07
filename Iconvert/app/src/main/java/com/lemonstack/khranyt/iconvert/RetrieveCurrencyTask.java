@@ -1,4 +1,4 @@
-package com.coconhub.khranyt.iconvert;
+package com.lemonstack.khranyt.iconvert;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
-import com.coconhub.khranyt.iconvert.data.CurrencyContract;
+import com.lemonstack.khranyt.iconvert.data.CurrencyContract;
 
 /**
  * Created by khranyt on 01/11/2015.

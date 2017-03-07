@@ -1,4 +1,4 @@
-package com.coconhub.khranyt.iconvert.fragment;
+package com.lemonstack.khranyt.iconvert.fragment;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -6,15 +6,15 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,20 +22,20 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 
-import com.coconhub.khranyt.iconvert.R;
-import com.coconhub.khranyt.iconvert.data.CurrencyContract;
+import com.lemonstack.khranyt.iconvert.R;
+import com.lemonstack.khranyt.iconvert.data.CurrencyContract;
 
 /**
  * Created by khranyt on 24/10/15.
  */
-public class ConvertTabFragment extends Fragment {
+public class ConversionFragment extends Fragment {
     // variables on the left side
-    private Spinner mLeftSpinner;
+    private RelativeLayout currencyFrom;
     private EditText mLeftEditText;
 
 
     // variables on the right side
-    private Spinner mRightSpinner;
+    private RelativeLayout currencyTo;
     private TextView mResult;
 
     private TextView mDisplayRateTv;
@@ -52,7 +52,7 @@ public class ConvertTabFragment extends Fragment {
     boolean fromCurrency = false;
     boolean toCurrency = false;
 
-    private final String TAG = ConvertTabFragment.class.getSimpleName();
+    private final String TAG = ConversionFragment.class.getSimpleName();
 
     static private final String BASE_URL = "https://openexchangerates.org/api/";
     static private final String APP_ID = "8c01fe27397241a78baf9ee8b72f6a37";
@@ -101,10 +101,32 @@ public class ConvertTabFragment extends Fragment {
         return rate;
     }
 
+    public static ConversionFragment newInstance() {
+        return newInstance("");
+    }
+
+    public static ConversionFragment newInstance(final String param) {
+        final ConversionFragment fragment = new ConversionFragment();
+        Bundle args = new Bundle();
+        args.putString("PARAM_1", param);
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate() method");
+        if(getArguments() != null) {
+            final String param = getArguments().getString("PARAM_1");
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_convert_tab, container, false);
-        return rootview;
+        View view = inflater.inflate(R.layout.fragment_conversion, container, false);
+        return view;
     }
 
     @Override
@@ -115,35 +137,63 @@ public class ConvertTabFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.d(TAG, "Inside onActivityCreated");
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "Inside onViewCreated");
 
-       mConvertBtn = (Button) getActivity().findViewById(R.id.convert_btn);
+        mConvertBtn = (Button) getActivity().findViewById(R.id.convert_btn);
         //ImageView mSwapBtn = (ImageView) getActivity().findViewById(R.id.swap_iv);
         //mResetBtn = (Button) getActivity().findViewById(R.id.reset_btn);
 
-        mLeftEditText = (EditText) getActivity().findViewById(R.id.left_edit_text);
-        mLeftSpinner = (Spinner) getActivity().findViewById(R.id.left_text_view);
+        mLeftEditText = (EditText) getActivity().findViewById(R.id.montant);
+       // mLeftSpinner = (Spinner) getActivity().findViewById(R.id.left_text_view);
 
-       mRightSpinner = (Spinner) getActivity().findViewById(R.id.right_text_view);
-        mResult = (TextView) getActivity().findViewById(R.id.right_text_view_result);
+       // mRightSpinner = (Spinner) getActivity().findViewById(R.id.right_text_view);
+        //mResult = (TextView) getActivity().findViewById(R.id.right_text_view_result);
 
-       mDisplayRateTv = (TextView) getActivity().findViewById(R.id.rateDisplay);
-       //mCurrencies = (TextView) getActivity().findViewById(R.id.currencies);
+        mDisplayRateTv = (TextView) getActivity().findViewById(R.id.rateDisplay);
+        //mCurrencies = (TextView) getActivity().findViewById(R.id.currencies);
 
         mRes = getResources();
         mResolver = getActivity().getContentResolver();
 
+        currencyFrom = (RelativeLayout) getActivity().findViewById(R.id.currency_from_rl);
+        currencyTo = (RelativeLayout) getActivity().findViewById(R.id.currency_to_rl);
         // initialize up and down state
         mLeftState =  mRes.getString(R.string.euro_text_view);
         mRightState = mRes.getString(R.string.usd_currency_text_view);
 
-        addListenerOnSpinners();
+        //addListenerOnSpinners();
         addListenerOnButtons();
+
+        currencyFrom.setOnClickListener(onRelativeLayoutListener());
+        currencyTo.setOnClickListener(onRelativeLayoutListener());
     }
 
-    private void addListenerOnSpinners() {
+    private View.OnClickListener onRelativeLayoutListener() {
+        return new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                final int id = v.getId();
+                switch (id) {
+                    case R.id.currency_from_rl:
+                        Toast.makeText(getContext(), String.valueOf(id), Toast.LENGTH_LONG).show();
+                        break;
+                    case R.id.currency_to_rl:
+                        Toast.makeText(getContext(), String.valueOf(id), Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d(TAG, "Inside onActivityCreated");
+    }
+
+    /*private void addListenerOnSpinners() {
         mLeftSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -173,7 +223,7 @@ public class ConvertTabFragment extends Fragment {
 
             }
         });
-    }
+    }*/
 
     private void addListenerOnButtons() {
 
@@ -182,7 +232,7 @@ public class ConvertTabFragment extends Fragment {
             public void onClick(View v) {
 
                 // get text view text of the left side
-                String leftStr = String.valueOf(mLeftSpinner.getSelectedItem());
+                String leftStr = String.valueOf(mLeftEditText.getText());
 
                 // get text view text of the right side
                 //String rightStr = String.valueOf(mRightSpinner.getSelectedItem());
@@ -206,40 +256,5 @@ public class ConvertTabFragment extends Fragment {
                 }
             }
         });
-
-       /* mResetBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mLeftEditText.setText("");
-                mResult.setText("");
-                mDisplayRateTv.setText("");
-            }
-        });*/
-
-                    /*mSwapBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    String fromStr = mLeftSpinner.getSelectedItem().toString();
-                    String toStr = mRightSpinner.getSelectedItem().toString();
-
-                    if (mLeftState.equals(fromStr) &
-                            mRightState.equals(toStr)) {
-
-                        mLeftSpinner.setText(toStr);
-                        mRightSpinner.setText(fromStr);
-
-                        mLeftState = toStr;
-                        mRightState = fromStr;
-                    } else {
-
-                        mLeftSpinner.setText(fromStr);
-                        mRightSpinner.setText(toStr);
-
-                        mLeftState = fromStr;
-                        mRightState = toStr;
-                    }
-                }
-            });*/
     }
 }
