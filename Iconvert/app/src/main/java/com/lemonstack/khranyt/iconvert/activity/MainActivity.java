@@ -10,10 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.lemonstack.khranyt.iconvert.R;
 import com.lemonstack.khranyt.iconvert.RetrieveCurrencyTask;
 import com.lemonstack.khranyt.iconvert.adapter.CurrencyViewPagerAdapter;
+import com.lemonstack.khranyt.iconvert.fragment.dialog.CurrenciesDialogFragment;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -92,4 +94,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

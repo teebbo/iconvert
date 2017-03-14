@@ -19,38 +19,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 
 import com.lemonstack.khranyt.iconvert.R;
 import com.lemonstack.khranyt.iconvert.data.CurrencyContract;
+import com.lemonstack.khranyt.iconvert.fragment.dialog.CurrenciesDialogFragment;
+import com.lemonstack.khranyt.iconvert.model.Currency;
 
 /**
  * Created by khranyt on 24/10/15.
  */
-public class ConversionFragment extends Fragment {
-    // variables on the left side
-    private RelativeLayout currencyFrom;
-    private EditText mLeftEditText;
-
-
-    // variables on the right side
-    private RelativeLayout currencyTo;
-    private TextView mResult;
-
-    private TextView mDisplayRateTv;
-
-    // Buttons
-    private Button mResetBtn;
-    private Button mConvertBtn;
-
-    //private TextView mCurrencies;
-
-    String mLeftState = "";
-    String mRightState = "";
-
-    boolean fromCurrency = false;
-    boolean toCurrency = false;
+public class ConversionFragment extends Fragment
+    implements CurrenciesDialogFragment.OnDialogFragmentListener {
 
     private final String TAG = ConversionFragment.class.getSimpleName();
 
@@ -66,6 +48,47 @@ public class ConversionFragment extends Fragment {
     static private final String BASE_KEY = "base";
     static private final String RATES_KEY = "ratesMap";
 
+    @Override
+    public void onItemClick(View view, Currency currency) {
+        Toast.makeText(getActivity(), currency.toString() + " selected!", Toast.LENGTH_LONG).show();
+
+        if(isCurrencyFrom()) {
+            codeFromTextView.setText(currency.getName());
+            labelFromTextView.setText(currency.getFullname());
+        } else {
+            codeToTextView.setText(currency.getName());
+            labelToTextView.setText(currency.getFullname());
+        }
+    }
+
+    private static final int REQUEST_CODE = 100;
+    // variables on the left side
+    private RelativeLayout currencyFrom;
+    private EditText mLeftEditText;
+
+    private TextView codeFromTextView;
+    private TextView labelFromTextView;
+    private TextView codeToTextView;
+    private TextView labelToTextView;
+
+    // variables on the right side
+    private RelativeLayout currencyTo;
+    private TextView mResult;
+
+    private TextView mDisplayRateTv;
+
+    // Buttons
+    private Button mResetBtn;
+    private Button mConvertBtn;
+
+    //private TextView mCurrencies;
+
+    private String mLeftState = "";
+    private String mRightState = "";
+
+    private boolean from = false;
+    private boolean to = false;
+
     JSONObject currenciesObj = null;
 
     Resources mRes;
@@ -73,6 +96,19 @@ public class ConversionFragment extends Fragment {
 
     double mLeftRate;
     double mRightRate;
+    private View conversionView;
+
+    private void ClickedOnCurrencyFrom() {
+        from = true;
+        to = false;
+        Log.d(TAG, "clicked on left");
+    }
+
+    private void ClickedOnCurrencyTo() {
+        from = false;
+        to = true;
+        Log.d(TAG, "clicked on right");
+    }
 
     private double queryCurrencyTable(Uri uri){
         Log.wtf(TAG, "URI : -> " + CurrencyContract.Currency.getCurrencyNameFromURI(uri));
@@ -125,7 +161,7 @@ public class ConversionFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_conversion, container, false);
+        final View view = inflater.inflate(R.layout.fragment_conversion, container, false);
         return view;
     }
 
@@ -140,24 +176,29 @@ public class ConversionFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "Inside onViewCreated");
 
-        mConvertBtn = (Button) getActivity().findViewById(R.id.convert_btn);
+        mConvertBtn = (Button) view.findViewById(R.id.convert_btn);
         //ImageView mSwapBtn = (ImageView) getActivity().findViewById(R.id.swap_iv);
         //mResetBtn = (Button) getActivity().findViewById(R.id.reset_btn);
 
-        mLeftEditText = (EditText) getActivity().findViewById(R.id.montant);
+        mLeftEditText = (EditText) view.findViewById(R.id.montant);
        // mLeftSpinner = (Spinner) getActivity().findViewById(R.id.left_text_view);
 
        // mRightSpinner = (Spinner) getActivity().findViewById(R.id.right_text_view);
         //mResult = (TextView) getActivity().findViewById(R.id.right_text_view_result);
 
-        mDisplayRateTv = (TextView) getActivity().findViewById(R.id.rateDisplay);
+        mDisplayRateTv = (TextView) view.findViewById(R.id.rateDisplay);
         //mCurrencies = (TextView) getActivity().findViewById(R.id.currencies);
 
         mRes = getResources();
         mResolver = getActivity().getContentResolver();
 
-        currencyFrom = (RelativeLayout) getActivity().findViewById(R.id.currency_from_rl);
-        currencyTo = (RelativeLayout) getActivity().findViewById(R.id.currency_to_rl);
+        codeFromTextView = (TextView) view.findViewById(R.id.code_currency_from);
+        labelFromTextView = (TextView) view.findViewById(R.id.label_currency_from);
+        codeToTextView = (TextView) view.findViewById(R.id.code_currency_to);
+        labelToTextView = (TextView) view.findViewById(R.id.label_currency_to);
+
+        currencyFrom = (RelativeLayout) view.findViewById(R.id.currency_from_rl);
+        currencyTo = (RelativeLayout) view.findViewById(R.id.currency_to_rl);
         // initialize up and down state
         mLeftState =  mRes.getString(R.string.euro_text_view);
         mRightState = mRes.getString(R.string.usd_currency_text_view);
@@ -177,9 +218,13 @@ public class ConversionFragment extends Fragment {
                 switch (id) {
                     case R.id.currency_from_rl:
                         Toast.makeText(getContext(), String.valueOf(id), Toast.LENGTH_LONG).show();
+                        ClickedOnCurrencyFrom();
+                        showDialog();
                         break;
                     case R.id.currency_to_rl:
                         Toast.makeText(getContext(), String.valueOf(id), Toast.LENGTH_LONG).show();
+                        ClickedOnCurrencyTo();
+                        showDialog();
                         break;
                     default:
                         break;
@@ -187,6 +232,27 @@ public class ConversionFragment extends Fragment {
             }
         };
     }
+
+    public boolean isCurrencyFrom() {
+        Log.d(TAG, "FROM value : " + from + " and TO value : " + to);
+        return from;
+    }
+
+    public boolean isCurrencyTo() {
+        return to;
+    }
+
+    private void setTextView() {
+
+    }
+
+    private void showDialog() {
+        final CurrenciesDialogFragment dialogFragment = CurrenciesDialogFragment.newInstance();
+        final String tag = CurrenciesDialogFragment.class.getName();
+        dialogFragment.setTargetFragment(this, REQUEST_CODE);
+        dialogFragment.show(getActivity().getSupportFragmentManager(), tag);
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
