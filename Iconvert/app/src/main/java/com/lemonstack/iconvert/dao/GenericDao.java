@@ -31,7 +31,7 @@ public abstract class GenericDao {
         dbHelper.close();
     }
 
-    protected Cursor getByCode(final String table, final String code) {
+    protected Cursor getByCode(final String table, final String tableCodeColumn, final String code) {
 
         final SQLiteDatabase db = getDb();
 
@@ -39,7 +39,7 @@ public abstract class GenericDao {
         db.beginTransaction();
 
         final Cursor cursor = db.query(table, null,
-                IConvertContract.TauxChange.COL_CODE + "=?", new String[] {code}, null, null, null);
+                tableCodeColumn + "=?", new String[] {code}, null, null, null);
         db.setTransactionSuccessful();
         db.endTransaction();
 

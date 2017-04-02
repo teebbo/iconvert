@@ -105,7 +105,7 @@ public class DeviseDaoImpl extends GenericDao
 
     @Override
     public Devise getByCode(final String code) {
-        final Cursor c = super.getByCode(IConvertContract.Devise.T_DEVISE, code);
+        final Cursor c = super.getByCode(IConvertContract.Devise.T_DEVISE, IConvertContract.Devise.COL_CODE code);
         return cursorToDevise(c);
     }
 

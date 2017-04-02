@@ -107,7 +107,7 @@ public class TauxChangeDaoImpl extends GenericDao
 
     @Override
     public TauxChange getByCode(final String code) {
-        final Cursor c = super.getByCode(IConvertContract.TauxChange.T_TAUX_CHANGE, code);
+        final Cursor c = super.getByCode(IConvertContract.TauxChange.T_TAUX_CHANGE, IConvertContract.TauxChange.COL_CODE, code);
         return cursorToTauxChange(c);
     }
 
