@@ -6,7 +6,7 @@
     tools:context="com.lemonstack.khranyt.iconvert.fragment.dialog.CurrenciesDialogFragment">
 
    <ListView
-       android:id="@+id/currencies_dialog_list_view"
+       android:id="@+id/devises_dialog_list_view"
        android:layout_width="match_parent"
        android:layout_height="match_parent" />
 

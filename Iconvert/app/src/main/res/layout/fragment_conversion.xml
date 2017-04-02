@@ -10,7 +10,7 @@
             android:orientation="horizontal">
 
         <RelativeLayout
-            android:id="@+id/currency_from_rl"
+            android:id="@+id/rl_devise_source"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="4"
@@ -25,7 +25,7 @@
                 android:scaleType="fitXY" />
 
             <TextView
-                android:id="@+id/code_currency_from"
+                android:id="@+id/code_devise_source"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -36,15 +36,15 @@
                 android:layout_alignParentTop="true" />
 
             <TextView
-                android:id="@+id/label_currency_from"
+                android:id="@+id/libelle_devise_source"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
                 android:text="Afrique Centrale"
                 android:textSize="10sp"
                 android:layout_above="@+id/montant"
-                android:layout_alignLeft="@+id/code_currency_from"
-                android:layout_alignStart="@+id/code_currency_from" />
+                android:layout_alignLeft="@+id/code_devise_source"
+                android:layout_alignStart="@+id/code_devise_source" />
 
             <EditText
                 android:id="@+id/montant"
@@ -53,14 +53,14 @@
                 android:hint="montant"
                 android:inputType="numberDecimal"
                 android:layout_below="@+id/ic_country_currency_from"
-                android:layout_alignRight="@id/label_currency_from"
-                android:layout_alignEnd="@id/label_currency_from"
+                android:layout_alignRight="@id/libelle_devise_source"
+                android:layout_alignEnd="@id/libelle_devise_source"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/currency_to_rl"
+            android:id="@+id/rl_devise_destination"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="4"
@@ -75,7 +75,7 @@
                 android:scaleType="fitXY" />
 
             <TextView
-                android:id="@+id/code_currency_to"
+                android:id="@+id/code_devise_destination"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -86,26 +86,26 @@
                 android:layout_alignParentTop="true" />
 
             <TextView
-                android:id="@+id/label_currency_to"
+                android:id="@+id/libelle_devise_destination"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
                 android:text="British Pound"
                 android:textSize="10sp"
-                android:layout_above="@+id/right_edit_text"
-                android:layout_alignLeft="@+id/code_currency_to"
-                android:layout_alignStart="@+id/code_currency_to" />
+                android:layout_above="@+id/montant_destination"
+                android:layout_alignLeft="@+id/code_devise_destination"
+                android:layout_alignStart="@+id/code_devise_destination" />
 
             <TextView
-                android:id="@+id/right_edit_text"
+                android:id="@+id/montant_destination"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Resultat"
                 android:textSize="20sp"
                 android:layout_marginTop="10dp"
                 android:layout_below="@+id/ic_country_currency_to"
-                android:layout_alignRight="@id/label_currency_to"
-                android:layout_alignEnd="@id/label_currency_to"
+                android:layout_alignRight="@id/libelle_devise_destination"
+                android:layout_alignEnd="@id/libelle_devise_destination"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 

@@ -5,11 +5,11 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "com.coconhub.khranyt.iconvert"
+        applicationId "com.lemonstack.iconvert"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
-        versionName "1.6.3"
+        versionName "1.7.3"
     }
     buildTypes {
         release {

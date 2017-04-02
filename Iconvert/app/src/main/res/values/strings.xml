@@ -3,6 +3,7 @@
 
     <!-- name of the application -->
     <string name="app_name">iConvert</string>
+    <string name="openexchangerates_app_id">openexchangerates_app_id</string>
 
     <!-- Euro's text view text-->
     <string name="euro_text_view">EUR</string>
@@ -32,7 +33,7 @@
     <string name="search_hint">Rechercher...</string>
     <string name="home_tab_title">Home</string>
     <string name="convert_tab_title">Convert</string>
-    <string name="currencies_tab_title">Currencies</string>
+    <string name="devise_tab_title">Devises</string>
 
     <!-- tabs titles -->
     <string-array name="tabs_title">

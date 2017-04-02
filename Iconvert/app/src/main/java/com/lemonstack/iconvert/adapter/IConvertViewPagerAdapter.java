@@ -1,25 +1,25 @@
-package com.lemonstack.khranyt.iconvert.adapter;
+package com.lemonstack.iconvert.adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.lemonstack.khranyt.iconvert.R;
-import com.lemonstack.khranyt.iconvert.fragment.ConversionFragment;
-import com.lemonstack.khranyt.iconvert.fragment.CurrenciesFragment;
+import com.lemonstack.iconvert.R;
+import com.lemonstack.iconvert.fragment.ConversionFragment;
+import com.lemonstack.iconvert.fragment.DeviseFragment;
 
 
 /**
  * Created by khranyt on 24/10/15.
  */
-public class CurrencyViewPagerAdapter extends FragmentStatePagerAdapter {
+public class IConvertViewPagerAdapter extends FragmentStatePagerAdapter {
 
     private Context context;
     private int numOfTabs;
     private String pageTitle;
 
-    public CurrencyViewPagerAdapter(final Context context, final FragmentManager fm, int numOfTabs){
+    public IConvertViewPagerAdapter(final Context context, final FragmentManager fm, int numOfTabs){
         super(fm);
         this.context = context;
         this.numOfTabs = numOfTabs;
@@ -38,7 +38,7 @@ public class CurrencyViewPagerAdapter extends FragmentStatePagerAdapter {
                 fragmentClass = ConversionFragment.class;
                 break;
             case 1:
-                fragmentClass = CurrenciesFragment.class;
+                fragmentClass = DeviseFragment.class;
                 break;
             default:
                 fragmentClass = ConversionFragment.class;
@@ -62,7 +62,7 @@ public class CurrencyViewPagerAdapter extends FragmentStatePagerAdapter {
                 setPageTitle(context.getString(R.string.convert_tab_title));
                 break;
             case 1:
-                setPageTitle(context.getString(R.string.currencies_tab_title));
+                setPageTitle(context.getString(R.string.devise_tab_title));
                 break;
             default:
                 setPageTitle(context.getString(R.string.convert_tab_title));
