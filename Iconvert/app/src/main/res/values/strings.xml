@@ -3,7 +3,7 @@
 
     <!-- name of the application -->
     <string name="app_name">iConvert</string>
-    <string name="openexchangerates_app_id">0d78f65495d040d38a9e073b46b0b281</string>
+    <string name="openexchangerates_app_id">openexchangerates_app_id</string>
 
     <!-- Euro's text view text-->
     <string name="euro_text_view">EUR</string>
