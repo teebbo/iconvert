@@ -1,8 +1,7 @@
 package com.lemonstack.iconvert.fragment;
 
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,9 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONObject;
-
 import com.lemonstack.iconvert.R;
+import com.lemonstack.iconvert.asyntask.TauxChangeByCodeAsyncTask;
 import com.lemonstack.iconvert.dao.tauxchange.TauxChangeDao;
 import com.lemonstack.iconvert.dao.tauxchange.TauxChangeDaoImpl;
 import com.lemonstack.iconvert.fragment.dialog.DeviseDialogFragment;
@@ -217,21 +215,50 @@ public class ConversionFragment extends Fragment
     public void onItemClick(View view, Devise devise) {
         Toast.makeText(getActivity(), devise.toString() + " selected!", Toast.LENGTH_LONG).show();
 
+        final TauxChangeByCodeAsyncTask tauxChangeByCodeAsyncTask = new TauxChangeByCodeAsyncTask(getContext());
+
+        String code;
+
         if(isCurrencyFrom()) {
             codeSourceTextView.setText(devise.getCode());
             labelSourceTextView.setText(devise.getLibelle());
+            code = codeSourceTextView.getText().toString();
 
-            final TauxChange tauxChangeSrc = tauxChangeDao.getByCode(codeSourceTextView.getText().toString());
-            tauxChangeSource = tauxChangeSrc.getTauxChange();
         } else {
             codeDestinationTextView.setText(devise.getCode());
             labelDestinationTextView.setText(devise.getLibelle());
-
-            final TauxChange tauxChangeDst = tauxChangeDao.getByCode(codeDestinationTextView.getText().toString());
-            tauxChangeDestination = tauxChangeDst.getTauxChange();
+            code = codeDestinationTextView.getText().toString();
         }
+
+        tauxChangeByCodeAsyncTask.execute(code);
     }
 
+    private class TauxChangeByCodeAsyncTask extends AsyncTask<String, Void, Double> {
 
+        private Context context;
+        private TauxChangeDao tauxChangeDao;
+
+        public TauxChangeByCodeAsyncTask(Context context) {
+            this.context = context;
+            tauxChangeDao = new TauxChangeDaoImpl(context);
+        }
+
+        @Override
+        protected Double doInBackground(String... params) {
+            final String code = params[0];
+            final TauxChange tauxChange = tauxChangeDao.getByCode(code);
+
+            return tauxChange.getTauxChange();
+        }
+
+        @Override
+        protected void onPostExecute(Double tauxChange) {
+            if(isCurrencyFrom()) {
+                tauxChangeSource = tauxChange;
+            } else {
+                tauxChangeDestination = tauxChange;
+            }
+        }
+    }
 
 }
