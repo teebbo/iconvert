@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lemonstack.iconvert.R;
+import com.lemonstack.iconvert.dao.devise.DeviseDao;
+import com.lemonstack.iconvert.dao.devise.DeviseDaoImpl;
 import com.lemonstack.iconvert.model.Devise;
 
 /**
@@ -19,10 +21,9 @@ public class DeviseAdapter extends CursorAdapter {
     /**
      * Cache of the children views
      */
-    private static final int COL_CODE_IDX = 1;
-    private static final int COL_LIBELLE_IDX = 2;
 
     private LayoutInflater inflater;
+    private DeviseDao deviseDao;
 
     /**
      * ViewHolder Class
@@ -37,6 +38,10 @@ public class DeviseAdapter extends CursorAdapter {
         }
     }
 
+    public DeviseAdapter(Context context) {
+        this(context, null);
+    }
+
     public DeviseAdapter(Context context, Cursor cursor){
         this(context, cursor, 0);
     }
@@ -44,6 +49,7 @@ public class DeviseAdapter extends CursorAdapter {
     public DeviseAdapter(Context context, Cursor cursor, int flags){
         super(context, cursor, flags);
         inflater = LayoutInflater.from(context);
+        deviseDao = new DeviseDaoImpl(context);
     }
 
     /**
@@ -56,10 +62,8 @@ public class DeviseAdapter extends CursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         final View view = inflater.inflate(R.layout.item_devise, parent, false);
-
         final ViewHolder viewHolder = new ViewHolder(view);
         view.setTag(viewHolder);
-
         return view;
     }
 
@@ -73,9 +77,8 @@ public class DeviseAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
 
         // extract data from the cursor
-        final Devise devise = new Devise(cursor.getString(COL_CODE_IDX), cursor.getString(COL_LIBELLE_IDX));
+        final Devise devise = deviseDao.createEntity(cursor);
         final ViewHolder viewHolder = (ViewHolder) view.getTag();
-
         viewHolder.codeDeviseTextView.setText(devise.getCode());
         viewHolder.libelleDeviseTextView.setText(devise.getLibelle());
     }

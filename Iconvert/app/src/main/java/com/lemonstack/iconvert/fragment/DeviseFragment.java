@@ -19,8 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lemonstack.iconvert.R;
-import com.lemonstack.iconvert.activity.MainActivity;
-import com.lemonstack.iconvert.loader.DeviseLoader;
+import com.lemonstack.iconvert.dao.devise.DeviseDao;
+import com.lemonstack.iconvert.dao.devise.DeviseDaoImpl;
+import com.lemonstack.iconvert.loader.devise.DeviseListLoader;
 import com.lemonstack.iconvert.model.Devise;
 import com.lemonstack.iconvert.adapter.DeviseAdapter;
 
@@ -36,11 +37,11 @@ public class DeviseFragment extends Fragment
     // to the Activity or Fragment in which they reside
     private static final int DEVISE_LOADER_ID = 100;
 
-    private LoaderManager.LoaderCallbacks<Cursor> deviseLoader;
+    private LoaderManager.LoaderCallbacks<Cursor> callbacks;
 
     // The adapter that binds our data to the listview
     private DeviseAdapter mAdapter;
-
+    private DeviseDao deviseDao;
 
     public DeviseFragment(){
         super();
@@ -77,6 +78,8 @@ public class DeviseFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
        View view = inflater.inflate(R.layout.fragment_devise, container, false);
+
+        deviseDao = new DeviseDaoImpl(getContext());
         return view;
     }
 
@@ -92,7 +95,7 @@ public class DeviseFragment extends Fragment
         * In other words: The cursor is not ready when you create the adapter.
         * Thus you create the adapter using "null" for the cursor argument:
         */
-        mAdapter = new DeviseAdapter(getContext(), null);
+        mAdapter = new DeviseAdapter(getContext());
 
         // bind adapter and listview; So that when the adapter changes, the listview will
         // automatically be updated.
@@ -101,10 +104,10 @@ public class DeviseFragment extends Fragment
         currenciesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String currencyName = ((TextView) view.findViewById(R.id.code_devise_textview)).getText().toString();
-                String currencyFullName = ((TextView) view.findViewById(R.id.libelle_devise_textview)).getText().toString();
+                final Cursor c = (Cursor) parent.getItemAtPosition(position);
+                final Devise devise = deviseDao.createEntity(c);
 
-                Toast.makeText(getActivity(), (new Devise(currencyName, currencyFullName)).toString(),
+                Toast.makeText(getActivity(), devise.toString(),
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -123,14 +126,14 @@ public class DeviseFragment extends Fragment
 
         Log.d(TAG, "onResume() is called");
 
-        // Initialisation du deviseLoader
-        deviseLoader = this;
+        // Initialisation du callbacks
+        callbacks = this;
 
-        // To start loading data from a deviseLoader call either initLoader() or restartLoader().
-        // The system automatically determines whether a deviseLoader with the same integer ID already
-        // exists and will either create a new deviseLoader or reuse an existing deviseLoader.
+        // To start loading data from a callbacks call either initLoader() or restartLoader().
+        // The system automatically determines whether a callbacks with the same integer ID already
+        // exists and will either create a new callbacks or reuse an existing callbacks.
         Log.d(TAG, "Calling getLoaderManager().initLoader");
-        getLoaderManager().initLoader(DEVISE_LOADER_ID, null, deviseLoader);
+        getLoaderManager().initLoader(DEVISE_LOADER_ID, null, callbacks);
     }
 
     @Override
@@ -154,9 +157,9 @@ public class DeviseFragment extends Fragment
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        // The onCreateLoader is responsible for building a deviseLoader
+        // The onCreateLoader is responsible for building a callbacks
         Log.d(TAG, "onCreateLoader() is called");
-        final DeviseLoader loader = new DeviseLoader(getActivity().getApplicationContext());
+        final DeviseListLoader loader = new DeviseListLoader(getActivity().getApplicationContext());
         return loader;
     }
 

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,21 +17,21 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.lemonstack.iconvert.R;
-import com.lemonstack.iconvert.adapter.DeviseDialogListAdapter;
+import com.lemonstack.iconvert.adapter.DeviseAdapter;
 import com.lemonstack.iconvert.dao.devise.DeviseDao;
 import com.lemonstack.iconvert.dao.devise.DeviseDaoImpl;
+import com.lemonstack.iconvert.loader.devise.DeviseListLoader;
 import com.lemonstack.iconvert.model.Devise;
-import com.lemonstack.iconvert.model.TauxChange;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link DeviseDialogFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DeviseDialogFragment extends DialogFragment {
+public class DeviseDialogFragment extends DialogFragment
+        implements LoaderManager.LoaderCallbacks<Cursor> {
+
     private static final String TAG = DeviseDialogFragment.class.getName();
 
     // TODO: Rename parameter arguments, choose names that match
@@ -38,13 +40,36 @@ public class DeviseDialogFragment extends DialogFragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String EMPTY_STRING = "";
 
+    private static final int LOADER_ID = 200;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private OnDialogFragmentListener listener;
-    private DeviseDialogListAdapter adapter;
+    private DeviseAdapter adapter;
+
+    private LoaderManager.LoaderCallbacks<Cursor> callbacks;
 
     private DeviseDao deviseDao;
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        Log.d(TAG, "onCreateLoader() is called");
+        final DeviseListLoader loader = new DeviseListLoader(getContext());
+        return loader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        Log.d(TAG, "onLoadFinished() is called");
+        adapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        Log.d(TAG, "onLoaderReset() is called");
+        adapter.swapCursor(null);
+    }
 
     public interface OnDialogFragmentListener {
         void onItemClick(View view, Devise devise);
@@ -119,18 +144,22 @@ public class DeviseDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         final ListView devisesListView = (ListView) view.findViewById(R.id.devises_dialog_list_view);
-        adapter = new DeviseDialogListAdapter(getActivity(), devises());
+        adapter = new DeviseAdapter(getActivity());
         devisesListView.setAdapter(adapter);
         getDialog().setTitle("Liste de devises");
 
         devisesListView.setOnItemClickListener(onListViewItemClick());
+
+        callbacks = this;
+        getLoaderManager().initLoader(LOADER_ID, null, callbacks);
     }
 
     private AdapterView.OnItemClickListener onListViewItemClick() {
         return new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final Devise o = (Devise) parent.getItemAtPosition(position);
+                final Cursor c = (Cursor) parent.getItemAtPosition(position);
+                final Devise o = deviseDao.createEntity(c);
                 Log.d(TAG, o.toString());
                 listener.onItemClick(view, o);
                 dismiss();
@@ -138,17 +167,4 @@ public class DeviseDialogFragment extends DialogFragment {
         };
     }
 
-    /**
-     * retourne la liste des devises
-     * @return
-     */
-    private List<Devise> devises() {
-        final List<Devise> devises = new ArrayList<>();
-        final Cursor c = deviseDao.list();
-
-        while (c.moveToNext()) {
-            devises.add(new Devise(c.getLong(0), c.getString(1), c.getString(2)));
-        }
-        return devises;
-    }
 }

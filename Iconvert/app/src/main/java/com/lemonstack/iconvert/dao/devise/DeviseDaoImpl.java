@@ -26,12 +26,20 @@ public class DeviseDaoImpl extends GenericDao
         implements DeviseDao {
 
     private static final String TAG = DeviseDaoImpl.class.getName();
+    private static final int COL_ID_IDX = 0;
+    private static final int COL_CODE_IDX = 1;
+    private static final int COL_LIBELLE_IDX = 2;
 
     private Context context;
 
     public DeviseDaoImpl(Context context) {
         super(context);
         this.context = context;
+    }
+
+    @Override
+    public Devise createEntity(Cursor c) {
+        return new Devise(c.getLong(COL_ID_IDX), c.getString(COL_CODE_IDX), c.getString(COL_LIBELLE_IDX));
     }
 
     @Override
@@ -105,7 +113,7 @@ public class DeviseDaoImpl extends GenericDao
 
     @Override
     public Devise getByCode(final String code) {
-        final Cursor c = super.getByCode(IConvertContract.Devise.T_DEVISE, IConvertContract.Devise.COL_CODE code);
+        final Cursor c = super.getByCode(IConvertContract.Devise.T_DEVISE, IConvertContract.Devise.COL_CODE, code);
         return cursorToDevise(c);
     }
 

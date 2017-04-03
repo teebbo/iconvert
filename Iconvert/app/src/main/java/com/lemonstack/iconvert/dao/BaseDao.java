@@ -28,4 +28,6 @@ public interface BaseDao<T> {
     public void save(JSONObject jsonObject);
 
     public T getByCode(String code);
+
+    public T createEntity(Cursor c);
 }

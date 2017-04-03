@@ -1,10 +1,12 @@
 package com.lemonstack.iconvert.adapter;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import com.lemonstack.iconvert.R;
@@ -17,7 +19,7 @@ import java.util.List;
  * Created by khranyt on 12/03/2017.
  */
 
-public class DeviseDialogListAdapter extends BaseAdapter {
+public class DeviseDialogListAdapter extends CursorAdapter {
 
     private Context context;
     private List<Devise> devises;
@@ -33,43 +35,33 @@ public class DeviseDialogListAdapter extends BaseAdapter {
         }
     }
 
-    public DeviseDialogListAdapter(final Context context, final List<Devise> devises) {
+    public DeviseDialogListAdapter(Context context) {
+        this(context, null);
+    }
+
+    public DeviseDialogListAdapter(Context context, Cursor c) {
+        this(context, c, 0);
+    }
+
+    public DeviseDialogListAdapter(Context context, Cursor c, int flags) {
+        super(context, c, flags);
         this.context = context;
-        this.devises = devises;
         this.inflater = LayoutInflater.from(context);
     }
 
     @Override
-    public int getCount() {
-        return devises.size();
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        final View view = inflater.inflate(R.layout.item_devise, parent, false);
+        final ViewHolder vh = new ViewHolder(view);
+        view.setTag(vh);
+        return view;
     }
 
     @Override
-    public Object getItem(int position) {
-        return devises.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView;
-        ViewHolder vh;
-        if (view == null) {
-            view = inflater.inflate(R.layout.item_devise, parent, false);
-            vh = new ViewHolder(view);
-            view.setTag(vh);
-        } else {
-            vh = (ViewHolder) view.getTag();
-        }
-
-        final Devise devise = (Devise) getItem(position);
+    public void bindView(View view, Context context, Cursor cursor) {
+        final ViewHolder vh = (ViewHolder) view.getTag();
+        final Devise devise = new Devise(cursor.getLong(0), cursor.getString(1), cursor.getString(2));
         vh.codeDeviseTextView.setText(devise.getCode());
         vh.libelleDeviseTextView.setText(devise.getLibelle());
-
-        return view;
     }
 }
