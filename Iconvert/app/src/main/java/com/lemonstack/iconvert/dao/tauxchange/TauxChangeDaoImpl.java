@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.lemonstack.iconvert.data.IConvertContract;
 import com.lemonstack.iconvert.dao.GenericDao;
+import com.lemonstack.iconvert.model.Devise;
 import com.lemonstack.iconvert.model.TauxChange;
 
 import org.json.JSONException;
@@ -25,8 +26,16 @@ public class TauxChangeDaoImpl extends GenericDao
         implements TauxChangeDao {
 
     private static final String TAG = TauxChangeDaoImpl.class.getName();
+    private static final int COL_ID_IDX = 0;
+    private static final int COL_CODE_IDX = 1;
+    private static final int COL_TAUX_CHANGE_IDX = 2;
 
     private Context context;
+
+    @Override
+    public TauxChange createEntity(Cursor c) {
+        return new TauxChange(c.getLong(COL_ID_IDX), c.getString(COL_CODE_IDX), c.getDouble(COL_TAUX_CHANGE_IDX));
+    }
 
     public TauxChangeDaoImpl(Context context) {
         super(context);
