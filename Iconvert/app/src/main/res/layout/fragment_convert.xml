@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.ConversionFragment">
+
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_devise_source"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:layout_margin="16dp">
+
+            <ImageView
+                android:id="@+id/ic_country_currency_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_cameroon_48"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/code_devise_source"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="XAF"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:layout_toRightOf="@id/ic_country_currency_from"
+                android:layout_alignParentTop="true" />
+
+            <TextView
+                android:id="@+id/libelle_devise_source"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:text="Afrique Centrale"
+                android:textSize="10sp"
+                android:layout_above="@+id/montant"
+                android:layout_alignLeft="@+id/code_devise_source"
+                android:layout_alignStart="@+id/code_devise_source" />
+
+            <EditText
+                android:id="@+id/montant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="montant"
+                android:inputType="numberDecimal"
+                android:layout_below="@+id/ic_country_currency_from"
+                android:layout_alignRight="@id/libelle_devise_source"
+                android:layout_alignEnd="@id/libelle_devise_source"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_devise_destination"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:layout_margin="16dp">
+
+            <ImageView
+                android:id="@+id/ic_country_currency_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_united_kingdom_48"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/code_devise_destination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="GBP"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:layout_toRightOf="@id/ic_country_currency_to"
+                android:layout_alignParentTop="true" />
+
+            <TextView
+                android:id="@+id/libelle_devise_destination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:text="British Pound"
+                android:textSize="10sp"
+                android:layout_above="@+id/montant_destination"
+                android:layout_alignLeft="@+id/code_devise_destination"
+                android:layout_alignStart="@+id/code_devise_destination" />
+
+            <TextView
+                android:id="@+id/montant_destination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Resultat"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/ic_country_currency_to"
+                android:layout_alignRight="@id/libelle_devise_destination"
+                android:layout_alignEnd="@id/libelle_devise_destination"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="48dp" >
+
+        <Button
+            android:id="@+id/convert_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/convert_btn"
+            android:layout_weight="1"/>
+
+        <!--<Button
+            android:id="@+id/reset_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reset_btn"
+            android:layout_weight="1"/> -->
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/rateDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#0d6cf2"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"/>
+
+
+</LinearLayout>

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.lemonstack.khranyt.iconvert.fragment.dialog.CurrenciesDialogFragment">
+    tools:context="com.kimboo.iconvert.fragment.dialog.CurrenciesDialogFragment">
 
    <ListView
        android:id="@+id/devises_dialog_list_view"

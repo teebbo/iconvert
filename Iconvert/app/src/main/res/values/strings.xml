@@ -14,7 +14,7 @@
     <!-- USD  text view text-->
     <string name="usd_currency_text_view">USD</string>
 
-    <!-- Button for performing the conversion -->
+    <!-- Strings related to fragment_convert -->
     <string name="convert_btn">Convert</string>
     <string name="reset_btn">Reset</string>
 
@@ -23,6 +23,7 @@
     <!-- button for change both text view -->
     <string name="swap_text_view">Swap</string>
 
+    <!-- strings related to actions menu -->
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
 
@@ -32,15 +33,10 @@
     <string name="refresh">Refresh</string>
     <string name="search_hint">Rechercher...</string>
     <string name="home_tab_title">Home</string>
-    <string name="convert_tab_title">Convert</string>
-    <string name="devise_tab_title">Devises</string>
+    <string name="fragment_convert_tab_title">Convert</string>
+    <string name="fragment_devise_tab_title">Devises</string>
 
-    <!-- tabs titles -->
-    <string-array name="tabs_title">
-        <item>Home</item>
-        <item>Convert</item>
-        <item>Currencies</item>
-    </string-array>
+
     <string-array name="currencies_list">
         <item>AUD</item>
         <item>BTC</item>
@@ -55,8 +51,6 @@
         <item>XAF</item>
         <item>XOF</item>
     </string-array>
-    <!-- numbers of tabs -->
-    <string name="tabs_numbers">3</string>
 
     <!-- Projec description -->
     <string name="project_description">
@@ -73,8 +67,5 @@
         Le taux d'échange est fourni par l'Api d'OpenExchangeRate."
     </string>
     <string name="currencies_title_text">1 USD : </string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
