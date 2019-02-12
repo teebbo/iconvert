@@ -1,0 +1,54 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion build_versions.target_sdk
+    defaultConfig {
+        applicationId "com.kimboofactory.iconvert"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.7.4"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // android support
+    implementation deps.support.app_compat
+    implementation deps.constraint_layout
+    implementation deps.support.design
+    implementation deps.support.v4
+
+    // butterknife
+    implementation deps.butterknife.runtime
+    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+    annotationProcessor deps.butterknife.compiler
+
+    // lifecycle (LiveData and ViewModel)
+    implementation deps.lifecycle.extensions
+    annotationProcessor deps.lifecycle.compiler
+
+    // lombok
+    compileOnly deps.lombok
+    annotationProcessor deps.lombok
+
+    // okhttp
+    implementation deps.okhttp.runtime
+
+    testImplementation deps.junit
+    androidTestImplementation deps.android_test_runner
+    androidTestImplementation deps.espresso.core
+}

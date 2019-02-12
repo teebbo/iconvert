@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dim_2">
+
+    <TextView
+        android:id="@+id/code_devise_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dim_4"
+        android:text="code"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/libelle_devise_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Libelle"
+        android:textStyle="italic"
+        android:padding="@dimen/dim_4"
+        android:layout_below="@id/code_devise_textview"/>
+
+    <CheckBox
+        android:id="@+id/cb_choose_currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>
