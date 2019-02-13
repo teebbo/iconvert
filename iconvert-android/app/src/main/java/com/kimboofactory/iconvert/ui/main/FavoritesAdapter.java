@@ -1,4 +1,4 @@
-package com.kimboofactory.iconvert.ui.adapter;
+package com.kimboofactory.iconvert.ui.main;
 
 import android.content.Context;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kimboofactory.iconvert.R;
-import com.kimboofactory.iconvert.adapter.ListViewAdapter;
+import com.kimboofactory.iconvert.common.ListViewAdapter;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 
 import java.util.List;
@@ -18,11 +18,11 @@ import butterknife.ButterKnife;
  * Created by CK_ALEENGO on 12/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public class FavoriteCurrenciesAdapter
-        extends ListViewAdapter<CurrencyIHM, FavoriteCurrenciesAdapter.Holder> {
+public class FavoritesAdapter
+        extends ListViewAdapter<CurrencyIHM, FavoritesAdapter.ViewHolder> {
 
 
-    public FavoriteCurrenciesAdapter(Context context, List<CurrencyIHM> favorites) {
+    public FavoritesAdapter(Context context, List<CurrencyIHM> favorites) {
         super(context, favorites);
     }
 
@@ -32,19 +32,24 @@ public class FavoriteCurrenciesAdapter
     }
 
     @Override
-    public Holder onCreateViewHolder(View view) {
-        return new Holder(view);
+    public ViewHolder onCreateViewHolder(View view) {
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        final CurrencyIHM item = (CurrencyIHM) getItem(position);
 
+        holder.codeTV.setText(item.getCode());
+        holder.libelleTV.setText(item.getLibelle());
+        /*holder.rateTV.setText(item.getRate());
+        holder.resultTV.setText(item.getResult());*/
     }
 
-    public static class Holder extends ListViewAdapter.ViewHolder {
+    public static class ViewHolder extends ListViewAdapter.ViewHolder {
 
-        @BindView(R.id.iv_delete_logo)
-        ImageView deleteIV;
+        /*@BindView(R.id.iv_delete_logo)
+        ImageView deleteIV;*/
         @BindView(R.id.iv_currency_logo)
         ImageView currencyLogoIV;
         @BindView(R.id.tv_code)
@@ -56,7 +61,7 @@ public class FavoriteCurrenciesAdapter
         @BindView(R.id.tv_rate)
         TextView rateTV;
 
-        public Holder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

@@ -15,11 +15,13 @@ import butterknife.ButterKnife;
  * Created by CK_ALEENGO on 28/06/2018.
  * Copyright (c) 2018. All rights reserved.
  */
-public abstract class BaseActivity
-        extends AppCompatActivity
-        implements UiCommon {
+public abstract class BaseActivity extends AppCompatActivity implements UiCommon {
 
     private static final boolean DEBUG = true;
+
+    protected void onResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // do nothing
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +59,18 @@ public abstract class BaseActivity
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (DEBUG) Log.d(getClassName(), "onSaveInstanceState() method called");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (DEBUG) Log.d(getClassName(), "onRestoreInstanceState() method called");
+    }
+
+    @Override
     protected void onRestart() {
         super.onRestart();
         if (DEBUG) Log.d(getClassName(), "onRestart() method called");
@@ -72,5 +86,7 @@ public abstract class BaseActivity
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (DEBUG) Log.d(getClassName(), "onActivityResult() method called");
+
+        onResult(requestCode, resultCode, data);
     }
 }

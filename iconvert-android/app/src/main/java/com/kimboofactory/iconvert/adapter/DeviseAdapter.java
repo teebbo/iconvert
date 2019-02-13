@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 
 import com.kimboofactory.iconvert.R;
+import com.kimboofactory.iconvert.common.ListViewAdapter;
 import com.kimboofactory.iconvert.model.DeviseData;
 
 import java.util.List;

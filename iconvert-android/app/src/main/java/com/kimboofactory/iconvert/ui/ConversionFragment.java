@@ -15,8 +15,8 @@ import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.BaseFragment;
 import com.kimboofactory.iconvert.fragment.dialog.DialogUi;
 import com.kimboofactory.iconvert.model.DeviseData;
-import com.kimboofactory.iconvert.presentation.ConvertPresenter;
-import com.kimboofactory.iconvert.ui.adapter.FavoriteCurrenciesAdapter;
+import com.kimboofactory.iconvert.ui.main.FavoritePresenter;
+import com.kimboofactory.iconvert.ui.main.FavoritesAdapter;
 
 import java.util.LinkedList;
 
@@ -59,13 +59,13 @@ public class ConversionFragment extends BaseFragment
     @BindView(R.id.lv_favorites)
     ListView favoritesCurrenciesLV;
 
-    private FavoriteCurrenciesAdapter mAdapter;
+    private FavoritesAdapter mAdapter;
 
 
     private boolean isSource = false;
     private boolean isDestination = false;
 
-    private ConvertPresenter presenter;
+    private FavoritePresenter presenter;
 
     private void ClickedOnDeviseSource() {
         isSource = true;
@@ -93,7 +93,7 @@ public class ConversionFragment extends BaseFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.presenter = new ConvertPresenter();
+        this.presenter = new FavoritePresenter();
     }
 
     @Override
@@ -102,7 +102,7 @@ public class ConversionFragment extends BaseFragment
         //currencyTo.setOnClickListener(this::onClick);
         //mConvertBtn.setOnClickListener(this::onClick);
 
-        mAdapter = new FavoriteCurrenciesAdapter(getActivity(), new LinkedList<>());
+        mAdapter = new FavoritesAdapter(getActivity(), new LinkedList<>());
         favoritesCurrenciesLV.setAdapter(mAdapter);
     }
 

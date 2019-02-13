@@ -1,10 +1,12 @@
-package com.kimboofactory.iconvert.adapter;
+package com.kimboofactory.iconvert.common;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import com.kimboofactory.iconvert.model.Model;
 
 import java.util.List;
 
@@ -14,14 +16,14 @@ import lombok.Getter;
  * Created by CK_ALEENGO on 11/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public abstract class ListViewAdapter<T, VH extends ListViewAdapter.ViewHolder> extends BaseAdapter {
+public abstract class ListViewAdapter<MODEL extends Model, VH extends ListViewAdapter.ViewHolder> extends BaseAdapter {
 
     @Getter
     private Context context;
     @Getter
-    private List<T> dataSet;
+    private List<MODEL> dataSet;
 
-    public ListViewAdapter(Context context, List<T> dataSet) {
+    public ListViewAdapter(Context context, List<MODEL> dataSet) {
         this.context = context;
         this.dataSet = dataSet;
     }
@@ -54,16 +56,11 @@ public abstract class ListViewAdapter<T, VH extends ListViewAdapter.ViewHolder> 
         }
     }
 
-    public void updateDataSet(final List<T> newDataSet) {
-        //final List<T> oldDataSet = new LinkedList<>();
-
-        // store the old values the dataset in an
-        // temporary list
-       // copy(this.dataSet, oldDataSet);
-        //copy(newDataSet, this.dataSet);
-        dataSet.addAll(newDataSet);
-        //copy(oldDataSet, this.dataSet);
-        notifyDataSetChanged();
+    public void updateDataSet(final List<MODEL> newDataSet) {
+        if (newDataSet.size() > 0) {
+            dataSet.addAll(newDataSet);
+            notifyDataSetChanged();
+        }
     }
 
     @Override

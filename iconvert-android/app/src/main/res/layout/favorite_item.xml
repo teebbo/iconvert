@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/dim_8">
+    android:padding="@dimen/dim_2">
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/iv_delete_logo"
         android:layout_width="28dp"
         android:layout_height="80dp"
@@ -12,60 +12,65 @@
         android:tint="@android:color/white"
         android:background="@android:color/holo_red_light"
         android:layout_alignParentTop="true"
-        android:padding="@dimen/dim_4"/>
+        android:padding="@dimen/dim_4"/>-->
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/iv_delete_logo"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:padding="@dimen/dim_2">
 
         <ImageView
             android:id="@+id/iv_currency_logo"
-            android:layout_width="@dimen/dim_75dp"
-            android:layout_height="@dimen/dim_75dp"
-            android:src="@drawable/ic_european_union_48" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_european_union_48"
+            android:layout_centerVertical="true"/>
 
         <TextView
             android:id="@+id/tv_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Code"
+            android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/iv_currency_logo"
-            android:textSize="18sp"
-            android:padding="@dimen/dim_10"/>
+            android:paddingLeft="@dimen/dim_10"
+            android:paddingRight="@dimen/dim_10"
+            android:text="Code"
+            android:textSize="15sp"
+            android:layout_centerVertical="true"/>
 
         <TextView
             android:id="@+id/tv_libelle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/iv_currency_logo"
+            android:layout_alignParentLeft="true"
+            android:paddingRight="@dimen/dim_8"
+            android:paddingTop="@dimen/dim_8"
             android:text="Libelle"
-            android:layout_below="@id/tv_code"
-            android:layout_toRightOf="@id/iv_currency_logo"
-            android:textSize="15sp"
-            android:paddingLeft="@dimen/dim_10"
-            android:paddingRight="@dimen/dim_10"/>
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/tv_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="rate: 1.99"
             android:layout_centerInParent="true"
-            android:paddingLeft="@dimen/dim_22"
-            android:paddingTop="@dimen/dim_12"
+            android:paddingLeft="@dimen/dim_12"
             android:paddingRight="@dimen/dim_12"
-            android:paddingBottom="@dimen/dim_12"/>
+            android:text="rate: 1.99" />
 
         <TextView
             android:id="@+id/tv_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2.052"
-            android:textSize="18sp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:padding="@dimen/dim_10"/>
+            android:paddingLeft="@dimen/dim_10"
+            android:paddingRight="@dimen/dim_10"
+            android:text="2.052"
+            android:textSize="15sp" />
     </RelativeLayout>
 </RelativeLayout>

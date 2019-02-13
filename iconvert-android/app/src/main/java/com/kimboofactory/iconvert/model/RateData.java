@@ -15,7 +15,7 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RateData {
+public class RateData implements Model {
 
     private Long id;
     private String code;

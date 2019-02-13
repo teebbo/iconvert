@@ -1,4 +1,4 @@
-package com.kimboofactory.iconvert.ui.adapter;
+package com.kimboofactory.iconvert.ui.search;
 
 import android.content.Context;
 import android.view.View;
@@ -8,30 +8,32 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.kimboofactory.iconvert.R;
-import com.kimboofactory.iconvert.adapter.ListViewAdapter;
+import com.kimboofactory.iconvert.common.ListViewAdapter;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.util.Helper;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lombok.Getter;
+import lombok.Setter;
 
 
 /**
  * Created by CK_ALEENGO on 12/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public class SelectCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SelectCurrencyAdapter.Holder>
+public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCurrencyAdapter.ViewHolder>
         implements Filterable {
 
-    private SelectCurrencyFilter mFilter;
+    private SearchCurrencyFilter mFilter;
     @Getter
     private final List<CurrencyIHM> originalList;
 
-    public SelectCurrencyAdapter(Context mContext, List<CurrencyIHM> currencies) {
+    public SearchCurrencyAdapter(Context mContext, List<CurrencyIHM> currencies) {
       super(mContext, currencies);
       this.originalList = new LinkedList<>();
       Helper.copy(currencies, originalList);
@@ -43,12 +45,12 @@ public class SelectCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SelectCu
     }
 
     @Override
-    public Holder onCreateViewHolder(View view) {
-        return new Holder(view);
+    public ViewHolder onCreateViewHolder(View view) {
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         final CurrencyIHM currencyIHM = (CurrencyIHM) getItem(position);
 
         holder.codeTV.setText(currencyIHM.getCode());
@@ -59,32 +61,38 @@ public class SelectCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SelectCu
     @Override
     public Filter getFilter() {
         if (mFilter == null) {
-            mFilter = new SelectCurrencyFilter(this);
+            mFilter = new SearchCurrencyFilter(this);
         }
         return mFilter;
     }
 
-    public class Holder extends ListViewAdapter.ViewHolder {
+    public static class ViewHolder extends ListViewAdapter.ViewHolder {
 
         @BindView(R.id.code_devise_textview)
         TextView codeTV;
         @BindView(R.id.libelle_devise_textview)
         TextView libelleTV;
+        @Getter @Setter
         @BindView(R.id.cb_choose_currency)
         CheckBox checkBox;
 
-        public Holder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
-    public static class SelectCurrencyFilter extends Filter {
+    public static class SearchCurrencyFilter extends Filter {
 
-        private SelectCurrencyAdapter adapter;
+        private SearchCurrencyAdapter adapter;
 
-        public SelectCurrencyFilter(SelectCurrencyAdapter adapter) {
+        public SearchCurrencyFilter(SearchCurrencyAdapter adapter) {
             this.adapter = adapter;
+        }
+
+        private boolean accept(CurrencyIHM currencyIHM, final String query) {
+            return currencyIHM.getCode().toLowerCase().trim().contains(query) ||
+                    currencyIHM.getLibelle().toLowerCase().trim().contains(query);
         }
 
         @Override
@@ -97,12 +105,9 @@ public class SelectCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SelectCu
             if (constraint != null && constraint.length() > 0) {
                 final String query = constraint.toString().toLowerCase().trim();
 
-                for (CurrencyIHM currencyIHM : adapter.getOriginalList()) {
-                    if (currencyIHM.getCode().toLowerCase().trim().contains(query) ||
-                            currencyIHM.getLibelle().toLowerCase().trim().contains(query)) {
-                        filteredList.add(currencyIHM);
-                    }
-                }
+                filteredList = adapter.getOriginalList().stream()
+                        .filter(currencyIHM -> accept(currencyIHM, query))
+                        .collect(Collectors.toList());
             } else {
                 Helper.copy(adapter.getOriginalList(), filteredList);
             }

@@ -16,7 +16,7 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeviseData {
+public class DeviseData implements Model {
     private Long id;
     private String code;
     private String libelle;

@@ -1,6 +1,7 @@
 package com.kimboofactory.iconvert.dto;
 
-import lombok.AllArgsConstructor;
+import com.kimboofactory.iconvert.model.Model;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -15,7 +16,7 @@ import lombok.Setter;
 @Getter
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class CurrencyIHM {
+public class CurrencyIHM implements Model {
     @NonNull
     private String code;
     @NonNull

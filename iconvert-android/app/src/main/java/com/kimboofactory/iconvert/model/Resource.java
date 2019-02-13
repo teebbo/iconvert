@@ -12,6 +12,6 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Resource<T> {
+public class Resource<T>{
     private T value;
 }
