@@ -1,0 +1,192 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:2:1-30:12
+INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:2:1-30:12
+INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:2:1-30:12
+INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:2:1-30:12
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.0-alpha3] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\constraintlayout-2.0.0-alpha3.aar\c9b297945d8081d6b2fdcdfa091c8252\AndroidManifest.xml:2:1-11:12
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\material-1.0.0.aar\7f18bebdf89f1db0e6a0642e68ef58f1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\appcompat-1.0.0.aar\1e52f7f215f56481c7d5d339efbef1a1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\legacy-support-v4-1.0.0.aar\8f5c699c04a15413d1d00161e94b4d8f\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\fragment-1.0.0.aar\85c8b155b725129fdcff32dbe0d7ee55\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\vectordrawable-animated-1.0.0.aar\185e6f7a48a252639d0c6169cf1174c1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\recyclerview-1.0.0.aar\831a43c499da7728db7d78bddf45dde8\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\legacy-support-core-ui-1.0.0.aar\7d5f3499c5edae1354167872a5ff5873\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\legacy-support-core-utils-1.0.0.aar\e361c7eb3fd016e0c4846272c915161d\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.transition:transition:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\transition-1.0.0.aar\301f0e6ea1c8b3702e4c4b39383aaa1c\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media:media:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\media-1.0.0.aar\d4428b8541540c2ca69a0e0972a48f5a\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\loader-1.0.0.aar\bd2ea4381800bfdc8eed13f9c5615d75\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\viewpager-1.0.0.aar\5a7ba347e17db40c5405f546890bf081\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-1.0.0.aar\1ca0e61e206bf9ec525594ec7679e96c\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\drawerlayout-1.0.0.aar\807b07d431ec19c2db4d2d710f96244b\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-1.0.0.aar\44e40999f5127e7e8aecedc549b358e2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\customview-1.0.0.aar\56f1e3b01d32f79ae44938b9fc21997b\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-1.0.0.aar\b722a4aba11620ba2427142d32fe48bc\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-1.0.0.aar\ba622b3dc2069e1acee3704e3431458d\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\vectordrawable-1.0.0.aar\6b00f7ffbcbd7b0d107b8c0e814e153a\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\core-1.0.0.aar\4e20271225b98d01baa91250e03ca8e7\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\versionedparcelable-1.0.0.aar\3948a51c0444230a97abf842aafb1c1b\AndroidManifest.xml:17:1-25:12
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\cardview-1.0.0.aar\dfe0455d5b334e2a81aaf2d5e8e28521\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\lifecycle-runtime-2.0.0.aar\df6f4f757170aa20e5e5d14114ad345b\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\documentfile-1.0.0.aar\58b1061224bb10f10b139f8f2b133897\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-1.0.0.aar\3a16c16d627f18c96bcdb0269b62e0dd\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\print-1.0.0.aar\7c34dd37b2f41d51c56af342fd9027bd\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\lifecycle-viewmodel-2.0.0.aar\27625f6593e4f62e6b14cd3500dacdd8\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\interpolator-1.0.0.aar\dce8089e3c4eeea9f53ab72107e6df9f\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\cursoradapter-1.0.0.aar\14d784f14a9d9e134ac24c73a439606c\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-2.0.0.aar\24457245717970060c44e06e7e01cef5\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-core-2.0.0.aar\538446d277afe726d9355f9f2580af3c\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\core-runtime-2.0.0.aar\fb356b2cedf7861b2a3cb10807af95bf\AndroidManifest.xml:17:1-22:12
+INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:2:1-30:12
+INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:2:1-30:12
+INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:2:1-30:12
+	package
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:4:5-41
+		INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml
+		INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:2:1-30:12
+		INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml
+	xmlns:tools
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:3:5-51
+	android:versionCode
+		INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:2:1-30:12
+		INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:7:5-67
+	android:name
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:7:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:8:5-79
+	android:name
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:8:22-76
+application
+ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:10:5-28:19
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.0-alpha3] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\constraintlayout-2.0.0-alpha3.aar\c9b297945d8081d6b2fdcdfa091c8252\AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.0-alpha3] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\constraintlayout-2.0.0-alpha3.aar\c9b297945d8081d6b2fdcdfa091c8252\AndroidManifest.xml:9:5-20
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\material-1.0.0.aar\7f18bebdf89f1db0e6a0642e68ef58f1\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\material-1.0.0.aar\7f18bebdf89f1db0e6a0642e68ef58f1\AndroidManifest.xml:22:5-20
+MERGED from [androidx.core:core:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\core-1.0.0.aar\4e20271225b98d01baa91250e03ca8e7\AndroidManifest.xml:22:5-89
+MERGED from [androidx.core:core:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\core-1.0.0.aar\4e20271225b98d01baa91250e03ca8e7\AndroidManifest.xml:22:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\versionedparcelable-1.0.0.aar\3948a51c0444230a97abf842aafb1c1b\AndroidManifest.xml:22:5-23:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\versionedparcelable-1.0.0.aar\3948a51c0444230a97abf842aafb1c1b\AndroidManifest.xml:22:5-23:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\core-1.0.0.aar\4e20271225b98d01baa91250e03ca8e7\AndroidManifest.xml:22:18-86
+	android:label
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:13:9-41
+	tools:ignore
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:15:9-48
+	android:icon
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:12:9-43
+	android:allowBackup
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:11:9-35
+	android:theme
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:14:9-40
+activity#com.kimboofactory.iconvert.activity.MainActivity
+ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:16:9-27:20
+	android:screenOrientation
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:18:13-49
+	android:label
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:19:13-45
+	android:name
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:17:13-76
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:20:13-23:29
+action#android.intent.action.MAIN
+ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:21:17-69
+	android:name
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:21:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:22:17-77
+	android:name
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:22:27-74
+meta-data#android.app.searchable
+ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:24:13-26:50
+	android:value
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:26:17-48
+	android:name
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml:25:17-54
+uses-sdk
+INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml
+INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.0-alpha3] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\constraintlayout-2.0.0-alpha3.aar\c9b297945d8081d6b2fdcdfa091c8252\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.0-alpha3] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\constraintlayout-2.0.0-alpha3.aar\c9b297945d8081d6b2fdcdfa091c8252\AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\material-1.0.0.aar\7f18bebdf89f1db0e6a0642e68ef58f1\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\material-1.0.0.aar\7f18bebdf89f1db0e6a0642e68ef58f1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\appcompat-1.0.0.aar\1e52f7f215f56481c7d5d339efbef1a1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\appcompat-1.0.0.aar\1e52f7f215f56481c7d5d339efbef1a1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\legacy-support-v4-1.0.0.aar\8f5c699c04a15413d1d00161e94b4d8f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\legacy-support-v4-1.0.0.aar\8f5c699c04a15413d1d00161e94b4d8f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\fragment-1.0.0.aar\85c8b155b725129fdcff32dbe0d7ee55\AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\fragment-1.0.0.aar\85c8b155b725129fdcff32dbe0d7ee55\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\vectordrawable-animated-1.0.0.aar\185e6f7a48a252639d0c6169cf1174c1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\vectordrawable-animated-1.0.0.aar\185e6f7a48a252639d0c6169cf1174c1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\recyclerview-1.0.0.aar\831a43c499da7728db7d78bddf45dde8\AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\recyclerview-1.0.0.aar\831a43c499da7728db7d78bddf45dde8\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\legacy-support-core-ui-1.0.0.aar\7d5f3499c5edae1354167872a5ff5873\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\legacy-support-core-ui-1.0.0.aar\7d5f3499c5edae1354167872a5ff5873\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\legacy-support-core-utils-1.0.0.aar\e361c7eb3fd016e0c4846272c915161d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\legacy-support-core-utils-1.0.0.aar\e361c7eb3fd016e0c4846272c915161d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.transition:transition:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\transition-1.0.0.aar\301f0e6ea1c8b3702e4c4b39383aaa1c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.transition:transition:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\transition-1.0.0.aar\301f0e6ea1c8b3702e4c4b39383aaa1c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\media-1.0.0.aar\d4428b8541540c2ca69a0e0972a48f5a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\media-1.0.0.aar\d4428b8541540c2ca69a0e0972a48f5a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\loader-1.0.0.aar\bd2ea4381800bfdc8eed13f9c5615d75\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\loader-1.0.0.aar\bd2ea4381800bfdc8eed13f9c5615d75\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\viewpager-1.0.0.aar\5a7ba347e17db40c5405f546890bf081\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\viewpager-1.0.0.aar\5a7ba347e17db40c5405f546890bf081\AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-1.0.0.aar\1ca0e61e206bf9ec525594ec7679e96c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-1.0.0.aar\1ca0e61e206bf9ec525594ec7679e96c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\drawerlayout-1.0.0.aar\807b07d431ec19c2db4d2d710f96244b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\drawerlayout-1.0.0.aar\807b07d431ec19c2db4d2d710f96244b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-1.0.0.aar\44e40999f5127e7e8aecedc549b358e2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-1.0.0.aar\44e40999f5127e7e8aecedc549b358e2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\customview-1.0.0.aar\56f1e3b01d32f79ae44938b9fc21997b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\customview-1.0.0.aar\56f1e3b01d32f79ae44938b9fc21997b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-1.0.0.aar\b722a4aba11620ba2427142d32fe48bc\AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-1.0.0.aar\b722a4aba11620ba2427142d32fe48bc\AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-1.0.0.aar\ba622b3dc2069e1acee3704e3431458d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-1.0.0.aar\ba622b3dc2069e1acee3704e3431458d\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\vectordrawable-1.0.0.aar\6b00f7ffbcbd7b0d107b8c0e814e153a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\vectordrawable-1.0.0.aar\6b00f7ffbcbd7b0d107b8c0e814e153a\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\core-1.0.0.aar\4e20271225b98d01baa91250e03ca8e7\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\core-1.0.0.aar\4e20271225b98d01baa91250e03ca8e7\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\versionedparcelable-1.0.0.aar\3948a51c0444230a97abf842aafb1c1b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\versionedparcelable-1.0.0.aar\3948a51c0444230a97abf842aafb1c1b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\cardview-1.0.0.aar\dfe0455d5b334e2a81aaf2d5e8e28521\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\cardview-1.0.0.aar\dfe0455d5b334e2a81aaf2d5e8e28521\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\lifecycle-runtime-2.0.0.aar\df6f4f757170aa20e5e5d14114ad345b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\lifecycle-runtime-2.0.0.aar\df6f4f757170aa20e5e5d14114ad345b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\documentfile-1.0.0.aar\58b1061224bb10f10b139f8f2b133897\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\documentfile-1.0.0.aar\58b1061224bb10f10b139f8f2b133897\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-1.0.0.aar\3a16c16d627f18c96bcdb0269b62e0dd\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-1.0.0.aar\3a16c16d627f18c96bcdb0269b62e0dd\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\print-1.0.0.aar\7c34dd37b2f41d51c56af342fd9027bd\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\print-1.0.0.aar\7c34dd37b2f41d51c56af342fd9027bd\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\lifecycle-viewmodel-2.0.0.aar\27625f6593e4f62e6b14cd3500dacdd8\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\lifecycle-viewmodel-2.0.0.aar\27625f6593e4f62e6b14cd3500dacdd8\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\interpolator-1.0.0.aar\dce8089e3c4eeea9f53ab72107e6df9f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\interpolator-1.0.0.aar\dce8089e3c4eeea9f53ab72107e6df9f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\cursoradapter-1.0.0.aar\14d784f14a9d9e134ac24c73a439606c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\cursoradapter-1.0.0.aar\14d784f14a9d9e134ac24c73a439606c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-2.0.0.aar\24457245717970060c44e06e7e01cef5\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-2.0.0.aar\24457245717970060c44e06e7e01cef5\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-core-2.0.0.aar\538446d277afe726d9355f9f2580af3c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-core-2.0.0.aar\538446d277afe726d9355f9f2580af3c\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\core-runtime-2.0.0.aar\fb356b2cedf7861b2a3cb10807af95bf\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\Jkatch\.gradle\caches\transforms-1\files-1.1\core-runtime-2.0.0.aar\fb356b2cedf7861b2a3cb10807af95bf\AndroidManifest.xml:20:5-44
+INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml
+INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml
+		INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml
+		ADDED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml
+		INJECTED from D:\Projets\iconvert-project\iconvert\iconvert-android\Iconvert\app\src\main\AndroidManifest.xml

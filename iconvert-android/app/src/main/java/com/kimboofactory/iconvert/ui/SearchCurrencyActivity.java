@@ -18,7 +18,7 @@ import java.util.List;
 import androidx.appcompat.widget.SearchView;
 import butterknife.BindView;
 
-public class SearchCurrencyActivity extends BaseActivity {
+public class SearchCurrencyActivity extends BaseActivity implements SearchView.OnQueryTextListener {
 
     @BindView(R.id.search_toolbar)
     KFYToolbar toolbar;
@@ -49,7 +49,7 @@ public class SearchCurrencyActivity extends BaseActivity {
 
         setSupportActionBar(toolbar);
 
-        mAdapter = new SelectCurrencyAdapter(this, new LinkedList<>());
+        mAdapter = new SelectCurrencyAdapter(this, getData());
         selectCurrencyLV.setAdapter(mAdapter);
         selectCurrencyLV.setOnItemClickListener(this::OnItemClick);
 
@@ -58,14 +58,10 @@ public class SearchCurrencyActivity extends BaseActivity {
     }
 
     private void setupSearchView() {
-        final SearchManager sm = (SearchManager) getSystemService(SEARCH_SERVICE);
-        mSearchView.setSearchableInfo(sm.getSearchableInfo(getComponentName()));
-    }
+        final SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mAdapter.updateDataSet(getData());
+        mSearchView.setOnQueryTextListener(this);
     }
 
     @Override
@@ -76,6 +72,17 @@ public class SearchCurrencyActivity extends BaseActivity {
     private void OnItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
         final CurrencyIHM currencyIHM = (CurrencyIHM) mAdapter.getItem(pos);
 
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        mAdapter.getFilter().filter(newText);
+        return false;
     }
 
     private List<CurrencyIHM> getData() {

@@ -1,10 +1,7 @@
 package com.kimboofactory.iconvert.adapter;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 
@@ -19,7 +16,7 @@ import butterknife.ButterKnife;
 /**
  * Created by khranyt on 29/10/2015.
  */
-public class DeviseAdapter extends KFYListAdapter<DeviseData, DeviseAdapter.ViewHolder> {
+public class DeviseAdapter extends ListViewAdapter<DeviseData, DeviseAdapter.ViewHolder> {
 
     public DeviseAdapter(Context context, List<DeviseData> currencies){
         super(context, currencies);
@@ -46,7 +43,7 @@ public class DeviseAdapter extends KFYListAdapter<DeviseData, DeviseAdapter.View
     /**
      * ViewHolder Class
      */
-    public static class ViewHolder extends KFYListAdapter.ViewHolder {
+    public static class ViewHolder extends ListViewAdapter.ViewHolder {
         @BindView(R.id.code_devise_textview)
         TextView codeDeviseTextView;
         @BindView(R.id.libelle_devise_textview)

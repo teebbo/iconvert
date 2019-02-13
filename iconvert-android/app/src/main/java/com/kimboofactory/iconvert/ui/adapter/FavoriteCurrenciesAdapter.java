@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kimboofactory.iconvert.R;
-import com.kimboofactory.iconvert.adapter.KFYListAdapter;
+import com.kimboofactory.iconvert.adapter.ListViewAdapter;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 
 import java.util.List;
@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
  * Copyright (c) 2019. All rights reserved.
  */
 public class FavoriteCurrenciesAdapter
-        extends KFYListAdapter<CurrencyIHM, FavoriteCurrenciesAdapter.Holder> {
+        extends ListViewAdapter<CurrencyIHM, FavoriteCurrenciesAdapter.Holder> {
 
 
     public FavoriteCurrenciesAdapter(Context context, List<CurrencyIHM> favorites) {
@@ -41,7 +41,7 @@ public class FavoriteCurrenciesAdapter
 
     }
 
-    public static class Holder extends KFYListAdapter.ViewHolder {
+    public static class Holder extends ListViewAdapter.ViewHolder {
 
         @BindView(R.id.iv_delete_logo)
         ImageView deleteIV;
