@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/dim_2">
+    android:layout_height="wrap_content">
 
     <!--<ImageView
         android:id="@+id/iv_delete_logo"
@@ -19,12 +18,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:padding="@dimen/dim_2">
+        android:padding="@dimen/dim_2dp">
 
         <ImageView
             android:id="@+id/iv_currency_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:src="@drawable/ic_european_union_48"
@@ -36,11 +35,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/iv_currency_logo"
-            android:paddingLeft="@dimen/dim_10"
-            android:paddingRight="@dimen/dim_10"
-            android:text="Code"
-            android:textSize="15sp"
-            android:layout_centerVertical="true"/>
+            android:paddingLeft="@dimen/dim_2dp"
+            android:text="@string/label_code"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tv_libelle"
@@ -48,18 +46,16 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_currency_logo"
             android:layout_alignParentLeft="true"
-            android:paddingRight="@dimen/dim_8"
-            android:paddingTop="@dimen/dim_8"
-            android:text="Libelle"
-            android:textSize="15sp" />
+            android:paddingTop="@dimen/dim_8dp"
+            android:text="@string/label_libelle" />
 
         <TextView
             android:id="@+id/tv_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:paddingLeft="@dimen/dim_12"
-            android:paddingRight="@dimen/dim_12"
+            android:paddingLeft="@dimen/dim_12dp"
+            android:paddingRight="@dimen/dim_12dp"
             android:text="rate: 1.99" />
 
         <TextView
@@ -68,9 +64,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/dim_10"
-            android:paddingRight="@dimen/dim_10"
-            android:text="2.052"
-            android:textSize="15sp" />
+            android:paddingLeft="@dimen/dim_10dp"
+            android:paddingRight="@dimen/dim_10dp"
+            android:text="2.052" />
     </RelativeLayout>
 </RelativeLayout>

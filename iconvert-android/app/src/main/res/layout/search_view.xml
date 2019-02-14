@@ -9,7 +9,7 @@
         android:id="@+id/iv_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dim_12"
+        android:padding="@dimen/dim_12dp"
         android:src="@drawable/ic_arrow_back_black_24dp"
         android:tint="@android:color/white" />
 

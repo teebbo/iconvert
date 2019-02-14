@@ -31,14 +31,15 @@ public class FavoritePresenter extends AbstractPresenter
     }
 
     @Override
-    public void result(int resultCode, Serializable data) {
+    public void updateListView(int resultCode, Serializable data) {
         final HashMap<Integer, CurrencyIHM> currencies = (HashMap<Integer, CurrencyIHM>) data;
         ((FavoriteView) getMvpView()).updateFavoriteList(new ArrayList<>(currencies.values()));
     }
 
     @Override
-    public void loadRate() {
+    public void loadRate(CurrencyIHM currencyIHM) {
         getRate = new GetRate();
+        //getRate.setRepository(new);
     }
 
     @Override

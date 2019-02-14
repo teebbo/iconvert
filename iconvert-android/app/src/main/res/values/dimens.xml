@@ -3,18 +3,20 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="dim_0">0dp</dimen>
-    <dimen name="dim_2">2dp</dimen>
-    <dimen name="dim_4">4dp</dimen>
-    <dimen name="dim_8">8dp</dimen>
-    <dimen name="dim_10">10dp</dimen>
-    <dimen name="dim_12">12dp</dimen>
-    <dimen name="dim_16">16dp</dimen>
-    <dimen name="dim_18">18dp</dimen>
-    <dimen name="dim_20">20dp</dimen>
-    <dimen name="dim_22">22dp</dimen>
+    <dimen name="dim_0dp">0dp</dimen>
+    <dimen name="dim_2dp">2dp</dimen>
+    <dimen name="dim_4dp">4dp</dimen>
+    <dimen name="dim_8dp">8dp</dimen>
+    <dimen name="dim_10dp">10dp</dimen>
+    <dimen name="dim_12dp">12dp</dimen>
+    <dimen name="dim_16dp">16dp</dimen>
+    <dimen name="dim_18dp">18dp</dimen>
+    <dimen name="dim_20dp">20dp</dimen>
+    <dimen name="dim_22dp">22dp</dimen>
+    <dimen name="dim_24dp">24dp</dimen>
     <dimen name="dim_40dp">40dp</dimen>
     <dimen name="dim_56dp">56dp</dimen>
     <dimen name="dim_75dp">75dp</dimen>
-    <dimen name="dim_100">100dp</dimen>
+    <dimen name="dim_100dp">100dp</dimen>
+
 </resources>

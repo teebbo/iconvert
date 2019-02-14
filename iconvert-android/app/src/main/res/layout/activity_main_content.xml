@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dim_8dp"
+    android:layout_margin="@dimen/dim_4dp"
+    tools:context=".ui.ConversionFragment">
+
+    <TextView
+        android:id="@+id/tv_update_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label_update_date"
+        android:padding="@dimen/dim_10dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/currency_border"
+        android:padding="@dimen/dim_4dp">
+
+        <include
+            android:id="@+id/rl_currency"
+            layout="@layout/currency" />
+
+        <EditText
+            android:id="@+id/et_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/rl_currency"
+            android:hint="100"
+            android:gravity="center"
+            android:textSize="28sp"
+            android:inputType="numberDecimal"
+            android:background="@null"/>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/lv_favorites"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dim_2dp"/>
+</LinearLayout>

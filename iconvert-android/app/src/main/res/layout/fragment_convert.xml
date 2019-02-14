@@ -5,8 +5,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/dim_8"
-    android:layout_margin="@dimen/dim_4"
+    android:padding="@dimen/dim_8dp"
+    android:layout_margin="@dimen/dim_4dp"
     tools:context=".ui.ConversionFragment">
 
     <TextView
@@ -14,13 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Mis à jour: "
-        android:padding="@dimen/dim_10"/>
+        android:padding="@dimen/dim_10dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/currency_border"
-        android:padding="@dimen/dim_4">
+        android:padding="@dimen/dim_4dp">
 
         <include
             android:id="@+id/rl_currency"
@@ -43,7 +43,7 @@
         android:id="@+id/lv_favorites"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dim_2"/>
+        android:layout_marginTop="@dimen/dim_2dp"/>
 
     <!--<TextView
         android:id="@+id/text_view_result"

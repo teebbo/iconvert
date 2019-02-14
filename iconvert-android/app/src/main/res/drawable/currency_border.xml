@@ -3,13 +3,13 @@
     android:shape="rectangle">
 
     <padding
-        android:top="@dimen/dim_2"
-        android:right="@dimen/dim_2"
-        android:bottom="@dimen/dim_2"
-        android:left="@dimen/dim_2" />
+        android:top="@dimen/dim_2dp"
+        android:right="@dimen/dim_2dp"
+        android:bottom="@dimen/dim_2dp"
+        android:left="@dimen/dim_2dp" />
 
     <stroke
         android:color="@color/ColorPrimary"
-        android:width="@dimen/dim_2"/>
+        android:width="@dimen/dim_2dp"/>
 
 </shape>

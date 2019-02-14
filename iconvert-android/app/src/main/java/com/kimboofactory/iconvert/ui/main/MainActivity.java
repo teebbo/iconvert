@@ -2,10 +2,13 @@ package com.kimboofactory.iconvert.ui.main;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -14,12 +17,11 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.BaseActivity;
+import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.util.Helper;
 import com.kimboofactory.widget.KFYToolbar;
 
 import java.io.Serializable;
-import java.util.Currency;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 import androidx.annotation.Nullable;
@@ -30,6 +32,7 @@ import lombok.Getter;
 public class MainActivity extends BaseActivity {
 
     public static final int SEARCH_CURRENCY_REQUEST_CODE = 100;
+    private static final long DELAY_MILLIS = 400;
 
     @BindView(R.id.toolbar)
     KFYToolbar toolbar;
@@ -49,6 +52,7 @@ public class MainActivity extends BaseActivity {
     private FavoritesAdapter favoritesAdapter;
     private FavoritePresenter mPresenter;
     private FavoriteView mMvpView;
+    private CurrencyIHM mCurrency;
 
     @Override
     public String getClassName() {
@@ -75,6 +79,28 @@ public class MainActivity extends BaseActivity {
 
         mPresenter = new FavoritePresenter();
         mPresenter.attach(mMvpView);
+
+        amountET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s != null && s.length() > 0) {
+                    mCurrency = new CurrencyIHM("EUR", "EURO", false);
+                    mCurrency.setResult(s.toString());
+
+                    (new Handler()).postDelayed(() -> mPresenter.loadRate(mCurrency), DELAY_MILLIS);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -82,7 +108,7 @@ public class MainActivity extends BaseActivity {
         if (requestCode == SEARCH_CURRENCY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
 
             final Serializable extras = data.getSerializableExtra(Helper.EXTRA_SELECTED_ITEM);
-            mPresenter.result(resultCode, extras);
+            mPresenter.updateListView(resultCode, extras);
         }
     }
 

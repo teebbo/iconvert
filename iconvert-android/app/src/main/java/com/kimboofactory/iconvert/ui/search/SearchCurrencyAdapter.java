@@ -41,7 +41,7 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
 
     @Override
     public int getLayoutResId() {
-        return R.layout.item_devise;
+        return R.layout.activity_search_item;
     }
 
     @Override

@@ -36,6 +36,14 @@
     <string name="fragment_convert_tab_title">Convert</string>
     <string name="fragment_devise_tab_title">Devises</string>
 
+    <!-- MainActivity -->
+    <string name="label_update_date">Mis à jour:</string>
+    <string name="label_code">Code</string>
+    <string name="label_libelle">Libelle</string>
+    <string name="label_code_libelle">Code - Libelle</string>
+    <!-- Search Currrency activity -->
+    <string name="snackbar_message">%1$s item(s)</string>
+    <string name="snackbar_add_action">ADD</string>
 
     <string-array name="currencies_list">
         <item>AUD</item>

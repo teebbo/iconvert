@@ -25,7 +25,7 @@ public class DeviseAdapter extends ListViewAdapter<DeviseData, DeviseAdapter.Vie
 
     @Override
     public int getLayoutResId() {
-        return R.layout.item_devise;
+        return R.layout.activity_search_item;
     }
 
     @Override

@@ -12,6 +12,7 @@ public class Helper {
     public static final String LATEST = "latest.json";
     public static final String CURRENCIES = "currencies.json";
     public static final String EXTRA_SELECTED_ITEM = "com.kimboofactory.iconvert.EXTRA_SELECTED_ITEMS";
+    public static final String EMPTY_STRING = "";
 
     private Helper() {
     }

@@ -2,6 +2,9 @@ package com.kimboofactory.iconvert.ui.search;
 
 import com.kimboofactory.iconvert.common.BasePresenter;
 import com.kimboofactory.iconvert.common.BaseView;
+import com.kimboofactory.iconvert.dto.CurrencyIHM;
+
+import java.util.List;
 
 /**
  * Created by CK_ALEENGO on 13/02/2019.
@@ -10,10 +13,12 @@ import com.kimboofactory.iconvert.common.BaseView;
 public interface SearchContract {
 
     interface Presenter extends BasePresenter {
-        void itemSelected();
+        void itemSelected(CurrencyIHM item);
+        void filter(String query);
     }
 
     interface View extends BaseView {
-        void notification(boolean show);
+        void filter(String query);
+        void toggleSnackbar(boolean show, List<CurrencyIHM> items);
     }
 }

@@ -49,7 +49,7 @@ public class DeviseDialogListAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        final View view = inflater.inflate(R.layout.item_devise, parent, false);
+        final View view = inflater.inflate(R.layout.activity_search_item, parent, false);
         final ViewHolder vh = new ViewHolder(view);
         view.setTag(vh);
         return view;

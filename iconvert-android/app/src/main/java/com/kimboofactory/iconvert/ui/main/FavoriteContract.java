@@ -16,10 +16,10 @@ import java.util.List;
 public interface FavoriteContract {
 
     interface Presenter extends BasePresenter {
-        void loadRate();
+        void loadRate(CurrencyIHM currencyIHM);
         void getCurrencies();
 
-        void result(int resultCode, Serializable data);
+        void updateListView(int resultCode, Serializable data);
         void addCurrency();
     }
 

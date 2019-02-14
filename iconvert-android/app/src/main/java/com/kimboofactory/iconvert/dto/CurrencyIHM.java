@@ -2,6 +2,7 @@ package com.kimboofactory.iconvert.dto;
 
 import com.kimboofactory.iconvert.model.Model;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;

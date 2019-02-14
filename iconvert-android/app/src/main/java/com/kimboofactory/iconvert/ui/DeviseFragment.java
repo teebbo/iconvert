@@ -133,10 +133,10 @@ public class DeviseFragment extends BaseFragment
         super.onCreateOptionsMenu(menu, inflater);
         /*inflater.inflate(R.menu.currencies_menu, menu);
 
-        // associate searchable config with the SearchView
+        // associate searchable config with the SearchCurrencyView
         SearchManager manager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         MenuItem searchActMenu = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchActMenu);
+        SearchCurrencyView searchView = (SearchCurrencyView) MenuItemCompat.getActionView(searchActMenu);
         searchView.setSearchableInfo(manager.getSearchableInfo(getActivity().getComponentName()));*/
     }
 
@@ -151,7 +151,7 @@ public class DeviseFragment extends BaseFragment
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         // The onFinished callback returns with our data results
-        // Here you update the UI based on the results of your query.
+        // Here you update the UI based on the results of your filter.
         Log.d(TAG, "onLoadFinished() is called");
         mAdapter.updateDataSet(new ArrayList<>());
 
