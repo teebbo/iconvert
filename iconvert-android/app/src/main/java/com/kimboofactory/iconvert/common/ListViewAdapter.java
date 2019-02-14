@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 
 import com.kimboofactory.iconvert.model.Model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import lombok.Getter;
@@ -22,10 +23,15 @@ public abstract class ListViewAdapter<MODEL extends Model, VH extends ListViewAd
     private Context context;
     @Getter
     private List<MODEL> dataSet;
+    @Getter
+    private final List<MODEL> originalList;
+
+    private boolean isOriginalListEmpty = true;
 
     public ListViewAdapter(Context context, List<MODEL> dataSet) {
         this.context = context;
         this.dataSet = dataSet;
+        originalList = new LinkedList<>();
     }
 
     /**
@@ -57,7 +63,14 @@ public abstract class ListViewAdapter<MODEL extends Model, VH extends ListViewAd
     }
 
     public void updateDataSet(final List<MODEL> newDataSet) {
+
         if (newDataSet.size() > 0) {
+
+            if (isOriginalListEmpty) {
+                originalList.addAll(newDataSet);
+                isOriginalListEmpty = false;
+            }
+
             dataSet.addAll(newDataSet);
             notifyDataSetChanged();
         }

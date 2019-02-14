@@ -15,10 +15,14 @@ public interface SearchContract {
     interface Presenter extends BasePresenter {
         void itemSelected(CurrencyIHM item);
         void filter(String query);
+        void loadCurrencies();
     }
 
     interface View extends BaseView {
         void filter(String query);
         void toggleSnackbar(boolean show, List<CurrencyIHM> items);
+
+        default void showMessage(String message){}
+        default void showMessage(int resId){}
     }
 }

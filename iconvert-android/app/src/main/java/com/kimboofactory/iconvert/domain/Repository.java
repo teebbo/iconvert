@@ -1,6 +1,6 @@
 package com.kimboofactory.iconvert.domain;
 
-import com.kimboofactory.iconvert.dto.CurrencyIHM;
+import com.kimboofactory.iconvert.dto.Result;
 
 /**
  * Created by CK_ALEENGO on 11/02/2019.
@@ -9,9 +9,12 @@ import com.kimboofactory.iconvert.dto.CurrencyIHM;
 public interface Repository {
 
     interface GetCallback {
-        void onLoaded(CurrencyIHM currencyIHM);
+        void onLoaded(Result<String> result);
     }
 
-    void get(String code, GetCallback callback);
-    void getAll();
+    interface SearchCallback {
+        void onDataLoaded(Result<String> result);
+    }
+
+    void find(String query, SearchCallback callback);
 }

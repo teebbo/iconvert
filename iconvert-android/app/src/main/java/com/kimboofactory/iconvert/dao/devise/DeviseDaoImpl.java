@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.kimboofactory.iconvert.data.IConvertContract;
 import com.kimboofactory.iconvert.dao.GenericDao;
-import com.kimboofactory.iconvert.model.DeviseData;
+import com.kimboofactory.iconvert.persistence.model.CurrencyData;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,9 +37,9 @@ public class DeviseDaoImpl extends GenericDao
     }
 
     @Override
-    public DeviseData createEntity(Cursor c) {
+    public CurrencyData createEntity(Cursor c) {
         return null;
-                //new DeviseData(c.getLong(COL_ID_IDX), c.getString(COL_CODE_IDX), c.getString(COL_LIBELLE_IDX));
+                //new CurrencyData(c.getLong(COL_ID_IDX), c.getString(COL_CODE_IDX), c.getString(COL_LIBELLE_IDX));
     }
 
     @Override
@@ -55,14 +55,14 @@ public class DeviseDaoImpl extends GenericDao
     }
 
     @Override
-    public long save(final List<DeviseData> devises) {
+    public long save(final List<CurrencyData> devises) {
         int count = 0;
         final SQLiteDatabase db = getDb();
 
         final String whereClause = IConvertContract.Devise.COL_CODE + "=?";
 
         db.beginTransaction();
-        for (DeviseData devise : devises) {
+        for (CurrencyData devise : devises) {
             // ContentValues is a name:value pair that makes it easy for us
             // to insert data in the database
             final ContentValues value = new ContentValues();
@@ -90,7 +90,7 @@ public class DeviseDaoImpl extends GenericDao
     @Override
     public void save(JSONObject devisesJson) {
         // fill out the currencyFullName table
-        final List<DeviseData> devises = new ArrayList<>();
+        final List<CurrencyData> devises = new ArrayList<>();
 
         if (devisesJson != null) {
             try {
@@ -99,7 +99,7 @@ public class DeviseDaoImpl extends GenericDao
                     final String deviseCode = iterator.next().trim();
                     final String deviseLibelle = devisesJson.getString(deviseCode).trim();
 
-                    devises.add(new DeviseData(Long.valueOf(0), deviseCode, deviseLibelle));
+                    devises.add(null);
                 }
 
                 long inserted = save(devises);
@@ -112,15 +112,15 @@ public class DeviseDaoImpl extends GenericDao
     }
 
     @Override
-    public DeviseData getByCode(final String code) {
+    public CurrencyData getByCode(final String code) {
         final Cursor c = super.getByCode(IConvertContract.Devise.T_DEVISE, IConvertContract.Devise.COL_CODE, code);
         return cursorToDevise(c);
     }
 
-    private DeviseData cursorToDevise(final Cursor c) {
-        DeviseData devise = null;
+    private CurrencyData cursorToDevise(final Cursor c) {
+        CurrencyData devise = null;
         if(c.moveToFirst()) {
-            devise = new DeviseData(c.getLong(0), c.getString(1), c.getString(2));
+            devise = null; //new CurrencyData(c.getLong(0), c.getString(1), c.getString(2));
         }
         return devise;
     }

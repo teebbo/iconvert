@@ -9,7 +9,7 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import com.kimboofactory.iconvert.R;
-import com.kimboofactory.iconvert.model.DeviseData;
+import com.kimboofactory.iconvert.persistence.model.CurrencyData;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import java.util.List;
 public class DeviseDialogListAdapter extends CursorAdapter {
 
     private Context context;
-    private List<DeviseData> devises;
+    private List<CurrencyData> devises;
     private LayoutInflater inflater;
 
     public static class ViewHolder{
@@ -59,7 +59,7 @@ public class DeviseDialogListAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         final ViewHolder vh = (ViewHolder) view.getTag();
 
-        final DeviseData devise = new DeviseData(cursor.getLong(0), cursor.getString(1), cursor.getString(2));
+        final CurrencyData devise = null; //new CurrencyData(cursor.getLong(0), cursor.getString(1), cursor.getString(2));
 
         vh.codeDeviseTextView.setText(devise.getCode());
         vh.libelleDeviseTextView.setText(devise.getLibelle());

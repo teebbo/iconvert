@@ -33,7 +33,7 @@ public class FavoriteView implements FavoriteContract.View {
 
     @Override
     public void updateFavoriteList(List<CurrencyIHM> currencies) {
-        activity.getFavoritesAdapter().clear();
+        //activity.getFavoritesAdapter().clear();
         activity.getFavoritesAdapter().updateDataSet(currencies);
     }
 }

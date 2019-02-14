@@ -44,6 +44,8 @@
     <!-- Search Currrency activity -->
     <string name="snackbar_message">%1$s item(s)</string>
     <string name="snackbar_add_action">ADD</string>
+    <string name="error_message_load_currencies">An error occured</string>
+    <string name="snackbar_retry_action">RETRY</string>
 
     <string-array name="currencies_list">
         <item>AUD</item>

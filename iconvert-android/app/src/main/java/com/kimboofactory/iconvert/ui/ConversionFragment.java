@@ -14,7 +14,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.BaseFragment;
 import com.kimboofactory.iconvert.fragment.dialog.DialogUi;
-import com.kimboofactory.iconvert.model.DeviseData;
+import com.kimboofactory.iconvert.persistence.model.CurrencyData;
 import com.kimboofactory.iconvert.ui.main.FavoritePresenter;
 import com.kimboofactory.iconvert.ui.main.FavoritesAdapter;
 
@@ -169,7 +169,7 @@ public class ConversionFragment extends BaseFragment
     }
 
     @Override
-    public void onDialogItemClicked(View view, DeviseData currency) {
+    public void onDialogItemClicked(View view, CurrencyData currency) {
         Toast.makeText(getActivity(), currency.toString() + " selected!", Toast.LENGTH_LONG).show();
         if(isCurrencyFrom()) {
             TextView from = currencyFrom.findViewById(R.id.text_view_code);

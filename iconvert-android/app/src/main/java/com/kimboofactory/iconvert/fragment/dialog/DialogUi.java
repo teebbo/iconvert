@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.adapter.DeviseAdapter;
-import com.kimboofactory.iconvert.model.DeviseData;
+import com.kimboofactory.iconvert.persistence.model.CurrencyData;
 
 import java.util.ArrayList;
 
@@ -37,7 +37,7 @@ public class DialogUi extends DialogFragment {
     ListView mCurrenciesListView;
 
     public interface DialogUiListener {
-        void onDialogItemClicked(View view, DeviseData currency);
+        void onDialogItemClicked(View view, CurrencyData currency);
     }
 
     public DialogUi() {
@@ -102,10 +102,10 @@ public class DialogUi extends DialogFragment {
 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //final Cursor c = (Cursor) parent.getItemAtPosition(position);
-        //final DeviseData o = deviseDao.createEntity(c);
+        //final CurrencyData o = deviseDao.createEntity(c);
         //Log.d(TAG, o.toString());
         //listener.onDialogItemClicked(view, o);
-        DeviseData currency = (DeviseData) this.adapter.getItem(position);
+        CurrencyData currency = (CurrencyData) this.adapter.getItem(position);
         this.listener.onDialogItemClicked(view, currency);
         dismiss();
     }

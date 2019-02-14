@@ -17,7 +17,7 @@ import com.kimboofactory.iconvert.dao.devise.DeviseDao;
 import com.kimboofactory.iconvert.dao.devise.DeviseDaoImpl;
 import com.kimboofactory.iconvert.common.BaseFragment;
 import com.kimboofactory.iconvert.loader.DeviseListLoader;
-import com.kimboofactory.iconvert.model.DeviseData;
+import com.kimboofactory.iconvert.persistence.model.CurrencyData;
 
 import java.util.ArrayList;
 
@@ -94,7 +94,7 @@ public class DeviseFragment extends BaseFragment
         ListView currenciesListView = view.findViewById(R.id.currenciesListView);
 
         /*
-        * You do not have a Cursor object before the onLoadFinished() method of your callback has been called.
+        * You do not have a Cursor object before the onLoadFinished() method of your usecaseCallback has been called.
         * In other words: The cursor is not ready when you create the adapter.
         * Thus you create the adapter using "null" for the cursor argument:
         */
@@ -108,7 +108,7 @@ public class DeviseFragment extends BaseFragment
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Cursor c = (Cursor) parent.getItemAtPosition(position);
-                final DeviseData devise = deviseDao.createEntity(c);
+                final CurrencyData devise = deviseDao.createEntity(c);
 
                 Toast.makeText(getActivity(), devise.toString(),
                         Toast.LENGTH_SHORT).show();
@@ -150,7 +150,7 @@ public class DeviseFragment extends BaseFragment
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        // The onFinished callback returns with our data results
+        // The onFinished usecaseCallback returns with our data results
         // Here you update the UI based on the results of your filter.
         Log.d(TAG, "onLoadFinished() is called");
         mAdapter.updateDataSet(new ArrayList<>());

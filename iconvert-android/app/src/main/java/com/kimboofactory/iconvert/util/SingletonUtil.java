@@ -1,5 +1,8 @@
 package com.kimboofactory.iconvert.util;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 public class SingletonUtil {
 
     private SingletonUtil(){}
@@ -10,9 +13,14 @@ public class SingletonUtil {
             synchronized (cls) {
                 if (instance == null) {
                     try {
-                        instance = cls.newInstance();
-                    } catch (IllegalAccessException |
-                            InstantiationException e) {
+                        final Class[] ctorArgs = null;
+                        final Constructor defaultCtor = cls.getDeclaredConstructor(ctorArgs);
+                        defaultCtor.setAccessible(true);
+
+                        final Object[] initArgs = null;
+                        instance = (T) defaultCtor.newInstance(initArgs);
+                    } catch (IllegalAccessException | NoSuchMethodException |
+                            InvocationTargetException| InstantiationException e) {
                         throw new RuntimeException(e);
                     }
                 }

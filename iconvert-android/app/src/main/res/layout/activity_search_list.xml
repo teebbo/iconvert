@@ -27,10 +27,17 @@
        android:layout_height="match_parent"
        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-       <ListView
-           android:id="@+id/lv_currencies"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content" />
+      <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+          android:id="@+id/swipe_refresh_layout"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+          <ListView
+              android:id="@+id/lv_currencies"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" />
+
+      </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
    </FrameLayout>
 

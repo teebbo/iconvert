@@ -1,6 +1,7 @@
 package com.kimboofactory.iconvert.ui.search;
 
 import android.app.SearchManager;
+import android.os.Handler;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
@@ -15,18 +16,27 @@ import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.util.Helper;
 import com.kimboofactory.widget.KFYToolbar;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import lombok.Getter;
 
 public class SearchCurrencyActivity extends BaseActivity implements SearchView.OnQueryTextListener {
 
+    @Getter
     @BindView(R.id.coordinator_layout)
     CoordinatorLayout coordinatorLayout;
+
+    @Getter
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @BindView(R.id.search_toolbar)
     KFYToolbar toolbar;
@@ -41,7 +51,8 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
 
     @Getter
     private Snackbar snackbar;
-    private SearchPresenter mPresenter;
+    @Getter
+    private SearchPresenter presenter;
     private SearchCurrencyView mMvpView;
 
     @Getter
@@ -62,7 +73,7 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
 
         setSupportActionBar(toolbar);
 
-        adapter = new SearchCurrencyAdapter(this, getData());
+        adapter = new SearchCurrencyAdapter(this, Helper.CURRENCY_IHMS_EMPTY_LIST);
         searchCurrencyLV.setAdapter(adapter);
         searchCurrencyLV.setOnItemClickListener(this::OnItemClick);
 
@@ -74,15 +85,34 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
         mMvpView = new SearchCurrencyView();
         mMvpView.attachUi(this);
 
-        mPresenter = new SearchPresenter();
-        mPresenter.attach(mMvpView);
+        presenter = new SearchPresenter();
+        presenter.attach(mMvpView);
+
+        // setting SwipeRefresh
+        setupSwipeRefreshContainer();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(mMvpView);
+
+        swipeRefreshLayout.setRefreshing(true);
+
+        presenter.loadCurrencies();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(mMvpView);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.detach();
-        mPresenter = null;
+        presenter.detach();
+        presenter = null;
         mMvpView = null;
     }
 
@@ -99,8 +129,24 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
     @Override
     public boolean onQueryTextChange(String newText) {
         //adapter.getFilter().filter(newText);
-        mPresenter.filter(newText);
+        presenter.filter(newText);
         return false;
+    }
+
+    private void setupSwipeRefreshContainer() {
+
+        final Runnable runnable = presenter::loadCurrencies;
+
+        final SwipeRefreshLayout.OnRefreshListener onRefreshListener =
+                () -> (new Handler()).postDelayed(runnable, Helper.DELAY_MILLIS_2000);
+
+        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
+        // configure the refreshing colors
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
     private void setupSearchView() {
@@ -123,11 +169,11 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
         currencyIHM.setChecked(checkBox.isChecked());
         adapter.notifyDataSetChanged();
 
-        mPresenter.itemSelected(currencyIHM);
+        presenter.itemSelected(currencyIHM);
     }
 
 
-    private List<CurrencyIHM> getData() {
+    /*private List<CurrencyIHM> getData() {
 
         final List<CurrencyIHM> data = new LinkedList<>();
 
@@ -139,5 +185,5 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
         data.add(new CurrencyIHM( "XAF", "CFA Franc", false));
 
         return data;
-    }
+    }*/
 }

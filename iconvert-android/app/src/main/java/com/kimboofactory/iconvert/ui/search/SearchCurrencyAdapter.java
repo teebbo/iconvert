@@ -30,13 +30,9 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
         implements Filterable {
 
     private SearchCurrencyFilter mFilter;
-    @Getter
-    private final List<CurrencyIHM> originalList;
 
     public SearchCurrencyAdapter(Context mContext, List<CurrencyIHM> currencies) {
       super(mContext, currencies);
-      this.originalList = new LinkedList<>();
-      Helper.copy(currencies, originalList);
     }
 
     @Override

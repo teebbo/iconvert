@@ -92,7 +92,7 @@ public class MainActivity extends BaseActivity {
                     mCurrency = new CurrencyIHM("EUR", "EURO", false);
                     mCurrency.setResult(s.toString());
 
-                    (new Handler()).postDelayed(() -> mPresenter.loadRate(mCurrency), DELAY_MILLIS);
+                    (new Handler()).postDelayed(() -> mPresenter.loadRate(mCurrency), Helper.DELAY_MILLIS_2000);
                 }
             }
 

@@ -23,30 +23,27 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     // android support
     implementation deps.support.app_compat
     implementation deps.constraint_layout
     implementation deps.support.design
     implementation deps.support.v4
-
     // butterknife
     implementation deps.butterknife.runtime
-    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     annotationProcessor deps.butterknife.compiler
-
+    // EventBus
+    implementation deps.eventbus
     // lifecycle (LiveData and ViewModel)
     implementation deps.lifecycle.extensions
     annotationProcessor deps.lifecycle.compiler
-
     // lombok
     compileOnly deps.lombok
     annotationProcessor deps.lombok
-
     // okhttp
     implementation deps.okhttp.runtime
+    // room
+    implementation deps.room.runtime
 
     testImplementation deps.junit
     androidTestImplementation deps.android_test_runner

@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.ListViewAdapter;
-import com.kimboofactory.iconvert.model.DeviseData;
+import com.kimboofactory.iconvert.persistence.model.CurrencyData;
 
 import java.util.List;
 
@@ -17,9 +17,9 @@ import butterknife.ButterKnife;
 /**
  * Created by khranyt on 29/10/2015.
  */
-public class DeviseAdapter extends ListViewAdapter<DeviseData, DeviseAdapter.ViewHolder> {
+public class DeviseAdapter extends ListViewAdapter<CurrencyData, DeviseAdapter.ViewHolder> {
 
-    public DeviseAdapter(Context context, List<DeviseData> currencies){
+    public DeviseAdapter(Context context, List<CurrencyData> currencies){
         super(context, currencies);
     }
 
@@ -35,7 +35,7 @@ public class DeviseAdapter extends ListViewAdapter<DeviseData, DeviseAdapter.Vie
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final DeviseData currency = (DeviseData) getItem(position);
+        final CurrencyData currency = (CurrencyData) getItem(position);
 
         holder.codeDeviseTextView.setText(currency.getCode());
         holder.libelleDeviseTextView.setText(currency.getLibelle());

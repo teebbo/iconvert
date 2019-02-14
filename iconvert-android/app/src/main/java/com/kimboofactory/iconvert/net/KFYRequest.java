@@ -1,13 +1,22 @@
 package com.kimboofactory.iconvert.net;
 
 
+import com.kimboofactory.iconvert.util.Helper;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
+/**
+ * Created by CK_ALEENGO on 13/02/2019.
+ * Copyright (c) 2019. All rights reserved.
+ */
 @Builder(builderClassName = "Builder")
+@AllArgsConstructor
 public class KFYRequest {
 
     public static final String GET_METHOD = "GET";
@@ -21,7 +30,7 @@ public class KFYRequest {
     public KFYRequest() {
     }
 
-    public void make(Callback callback) {
+    public void execute(Callback callback) {
         final Call call = HttpClient.getClient().newCall(getRequest());
         call.enqueue(callback);
     }
@@ -34,8 +43,14 @@ public class KFYRequest {
         if (method == null) {
             method = GET_METHOD;
         }
+
+        if (endpoint == null) {
+            endpoint = Helper.EMPTY_STRING;
+        }
+
+        final HttpUrl url = HttpUrl.parse(baseUrl + endpoint);
         return new Request.Builder()
-                .url(baseUrl + endpoint)
+                .url(url.toString())
                 .method(method, requestBody)
                 .build();
     }

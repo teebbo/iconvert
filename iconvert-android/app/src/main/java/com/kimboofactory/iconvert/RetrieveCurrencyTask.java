@@ -75,11 +75,11 @@ public class RetrieveCurrencyTask extends AsyncTask<String, Void, String> {
             //mCurrencies.setText(currencies);
             Log.d(TAG, "onPostExecute done without error");
         else
-            //mCurrencies.setText("DeviseData is null");
+            //mCurrencies.setText("CurrencyData is null");
             Log.d(TAG, "onPostExecute is not OK");
 
         Toast.makeText( context,
-                "DeviseData extraction from OpenExchangeRates is terminated",
+                "CurrencyData extraction from OpenExchangeRates is terminated",
                 Toast.LENGTH_LONG).show();
     }
 

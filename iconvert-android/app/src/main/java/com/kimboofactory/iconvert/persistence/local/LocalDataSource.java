@@ -1,10 +1,26 @@
 package com.kimboofactory.iconvert.persistence.local;
 
 import com.kimboofactory.iconvert.persistence.DataSource;
+import com.kimboofactory.iconvert.persistence.model.CurrencyData;
+import com.kimboofactory.iconvert.util.SingletonUtil;
 
+import java.util.List;
+
+/**
+ * Created by CK_ALEENGO on 13/02/2019.
+ * Copyright (c) 2019. All rights reserved.
+ */
 public class LocalDataSource implements DataSource {
 
-    public LocalDataSource() {
+    private static LocalDataSource instance;
+    private CurrencyDAO currencyDAO;
+
+    private LocalDataSource() {
+    }
+
+    public static LocalDataSource getInstance() {
+        instance = SingletonUtil.getInstance(LocalDataSource.class, instance);
+        return instance;
     }
 
     @Override
@@ -15,5 +31,15 @@ public class LocalDataSource implements DataSource {
     @Override
     public void getCurrencies(GetCurrenciesCallback callback) {
 
+    }
+
+    public boolean isEmpty() {
+        //return currencyDAO.get("USD") == null;
+        return false;
+    }
+
+
+    public void saveAll(List<CurrencyData> currencies) {
+        //currencyDAO.saveAll(currencies);
     }
 }

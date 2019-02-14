@@ -1,5 +1,7 @@
 package com.kimboofactory.iconvert.domain;
 
+import com.kimboofactory.iconvert.dto.Result;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,10 +9,10 @@ import lombok.Setter;
  * Created by CK_ALEENGO on 11/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public abstract class UseCase<Q> {
+public abstract class UseCase<Q, RESULT extends Result> {
 
-    @Setter @Getter
-    private UseCase.Callback callback;
+    @Getter @Setter
+    private Callback<RESULT> usecaseCallback;
     @Setter @Getter
     private Repository repository;
     @Setter @Getter
@@ -19,14 +21,13 @@ public abstract class UseCase<Q> {
     public UseCase() {
     }
 
-    protected abstract void execute();
+    protected abstract void executeUseCase();
 
     public void run() {
-        execute();
+        executeUseCase();
     }
 
-    interface Callback {
-        void onSuccess();
-        void onFailure();
+    public interface Callback<RESULT> {
+        void onResult(RESULT result);
     }
 }
