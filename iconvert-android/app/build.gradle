@@ -24,6 +24,12 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    // peach-toolbox-commons
+    implementation project(':peach-toolbox-commons-0.1.0-alpha01')
+    // peach-toolbox-android
+    implementation project(':peach-toolbox-android')
+
     // android support
     implementation deps.support.app_compat
     implementation deps.constraint_layout

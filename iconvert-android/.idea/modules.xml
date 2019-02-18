@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/iconvert-android.iml" filepath="$PROJECT_DIR$/iconvert-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/peach-toolbox-android/peach-toolbox-android.iml" filepath="$PROJECT_DIR$/peach-toolbox-android/peach-toolbox-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/peach-toolbox-commons-0.1.0-alpha01/peach-toolbox-commons-0.1.0-alpha01.iml" filepath="$PROJECT_DIR$/peach-toolbox-commons-0.1.0-alpha01/peach-toolbox-commons-0.1.0-alpha01.iml" />
     </modules>
   </component>
 </project>
