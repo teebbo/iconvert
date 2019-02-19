@@ -5,11 +5,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aleengo.peach.toolbox.adapter.ListViewAdapter;
 import com.kimboofactory.iconvert.R;
-import com.kimboofactory.iconvert.common.ListViewAdapter;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,9 +32,22 @@ public class FavoritesAdapter
         return R.layout.favorite_item;
     }
 
+   /* @Override
+    public Object onNewViewHolder(View view) {
+       ;
+    }*/
+
     @Override
-    public ViewHolder onCreateViewHolder(View view) {
+    protected ViewHolder onNewViewHolder(View view) {
         return new ViewHolder(view);
+    }
+
+    @Override
+    public void updateItems(List<CurrencyIHM> newItems) {
+        if (newItems != null && newItems.size() > 0) {
+            getItems().addAll(newItems);
+            notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -45,6 +59,7 @@ public class FavoritesAdapter
         /*holder.rateTV.setText(item.getRate());
         holder.resultTV.setText(item.getResult());*/
     }
+
 
     public static class ViewHolder extends ListViewAdapter.ViewHolder {
 

@@ -7,8 +7,8 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.aleengo.peach.toolbox.adapter.ListViewAdapter;
 import com.kimboofactory.iconvert.R;
-import com.kimboofactory.iconvert.common.ListViewAdapter;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.util.Helper;
 
@@ -30,9 +30,13 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
         implements Filterable {
 
     private SearchCurrencyFilter mFilter;
+    @Getter
+    private List<CurrencyIHM> originalList;
+    private boolean isOriginalListEmpty = true;
 
     public SearchCurrencyAdapter(Context mContext, List<CurrencyIHM> currencies) {
       super(mContext, currencies);
+      this.originalList = new LinkedList<>();
     }
 
     @Override
@@ -41,8 +45,22 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(View view) {
+    protected ViewHolder onNewViewHolder(View view) {
         return new ViewHolder(view);
+    }
+
+    @Override
+    public void updateItems(List<CurrencyIHM> newItems) {
+        if (newItems != null && newItems.size() > 0) {
+
+            if (isOriginalListEmpty) {
+                originalList.addAll(newItems);
+                isOriginalListEmpty = false;
+            }
+
+            getItems().addAll(newItems);
+            notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -117,7 +135,7 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
         protected void publishResults(CharSequence constraint, FilterResults results) {
             // Method called in the UI thread
             adapter.clear();
-            adapter.updateDataSet((List<CurrencyIHM>) results.values);
+            adapter.updateItems((List<CurrencyIHM>) results.values);
         }
     }
 }

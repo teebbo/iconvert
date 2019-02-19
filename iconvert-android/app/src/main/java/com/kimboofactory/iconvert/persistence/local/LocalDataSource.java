@@ -18,9 +18,14 @@ public class LocalDataSource implements DataSource {
     private LocalDataSource() {
     }
 
+    private static class LazyHolder {
+        private static final LocalDataSource INSTANCE = new LocalDataSource();
+    }
+
     public static LocalDataSource getInstance() {
-        instance = SingletonUtil.getInstance(LocalDataSource.class, instance);
-        return instance;
+        /*instance = SingletonUtil.getInstance(LocalDataSource.class, instance);
+        return instance;*/
+        return LazyHolder.INSTANCE;
     }
 
     @Override

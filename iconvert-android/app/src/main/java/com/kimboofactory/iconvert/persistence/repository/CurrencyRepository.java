@@ -24,9 +24,7 @@ public class CurrencyRepository implements Repository {
 
     @Override
     public void find(final String query, SearchCallback callback) {
-      if (!localDataSource.isEmpty()) {
-          localDataSource.getCurrencies(null);
-      } else {
+      if (localDataSource.isEmpty()) {
           remoteDataSource.getCurrencies((error, currencies) -> {
               final Result<String> result =
                       new Result<>(Optional.ofNullable(error), Optional.ofNullable(currencies));
@@ -37,6 +35,8 @@ public class CurrencyRepository implements Repository {
                   localDataSource.saveAll(new ArrayList<>());
               }
           });
+      } else {
+          localDataSource.getCurrencies(null);
       }
     }
 }

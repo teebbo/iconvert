@@ -24,11 +24,16 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     // android support
     implementation deps.support.app_compat
     implementation deps.constraint_layout
     implementation deps.support.design
     implementation deps.support.v4
+
+    // peach-toolbox
+    implementation deps.peach_toolbox
+
     // butterknife
     implementation deps.butterknife.runtime
     annotationProcessor deps.butterknife.compiler
