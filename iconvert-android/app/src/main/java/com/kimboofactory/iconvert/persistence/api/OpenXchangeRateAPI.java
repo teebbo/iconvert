@@ -1,12 +1,12 @@
 package com.kimboofactory.iconvert.persistence.api;
 
+
+import com.aleengo.peach.toolbox.commons.concurrent.DefaultCallback;
 import com.aleengo.peach.toolbox.commons.net.OkHttpSingleton;
-import com.aleengo.peach.toolbox.commons.net.PeachRequest;
-import com.kimboofactory.iconvert.net.KFYRequest;
-import com.kimboofactory.iconvert.util.SingletonUtil;
+import com.aleengo.peach.toolbox.commons.net.RequestConfig;
+import com.aleengo.peach.toolbox.commons.net.RequestWrapper;
 
 import okhttp3.Callback;
-import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 
 /**
@@ -41,26 +41,26 @@ public class OpenXchangeRateAPI {
                 .endpoint(CURRENCIES_END_POINT)
                 .build();*/
 
-        final PeachRequest request = new PeachRequest.Builder()
-                .client(client)
+
+        final RequestConfig currenciesConfig = new RequestConfig.Builder((DefaultCallback) callback)
                 .baseUrl(BASE_URL)
+                .endPoint(CURRENCIES_END_POINT)
                 .build();
+        final RequestWrapper request = new RequestWrapper(currenciesConfig);
 
         //request.execute(callback);
-        request.get(CURRENCIES_END_POINT, callback);
-        request.get(RATE_END_POINT, callback);
+        /*request.get(CURRENCIES_END_POINT, callback);
+        request.get(RATE_END_POINT, callback);*/
 
 
     }
 
     private OkHttpClient configureClient() {
-        final Dispatcher dispatcher = new Dispatcher();
-        dispatcher.setMaxRequests(5);
 
-        return OkHttpSingleton.getInstance()
+        return OkHttpSingleton
+                .getInstance()
                 .getClient()
                 .newBuilder()
-                .dispatcher(dispatcher)
                 .build();
     }
 }

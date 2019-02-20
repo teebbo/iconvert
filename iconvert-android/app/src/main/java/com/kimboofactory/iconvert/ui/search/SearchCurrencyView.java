@@ -41,7 +41,7 @@ public class SearchCurrencyView implements SearchContract.View {
 
         final List<CurrencyIHM> currencies = (List<CurrencyIHM>) event.getValue().get();
         activity.getAdapter().clear();
-        activity.getAdapter().updateDataSet(currencies);
+        activity.getAdapter().updateItems(currencies);
 
         // stop the refresh
         activity.getSwipeRefreshLayout().setRefreshing(false);
