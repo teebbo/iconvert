@@ -1,7 +1,9 @@
 package com.kimboofactory.iconvert.persistence.api;
 
 
+import com.aleengo.peach.toolbox.commons.common.OnCompleteCallback;
 import com.aleengo.peach.toolbox.commons.concurrent.DefaultCallback;
+import com.aleengo.peach.toolbox.commons.concurrent.HttpService;
 import com.aleengo.peach.toolbox.commons.net.OkHttpSingleton;
 import com.aleengo.peach.toolbox.commons.net.RequestConfig;
 import com.aleengo.peach.toolbox.commons.net.RequestWrapper;
@@ -35,18 +37,19 @@ public class OpenXchangeRateAPI {
     }
 
 
-    public void getCurrencies(Callback callback) {
+    public void getCurrencies(OnCompleteCallback<String> callback) {
         /*final KFYRequest request = KFYRequest.builder()
                 .baseUrl(BASE_URL)
                 .endpoint(CURRENCIES_END_POINT)
                 .build();*/
 
-
-        final RequestConfig currenciesConfig = new RequestConfig.Builder((DefaultCallback) callback)
+        final RequestConfig currenciesConfig = new RequestConfig.Builder(new DefaultCallback())
                 .baseUrl(BASE_URL)
                 .endPoint(CURRENCIES_END_POINT)
                 .build();
         final RequestWrapper request = new RequestWrapper(currenciesConfig);
+
+        HttpService.execute(request, callback);
 
         //request.execute(callback);
         /*request.get(CURRENCIES_END_POINT, callback);

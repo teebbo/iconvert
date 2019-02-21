@@ -33,17 +33,6 @@ public class RemoteDataSource implements DataSource {
 
     @Override
     public void getCurrencies(GetCurrenciesCallback callback) {
-        OpenXchangeRateAPI.getInstance().getCurrencies(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                callback.currenciesLoaded(e.getMessage(), null);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String body = response.body().string();
-                callback.currenciesLoaded(null, body);
-            }
-        });
+        OpenXchangeRateAPI.getInstance().getCurrencies(callback::currenciesLoaded);
     }
 }

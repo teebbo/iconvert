@@ -17,6 +17,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Result<T> {
-    private Optional<String> error;
+    private Optional<Throwable> error;
     private Optional<T> value;
 }

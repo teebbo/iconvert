@@ -1,11 +1,14 @@
 package com.kimboofactory.iconvert.persistence.repository;
 
+import com.aleengo.peach.toolbox.commons.common.Response;
 import com.kimboofactory.iconvert.domain.Repository;
 import com.kimboofactory.iconvert.dto.Result;
+import com.kimboofactory.iconvert.persistence.DataSource;
 import com.kimboofactory.iconvert.persistence.local.LocalDataSource;
 import com.kimboofactory.iconvert.persistence.remote.RemoteDataSource;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -25,18 +28,24 @@ public class CurrencyRepository implements Repository {
     @Override
     public void find(final String query, SearchCallback callback) {
       if (localDataSource.isEmpty()) {
-          remoteDataSource.getCurrencies((error, currencies) -> {
-              final Result<String> result =
-                      new Result<>(Optional.ofNullable(error), Optional.ofNullable(currencies));
+          remoteDataSource.getCurrencies(response -> {
+              final Result<List<String>> result =
+                      new Result<>(Optional.ofNullable(response.getError()),
+                              Optional.ofNullable(response.getValue()));
 
               callback.onDataLoaded(result);
 
-              if (error == null) {
+              if (response.getError() == null) {
                   localDataSource.saveAll(new ArrayList<>());
               }
           });
       } else {
-          localDataSource.getCurrencies(null);
+          localDataSource.getCurrencies(new DataSource.GetCurrenciesCallback() {
+              @Override
+              public void currenciesLoaded(Response<String> response) {
+                  callback.onDataLoaded(new Result<>());
+              }
+          });
       }
     }
 }
