@@ -38,7 +38,7 @@ versions.timber = "4.5.1"
 versions.volley = "1.1.0"
 versions.lombok = "1.16.20"
 versions.room = "2.1.0-alpha04"
-versions.toolbox= "f160de869f"
+versions.toolbox= "fee71d71ea"
 
 // android build versions
 def build_versions = [:]
@@ -59,13 +59,11 @@ deps.constraint_layout = "androidx.constraintlayout:constraintlayout:$versions.c
 deps.timber = "com.jakewharton.timber:timber:$versions.timber"
 deps.junit = "junit:junit:$versions.junit"
 deps.lombok = "org.projectlombok:lombok:$versions.lombok"
-//deps.peach_toolbox = "com.github.aleengo:peach-toolbox:$versions.peach_toolbox"
 
-def peach_toolbox = [:]
-peach_toolbox.android = "com.github.aleengo.peach-toolbox:toolbox:$versions.toolbox"
-//peach_toolbox.commons = "com.github.aleengo.peach-toolbox:commons:$versions.peach_toolbox"
-peach_toolbox.commons = "com.github.aleengo.peach-toolbox:commons:$versions.toolbox"
-deps.peach_toolbox = peach_toolbox
+def toolbox = [:]
+toolbox.android = "com.github.aleengo.peach-toolbox:toolbox:$versions.toolbox"
+toolbox.commons = "com.github.aleengo.peach-toolbox:commons:$versions.toolbox"
+deps.toolbox = toolbox
 
 // android support
 def support = [:]

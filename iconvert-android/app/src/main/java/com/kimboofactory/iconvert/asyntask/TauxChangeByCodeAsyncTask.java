@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 
 import com.kimboofactory.iconvert.dao.tauxchange.TauxChangeDao;
 import com.kimboofactory.iconvert.dao.tauxchange.TauxChangeDaoImpl;
-import com.kimboofactory.iconvert.model.RateData;
+import com.kimboofactory.iconvert.persistence.model.RateData;
 
 
 /**

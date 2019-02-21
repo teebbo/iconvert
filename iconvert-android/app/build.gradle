@@ -32,8 +32,8 @@ dependencies {
     implementation deps.support.v4
 
     // peach-toolbox
-    implementation deps.peach_toolbox.commons
-    implementation deps.peach_toolbox.android
+    implementation deps.toolbox.commons
+    implementation deps.toolbox.android
 
     // butterknife
     implementation deps.butterknife.runtime

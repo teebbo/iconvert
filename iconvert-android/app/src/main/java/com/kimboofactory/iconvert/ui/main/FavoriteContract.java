@@ -3,10 +3,8 @@ package com.kimboofactory.iconvert.ui.main;
 import com.kimboofactory.iconvert.common.BasePresenter;
 import com.kimboofactory.iconvert.common.BaseView;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
-import com.kimboofactory.iconvert.model.RateData;
 
 import java.io.Serializable;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**

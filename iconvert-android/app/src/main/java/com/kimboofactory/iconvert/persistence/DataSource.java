@@ -1,6 +1,8 @@
 package com.kimboofactory.iconvert.persistence;
 
-import com.kimboofactory.iconvert.dto.CurrencyIHM;
+import com.aleengo.peach.toolbox.commons.common.Response;
+
+import java.util.List;
 
 /**
  * Created by CK_ALEENGO on 13/02/2019.
@@ -9,11 +11,11 @@ import com.kimboofactory.iconvert.dto.CurrencyIHM;
 public interface DataSource {
 
     interface GetCurrencyCallback {
-        void currencyLoaded(String error, String currency);
+        void currencyLoaded(Response response);
     }
 
     interface GetCurrenciesCallback {
-        void currenciesLoaded(String error, String currencies);
+        void currenciesLoaded(Response response);
     }
 
     void getCurrencyByCode(String code, GetCurrencyCallback callback);

@@ -28,7 +28,7 @@ public class GetCurrencies extends UseCase<QueryValue, Result> {
         getRepository().find(query, this::onDataLoaded);
     }
 
-    private void onDataLoaded(Result<String> result) {
+    private void onDataLoaded(Result<List<String>> result) {
         if (result.getError().isPresent()) {
             getUsecaseCallback().onResult(result);
             return;
@@ -36,13 +36,13 @@ public class GetCurrencies extends UseCase<QueryValue, Result> {
 
         try {
             final List<CurrencyIHM> items = new LinkedList<>();
-            final JSONObject json = new JSONObject(result.getValue().get());
 
-            json.keys().forEachRemaining(s -> {
+            final String value = result.getValue().get().get(0);
+            final JSONObject json = new JSONObject(value);
+
+            json.keys().forEachRemaining(key -> {
                 try {
-                    final String code = s;
-                    final String libelle = json.getString(s);
-                    items.add(new CurrencyIHM(code, libelle, false));
+                    items.add(new CurrencyIHM(key, json.getString(key), false));
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }

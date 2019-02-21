@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.kimboofactory.iconvert.data.IConvertContract;
 import com.kimboofactory.iconvert.dao.GenericDao;
-import com.kimboofactory.iconvert.model.RateData;
+import com.kimboofactory.iconvert.persistence.model.RateData;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -23,8 +23,6 @@ public class LocalDataSource implements DataSource {
     }
 
     public static LocalDataSource getInstance() {
-        /*instance = SingletonUtil.getInstance(LocalDataSource.class, instance);
-        return instance;*/
         return LazyHolder.INSTANCE;
     }
 

@@ -13,22 +13,22 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Created by CK_ALEENGO on 31/03/2017.
- * Copyright (c) 2017. All rights reserved.
+ * Created by CK_ALEENGO on 29/10/2015..
+ * Copyright (c) 2015. All rights reserved.
  */
-
-@ToString(of = {"code"})
+@ToString(of = {"code", "value"})
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(tableName = "currency", indices = {@Index("code")})
-public class CurrencyData implements Model {
+@Entity(tableName = "rate", indices = {@Index("code")})
+public class RateData implements Model {
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
-    private Long currencyId;
+    private Long rateId;
     @ColumnInfo(name = "code")
     private String code;
-    @ColumnInfo(name = "libelle")
-    private String libelle;
+    @ColumnInfo(name = "rate")
+    private String value;
 }

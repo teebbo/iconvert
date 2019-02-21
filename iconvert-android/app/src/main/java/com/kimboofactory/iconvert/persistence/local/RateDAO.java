@@ -1,23 +1,22 @@
 package com.kimboofactory.iconvert.persistence.local;
 
-import com.kimboofactory.iconvert.persistence.model.CurrencyData;
+import com.kimboofactory.iconvert.persistence.model.RateData;
 
 import java.util.List;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
-import androidx.room.Query;
 
 /**
- * Created by CK_ALEENGO on 14/02/2019.
+ * Created by CK_ALEENGO on 21/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
 @Dao
-public interface CurrencyDAO {
+public interface RateDAO {
 
     @Insert
-    void saveAll(List<CurrencyData> currencies);
+    void insert(List<RateData> rates);
     @Delete
     void deleteAll();
 }
