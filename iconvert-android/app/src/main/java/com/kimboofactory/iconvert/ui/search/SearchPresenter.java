@@ -1,12 +1,13 @@
 package com.kimboofactory.iconvert.ui.search;
 
+import com.aleengo.peach.toolbox.commons.factory.Singleton;
+import com.aleengo.peach.toolbox.commons.model.Result;
 import com.kimboofactory.iconvert.common.AbstractPresenter;
 import com.kimboofactory.iconvert.domain.UseCase;
 import com.kimboofactory.iconvert.domain.UseCaseHandler;
 import com.kimboofactory.iconvert.domain.common.QueryValue;
 import com.kimboofactory.iconvert.domain.usecases.GetCurrencies;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
-import com.kimboofactory.iconvert.dto.Result;
 import com.kimboofactory.iconvert.persistence.local.LocalDataSource;
 import com.kimboofactory.iconvert.persistence.remote.RemoteDataSource;
 import com.kimboofactory.iconvert.persistence.repository.CurrencyRepository;
@@ -27,7 +28,7 @@ public class SearchPresenter extends AbstractPresenter
 
     @Getter
     private List<CurrencyIHM> selectedItems = new LinkedList<>();
-    private UseCase<QueryValue, Result> getCurrenciesUseCase;
+    private UseCase<QueryValue> getCurrenciesUseCase;
 
     public SearchPresenter() {
     }
@@ -54,7 +55,8 @@ public class SearchPresenter extends AbstractPresenter
     public void loadCurrencies() {
         getCurrenciesUseCase = new GetCurrencies();
         getCurrenciesUseCase
-                .setRepository(new CurrencyRepository(LocalDataSource.getInstance(), RemoteDataSource.getInstance()));
+                .setRepository(new CurrencyRepository(Singleton.of(LocalDataSource.class),
+                        Singleton.of(RemoteDataSource.class)));
 
         UseCaseHandler.getInstance().setUseCase(null, getCurrenciesUseCase);
         UseCaseHandler.getInstance().execute((Result result) -> EventBus.getDefault().post(result));

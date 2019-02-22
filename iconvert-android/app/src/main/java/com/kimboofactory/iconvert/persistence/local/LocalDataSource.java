@@ -2,7 +2,6 @@ package com.kimboofactory.iconvert.persistence.local;
 
 import com.kimboofactory.iconvert.persistence.DataSource;
 import com.kimboofactory.iconvert.persistence.model.CurrencyData;
-import com.kimboofactory.iconvert.util.SingletonUtil;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class LocalDataSource implements DataSource {
 
     public boolean isEmpty() {
         //return currencyDAO.get("USD") == null;
-        return false;
+        return true;
     }
 
 

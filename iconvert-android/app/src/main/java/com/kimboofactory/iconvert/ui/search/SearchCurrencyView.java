@@ -4,12 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
-import android.widget.Toast;
 
+import com.aleengo.peach.toolbox.commons.model.Result;
 import com.google.android.material.snackbar.Snackbar;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
-import com.kimboofactory.iconvert.dto.Result;
 import com.kimboofactory.iconvert.util.Helper;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -32,14 +31,14 @@ public class SearchCurrencyView implements SearchContract.View {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(Result event) {
-        if (event.getError().isPresent()) {
+        if (event.getError() != null) {
             // show an error message
             showMessage(R.string.error_message_load_currencies);
             activity.getSwipeRefreshLayout().setRefreshing(false);
             return;
         }
 
-        final List<CurrencyIHM> currencies = (List<CurrencyIHM>) event.getValue().get();
+        final List<CurrencyIHM> currencies = (List<CurrencyIHM>) event.getValue();
         activity.getAdapter().clear();
         activity.getAdapter().updateItems(currencies);
 

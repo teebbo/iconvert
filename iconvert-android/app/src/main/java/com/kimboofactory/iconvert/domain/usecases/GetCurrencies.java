@@ -1,22 +1,26 @@
 package com.kimboofactory.iconvert.domain.usecases;
 
+import com.aleengo.peach.toolbox.commons.model.RawJSON;
+import com.aleengo.peach.toolbox.commons.model.Response;
+import com.aleengo.peach.toolbox.commons.model.Result;
+import com.aleengo.peach.toolbox.commons.strategy.RawJSONDeserializer;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
 import com.kimboofactory.iconvert.domain.UseCase;
 import com.kimboofactory.iconvert.domain.common.QueryValue;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
-import com.kimboofactory.iconvert.dto.Result;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by CK_ALEENGO on 11/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public class GetCurrencies extends UseCase<QueryValue, Result> {
+public class GetCurrencies extends UseCase<QueryValue> {
 
     public GetCurrencies() {
     }
@@ -28,32 +32,26 @@ public class GetCurrencies extends UseCase<QueryValue, Result> {
         getRepository().find(query, this::onDataLoaded);
     }
 
-    private void onDataLoaded(Result<List<String>> result) {
-        if (result.getError().isPresent()) {
-            getUsecaseCallback().onResult(result);
+    private void onDataLoaded(Response response) {
+        if (response.getError() != null) {
+            getUsecaseCallback().onResult(new Result<String>(null, response.getError()));
             return;
         }
+        final List<CurrencyIHM> items = new LinkedList<>();
 
-        try {
-            final List<CurrencyIHM> items = new LinkedList<>();
+        final Gson gson = new GsonBuilder()
+                .registerTypeAdapter(RawJSON.class, new RawJSONDeserializer())
+                .create();
 
-            final String value = result.getValue().get().get(0);
-            final JSONObject json = new JSONObject(value);
+        final String json = (String) response.getValue();
+        final RawJSON rawData = gson.fromJson(new JsonReader(new StringReader(json)),
+                RawJSON.class);
 
-            json.keys().forEachRemaining(key -> {
-                try {
-                    items.add(new CurrencyIHM(key, json.getString(key), false));
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+        final List<CurrencyIHM> list = rawData.getItems().entrySet()
+                .stream()
+                .map(entrySet -> new CurrencyIHM(entrySet.getKey(), entrySet.getValue(), false))
+                .collect(Collectors.toList());
 
-            final Result<List<CurrencyIHM>> newResult =
-                    new Result<>(result.getError(), Optional.of(items));
-            getUsecaseCallback().onResult(newResult);
-
-        } catch (JSONException e) {
-            throw new IllegalArgumentException(e);
-        }
+        getUsecaseCallback().onResult(new Result(list, null));
     }
 }

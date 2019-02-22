@@ -1,6 +1,7 @@
 package com.kimboofactory.iconvert.domain;
 
-import com.kimboofactory.iconvert.dto.Result;
+
+import com.aleengo.peach.toolbox.commons.model.Result;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,10 +10,10 @@ import lombok.Setter;
  * Created by CK_ALEENGO on 11/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public abstract class UseCase<Q, RESULT extends Result> {
+public abstract class UseCase<Q> {
 
     @Getter @Setter
-    private Callback<RESULT> usecaseCallback;
+    private Callback usecaseCallback;
     @Setter @Getter
     private Repository repository;
     @Setter @Getter
@@ -27,7 +28,7 @@ public abstract class UseCase<Q, RESULT extends Result> {
         executeUseCase();
     }
 
-    public interface Callback<RESULT> {
-        void onResult(RESULT result);
+    public interface Callback {
+        void onResult(Result result);
     }
 }

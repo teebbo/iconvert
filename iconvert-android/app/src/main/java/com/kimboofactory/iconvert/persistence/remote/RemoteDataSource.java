@@ -4,12 +4,6 @@ import com.kimboofactory.iconvert.persistence.DataSource;
 import com.kimboofactory.iconvert.persistence.api.OpenXchangeRateAPI;
 import com.kimboofactory.iconvert.util.SingletonUtil;
 
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-
 /**
  * Created by CK_ALEENGO on 13/02/2019.
  * Copyright (c) 2019. All rights reserved.

@@ -2,13 +2,13 @@ package com.kimboofactory.iconvert.persistence.api;
 
 
 import com.aleengo.peach.toolbox.commons.common.OnCompleteCallback;
-import com.aleengo.peach.toolbox.commons.concurrent.DefaultCallback;
-import com.aleengo.peach.toolbox.commons.concurrent.HttpService;
-import com.aleengo.peach.toolbox.commons.net.OkHttpSingleton;
+import com.aleengo.peach.toolbox.commons.concurrent.HTTPService;
+import com.aleengo.peach.toolbox.commons.concurrent.ResponseCallback;
+import com.aleengo.peach.toolbox.commons.factory.Singleton;
+import com.aleengo.peach.toolbox.commons.net.HttpClient;
 import com.aleengo.peach.toolbox.commons.net.RequestConfig;
 import com.aleengo.peach.toolbox.commons.net.RequestWrapper;
 
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 
 /**
@@ -36,20 +36,19 @@ public class OpenXchangeRateAPI {
         return LazyHolder.INSTANCE;
     }
 
-
-    public void getCurrencies(OnCompleteCallback<String> callback) {
+    public void getCurrencies(OnCompleteCallback callback) {
         /*final KFYRequest request = KFYRequest.builder()
                 .baseUrl(BASE_URL)
                 .endpoint(CURRENCIES_END_POINT)
                 .build();*/
 
-        final RequestConfig currenciesConfig = new RequestConfig.Builder(new DefaultCallback())
+        final RequestConfig currenciesConfig = new RequestConfig.Builder(new ResponseCallback())
                 .baseUrl(BASE_URL)
                 .endPoint(CURRENCIES_END_POINT)
                 .build();
         final RequestWrapper request = new RequestWrapper(currenciesConfig);
 
-        HttpService.execute(request, callback);
+        HTTPService.execute(request, callback);
 
         //request.execute(callback);
         /*request.get(CURRENCIES_END_POINT, callback);
@@ -60,9 +59,7 @@ public class OpenXchangeRateAPI {
 
     private OkHttpClient configureClient() {
 
-        return OkHttpSingleton
-                .getInstance()
-                .getClient()
+        return Singleton.of(HttpClient.class).get()
                 .newBuilder()
                 .build();
     }

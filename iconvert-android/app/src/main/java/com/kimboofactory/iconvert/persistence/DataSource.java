@@ -1,6 +1,7 @@
 package com.kimboofactory.iconvert.persistence;
 
-import com.aleengo.peach.toolbox.commons.common.Response;
+
+import com.aleengo.peach.toolbox.commons.model.Response;
 
 import java.util.List;
 

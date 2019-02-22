@@ -135,7 +135,6 @@
     <orderEntry type="library" name="Gradle: androidx.coordinatorlayout:coordinatorlayout-1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.documentfile:documentfile-1.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: javax.inject:javax.inject:1@jar" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.aleengo.peach-toolbox:toolbox-fee71d71ea" level="project" />
     <orderEntry type="library" name="Gradle: androidx.annotation:annotation:1.1.0-alpha01@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-viewmodel-2.1.0-alpha02" level="project" />
     <orderEntry type="library" name="Gradle: androidx.room:room-runtime-2.1.0-alpha04" level="project" />
@@ -144,7 +143,7 @@
     <orderEntry type="library" name="Gradle: androidx.sqlite:sqlite-framework-2.0.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.savedstate:savedstate-bundle-1.0.0-alpha01" level="project" />
     <orderEntry type="library" name="Gradle: androidx.vectordrawable:vectordrawable-1.0.1" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.aleengo.peach-toolbox:commons:fee71d71ea@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.aleengo.peach-toolbox:toolbox-master-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: androidx.legacy:legacy-support-v4-1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.fragment:fragment-1.1.0-alpha04" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:listenablefuture:1.0@jar" level="project" />
@@ -156,6 +155,7 @@
     <orderEntry type="library" name="Gradle: androidx.constraintlayout:constraintlayout-2.0.0-alpha3" level="project" />
     <orderEntry type="library" name="Gradle: androidx.activity:activity-1.0.0-alpha04" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.test:runner-1.1.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.5@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-runtime-2.0.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.drawerlayout:drawerlayout-1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat-1.1.0-alpha02" level="project" />
@@ -175,10 +175,10 @@
     <orderEntry type="library" name="Gradle: androidx.arch.core:core-common:2.0.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.viewpager:viewpager-1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.arch.core:core-runtime-2.0.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.12@jar" level="project" />
+    <orderEntry type="library" name="Gradle: junit:junit:4.12@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.versionedparcelable:versionedparcelable-1.1.0-alpha01" level="project" />
     <orderEntry type="library" name="Gradle: androidx.legacy:legacy-support-core-ui-1.0.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3@jar" level="project" />
+    <orderEntry type="library" name="Gradle: org.hamcrest:hamcrest-core:1.3@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.vectordrawable:vectordrawable-animated-1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.core:core-1.1.0-alpha04" level="project" />
     <orderEntry type="library" name="Gradle: androidx.loader:loader-1.0.0" level="project" />
@@ -188,6 +188,7 @@
     <orderEntry type="library" name="Gradle: org.greenrobot:eventbus:3.1.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.jakewharton:butterknife-annotations:10.0.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.customview:customview-1.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.aleengo.peach-toolbox:commons:master-SNAPSHOT@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.localbroadcastmanager:localbroadcastmanager-1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-process-2.0.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.cursoradapter:cursoradapter-1.0.0" level="project" />

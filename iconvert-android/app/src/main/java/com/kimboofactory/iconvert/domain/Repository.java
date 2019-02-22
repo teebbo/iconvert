@@ -1,8 +1,6 @@
 package com.kimboofactory.iconvert.domain;
 
-import com.kimboofactory.iconvert.dto.Result;
-
-import java.util.List;
+import com.aleengo.peach.toolbox.commons.model.Response;
 
 /**
  * Created by CK_ALEENGO on 11/02/2019.
@@ -11,11 +9,11 @@ import java.util.List;
 public interface Repository {
 
     interface GetCallback {
-        void onLoaded(Result<List<String>> result);
+        void onLoaded(Response response);
     }
 
     interface SearchCallback {
-        void onDataLoaded(Result<List<String>> result);
+        void onDataLoaded(Response response);
     }
 
     void find(String query, SearchCallback callback);
