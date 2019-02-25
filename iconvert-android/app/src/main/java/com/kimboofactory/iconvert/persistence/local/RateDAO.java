@@ -5,7 +5,6 @@ import com.kimboofactory.iconvert.persistence.model.RateData;
 import java.util.List;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 
 /**
