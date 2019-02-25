@@ -94,7 +94,7 @@ public class DeviseFragment extends BaseFragment
         ListView currenciesListView = view.findViewById(R.id.currenciesListView);
 
         /*
-        * You do not have a Cursor object before the onLoadFinished() method of your usecaseCallback has been called.
+        * You do not have a Cursor object before the onLoadFinished() method of your useCaseCallback has been called.
         * In other words: The cursor is not ready when you create the adapter.
         * Thus you create the adapter using "null" for the cursor argument:
         */
@@ -150,7 +150,7 @@ public class DeviseFragment extends BaseFragment
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        // The onFinished usecaseCallback returns with our data results
+        // The onFinished useCaseCallback returns with our data results
         // Here you update the UI based on the results of your filter.
         Log.d(TAG, "onLoadFinished() is called");
         mAdapter.updateDataSet(new ArrayList<>());

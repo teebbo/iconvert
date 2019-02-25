@@ -9,7 +9,7 @@ import java.util.List;
  * Created by CK_ALEENGO on 13/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public interface DataSource {
+public interface CurrencyDataSource {
 
     interface GetCurrencyCallback {
         void currencyLoaded(Response response);

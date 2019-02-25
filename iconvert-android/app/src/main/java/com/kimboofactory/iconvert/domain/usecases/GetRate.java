@@ -27,7 +27,7 @@ public class GetRate extends UseCase<QueryValue> {
     private void onDataLoaded(Response response) {
 
         if (response.getError() != null) {
-            getUsecaseCallback().onResult(new Result<String>(null, response.getError()));
+            getUseCaseCallback().onResult(new Result<String>(null, response.getError()));
             return;
         }
 
@@ -44,7 +44,7 @@ public class GetRate extends UseCase<QueryValue> {
                 .map(entrySet -> new CurrencyIHM(entrySet.getKey(), entrySet.getValue(), false))
                 .collect(Collectors.toList());
 
-        getUsecaseCallback().onResult(new Result(list, null));
+        getUseCaseCallback().onResult(new Result(list, null));
     }
 
     @Override

@@ -102,6 +102,7 @@ deps.espresso = espresso
 
 def room = [:]
 room.runtime = "androidx.room:room-runtime:$versions.room"
+room.compiler = "androidx.room:room-compiler:$versions.room"
 deps.room = room
 
 // adding the deps object to ext (extensions) object

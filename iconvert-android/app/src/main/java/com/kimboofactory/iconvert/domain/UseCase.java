@@ -13,7 +13,7 @@ import lombok.Setter;
 public abstract class UseCase<Q> {
 
     @Getter @Setter
-    private Callback usecaseCallback;
+    private UseCase.Callback useCaseCallback;
     @Setter @Getter
     private Repository repository;
     @Setter @Getter
