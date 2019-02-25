@@ -50,6 +50,7 @@ dependencies {
     implementation deps.okhttp.runtime
     // room
     implementation deps.room.runtime
+    annotationProcessor deps.room.compiler
 
     testImplementation deps.junit
     androidTestImplementation deps.android_test_runner

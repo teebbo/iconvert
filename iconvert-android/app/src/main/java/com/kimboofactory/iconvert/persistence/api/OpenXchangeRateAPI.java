@@ -28,37 +28,16 @@ public class OpenXchangeRateAPI {
         client = configureClient();
     }
 
-    private static class LazyHolder {
-        private static final OpenXchangeRateAPI INSTANCE = new OpenXchangeRateAPI();
-    }
-
-    public static OpenXchangeRateAPI getInstance() {
-        return LazyHolder.INSTANCE;
-    }
-
     public void getCurrencies(OnCompleteCallback callback) {
-        /*final KFYRequest request = KFYRequest.builder()
-                .baseUrl(BASE_URL)
-                .endpoint(CURRENCIES_END_POINT)
-                .build();*/
-
         final RequestConfig currenciesConfig = new RequestConfig.Builder(new ResponseCallback())
                 .baseUrl(BASE_URL)
                 .endPoint(CURRENCIES_END_POINT)
                 .build();
         final RequestWrapper request = new RequestWrapper(currenciesConfig);
-
         HTTPService.execute(request, callback);
-
-        //request.execute(callback);
-        /*request.get(CURRENCIES_END_POINT, callback);
-        request.get(RATE_END_POINT, callback);*/
-
-
     }
 
     private OkHttpClient configureClient() {
-
         return Singleton.of(HttpClient.class).get()
                 .newBuilder()
                 .build();

@@ -8,7 +8,7 @@ import com.kimboofactory.iconvert.domain.UseCaseHandler;
 import com.kimboofactory.iconvert.domain.common.QueryValue;
 import com.kimboofactory.iconvert.domain.usecases.GetCurrencies;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
-import com.kimboofactory.iconvert.persistence.local.LocalDataSource;
+import com.kimboofactory.iconvert.persistence.local.LocalCurrencyDataSource;
 import com.kimboofactory.iconvert.persistence.remote.RemoteDataSource;
 import com.kimboofactory.iconvert.persistence.repository.CurrencyRepository;
 
@@ -55,10 +55,10 @@ public class SearchPresenter extends AbstractPresenter
     public void loadCurrencies() {
         getCurrenciesUseCase = new GetCurrencies();
         getCurrenciesUseCase
-                .setRepository(new CurrencyRepository(Singleton.of(LocalDataSource.class),
+                .setRepository(new CurrencyRepository(Singleton.of(LocalCurrencyDataSource.class),
                         Singleton.of(RemoteDataSource.class)));
 
-        UseCaseHandler.getInstance().setUseCase(null, getCurrenciesUseCase);
-        UseCaseHandler.getInstance().execute((Result result) -> EventBus.getDefault().post(result));
+        Singleton.of(UseCaseHandler.class).setUseCase(null, getCurrenciesUseCase);
+        Singleton.of(UseCaseHandler.class).execute((Result result) -> EventBus.getDefault().post(result));
     }
 }

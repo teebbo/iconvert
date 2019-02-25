@@ -1,12 +1,13 @@
 package com.kimboofactory.iconvert.persistence.local;
 
+
 import com.kimboofactory.iconvert.persistence.model.CurrencyData;
 
 import java.util.List;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 /**
@@ -16,8 +17,15 @@ import androidx.room.Query;
 @Dao
 public interface CurrencyDAO {
 
-    @Insert
+    @Query("SELECT * FROM currency")
+    List<CurrencyData> getAll();
+
+    @Query("SELECT * FROM currency WHERE code = :code")
+    CurrencyData getCurrencyByCode(String code);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void saveAll(List<CurrencyData> currencies);
-    @Delete
+
+    @Query("DELETE FROM currency")
     void deleteAll();
 }

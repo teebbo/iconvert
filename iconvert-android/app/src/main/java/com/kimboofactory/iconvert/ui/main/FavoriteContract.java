@@ -14,8 +14,8 @@ import java.util.List;
 public interface FavoriteContract {
 
     interface Presenter extends BasePresenter {
-        void loadRate(CurrencyIHM currencyIHM);
-        void getCurrencies();
+        void loadCurrency(CurrencyIHM currencyIHM);
+        void loadCurrencies();
 
         void updateListView(int resultCode, Serializable data);
         void addCurrency();

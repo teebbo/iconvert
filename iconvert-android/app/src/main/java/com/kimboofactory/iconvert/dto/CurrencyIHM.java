@@ -2,7 +2,6 @@ package com.kimboofactory.iconvert.dto;
 
 import com.kimboofactory.iconvert.model.Model;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -24,6 +23,7 @@ public class CurrencyIHM implements Model {
     private String libelle;
     @NonNull
     private Boolean checked;
+    @NonNull
     private String rate;
     private String result;
 }

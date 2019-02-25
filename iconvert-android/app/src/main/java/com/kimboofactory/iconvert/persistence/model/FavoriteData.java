@@ -10,11 +10,7 @@ import androidx.room.PrimaryKey;
  * Copyright (c) 2019. All rights reserved.
  */
 @Entity(
-        tableName = "favorite",
-        foreignKeys = {@ForeignKey(
-                        entity = CurrencyData.class,
-                        parentColumns = "code",
-                        childColumns = {"src_code", "dest_code"}) }
+        tableName = "favorite"
 )
 public class FavoriteData {
     @PrimaryKey(autoGenerate = true)
@@ -28,4 +24,51 @@ public class FavoriteData {
     private String computedRate;
     @ColumnInfo(name = "value")
     private String value;
+
+    public FavoriteData(String source, String dest, String computedRate, String value) {
+        this.source = source;
+        this.dest = dest;
+        this.computedRate = computedRate;
+        this.value = value;
+    }
+
+    public long getFavoriteId() {
+        return favoriteId;
+    }
+
+    public void setFavoriteId(long favoriteId) {
+        this.favoriteId = favoriteId;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getDest() {
+        return dest;
+    }
+
+    public void setDest(String dest) {
+        this.dest = dest;
+    }
+
+    public String getComputedRate() {
+        return computedRate;
+    }
+
+    public void setComputedRate(String computedRate) {
+        this.computedRate = computedRate;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
 }

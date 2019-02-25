@@ -31,7 +31,7 @@ public class TauxChangeDaoImpl extends GenericDao
 
     private Context context;
 
-    @Override
+    //@Override
     public RateData createEntity(Cursor c) {
         //return new RateData(c.getLong(COL_ID_IDX), c.getString(COL_CODE_IDX), c.getDouble(COL_TAUX_CHANGE_IDX));
         return null;
@@ -101,7 +101,7 @@ public class TauxChangeDaoImpl extends GenericDao
                     final String tauxChangeCode = iterator.next();
                     final Double tauxChangeValue = new Double(tauxChangeJson.getDouble(tauxChangeCode));
 
-                    tauxChanges.add(new RateData(Long.valueOf(0), tauxChangeCode, String.valueOf(tauxChangeValue)));
+                    //tauxChanges.add(new RateData(Long.valueOf(0), tauxChangeCode, String.valueOf(tauxChangeValue)));
                 }
 
                 long inserted = save(tauxChanges);

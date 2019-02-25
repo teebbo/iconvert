@@ -1,6 +1,10 @@
 package com.kimboofactory.iconvert.ui.main;
 
+import com.aleengo.peach.toolbox.commons.factory.Singleton;
+import com.aleengo.peach.toolbox.commons.model.Result;
 import com.kimboofactory.iconvert.common.AbstractPresenter;
+import com.kimboofactory.iconvert.domain.UseCase;
+import com.kimboofactory.iconvert.domain.UseCaseHandler;
 import com.kimboofactory.iconvert.domain.usecases.GetCurrencies;
 import com.kimboofactory.iconvert.domain.usecases.GetRate;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
@@ -34,14 +38,23 @@ public class FavoritePresenter extends AbstractPresenter
     }
 
     @Override
-    public void loadRate(CurrencyIHM currencyIHM) {
+    public void loadCurrency(CurrencyIHM currencyIHM) {
         getRate = new GetRate();
         //getRate.setRepository(new);
     }
 
     @Override
-    public void getCurrencies() {
+    public void loadCurrencies() {
         getCurrencies = new GetCurrencies();
+
+
+        Singleton.of(UseCaseHandler.class).setUseCase(null, getCurrencies);
+        Singleton.of(UseCaseHandler.class).execute(new UseCase.Callback() {
+            @Override
+            public void onResult(Result result) {
+
+            }
+        });
     }
 
     @Override
