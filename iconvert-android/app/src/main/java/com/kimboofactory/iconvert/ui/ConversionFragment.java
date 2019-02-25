@@ -15,7 +15,7 @@ import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.BaseFragment;
 import com.kimboofactory.iconvert.fragment.dialog.DialogUi;
 import com.kimboofactory.iconvert.persistence.model.CurrencyData;
-import com.kimboofactory.iconvert.ui.main.FavoritePresenter;
+import com.kimboofactory.iconvert.ui.main.MainPresenter;
 import com.kimboofactory.iconvert.ui.main.FavoritesAdapter;
 
 import java.util.LinkedList;
@@ -65,7 +65,7 @@ public class ConversionFragment extends BaseFragment
     private boolean isSource = false;
     private boolean isDestination = false;
 
-    private FavoritePresenter presenter;
+    private MainPresenter presenter;
 
     private void ClickedOnDeviseSource() {
         isSource = true;
@@ -93,7 +93,7 @@ public class ConversionFragment extends BaseFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.presenter = new FavoritePresenter();
+        //this.presenter = new MainPresenter();
     }
 
     @Override

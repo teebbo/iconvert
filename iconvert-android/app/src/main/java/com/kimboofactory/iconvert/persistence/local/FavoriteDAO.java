@@ -1,8 +1,5 @@
 package com.kimboofactory.iconvert.persistence.local;
 
-import android.icu.text.Replaceable;
-
-import com.kimboofactory.iconvert.persistence.model.CurrencyData;
 import com.kimboofactory.iconvert.persistence.model.FavoriteData;
 
 import java.util.List;

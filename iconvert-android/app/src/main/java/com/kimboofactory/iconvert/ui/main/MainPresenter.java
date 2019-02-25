@@ -1,12 +1,13 @@
 package com.kimboofactory.iconvert.ui.main;
 
-import com.aleengo.peach.toolbox.commons.factory.Singleton;
 import com.aleengo.peach.toolbox.commons.model.Result;
 import com.kimboofactory.iconvert.common.AbstractPresenter;
 import com.kimboofactory.iconvert.domain.UseCase;
 import com.kimboofactory.iconvert.domain.UseCaseHandler;
+import com.kimboofactory.iconvert.domain.common.QueryValue;
 import com.kimboofactory.iconvert.domain.usecases.GetCurrencies;
 import com.kimboofactory.iconvert.domain.usecases.GetRate;
+import com.kimboofactory.iconvert.domain.usecases.GetRatesAndCurrencies;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 
 import java.io.Serializable;
@@ -17,13 +18,23 @@ import java.util.HashMap;
  * Created by CK_ALEENGO on 11/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public class FavoritePresenter extends AbstractPresenter
+public class MainPresenter extends AbstractPresenter
         implements FavoriteContract.Presenter {
 
-    private GetRate getRate;
-    private GetCurrencies getCurrencies;
+    private GetRate mGetRateUseCase;
+    private GetCurrencies mGetCurrenciesUseCase;
+    private GetRatesAndCurrencies mGetRatesAndCurrenciesUseCase;
+    private UseCaseHandler mUseCaseHandler;
 
-    public FavoritePresenter() {
+    private boolean mFirstLoad = true;
+
+    public MainPresenter(UseCaseHandler useCaseHandler,
+                         GetCurrencies getCurrencies, GetRate getRate,
+                         GetRatesAndCurrencies getRatesAndCurrencies) {
+        mUseCaseHandler = useCaseHandler;
+        mGetCurrenciesUseCase = getCurrencies;
+        mGetRateUseCase = getRate;
+        mGetRatesAndCurrenciesUseCase = getRatesAndCurrencies;
     }
 
     @Override
@@ -39,17 +50,13 @@ public class FavoritePresenter extends AbstractPresenter
 
     @Override
     public void loadCurrency(CurrencyIHM currencyIHM) {
-        getRate = new GetRate();
         //getRate.setRepository(new);
     }
 
     @Override
     public void loadCurrencies() {
-        getCurrencies = new GetCurrencies();
-
-
-        Singleton.of(UseCaseHandler.class).setUseCase(null, getCurrencies);
-        Singleton.of(UseCaseHandler.class).execute(new UseCase.Callback() {
+        mUseCaseHandler.setUseCase(null, mGetCurrenciesUseCase  );
+        mUseCaseHandler.execute(new UseCase.Callback() {
             @Override
             public void onResult(Result result) {
 
@@ -58,7 +65,16 @@ public class FavoritePresenter extends AbstractPresenter
     }
 
     @Override
-    public void loadRatesAndCurrencies() {
+    public void loadRatesAndCurrencies(boolean forceUpdate) {
+        final QueryValue queryVal =
+                new GetRatesAndCurrencies.QueryVal(forceUpdate || mFirstLoad, null);
+        mFirstLoad = false;
 
+        mUseCaseHandler.setUseCase(queryVal, mGetRatesAndCurrenciesUseCase);
+        mUseCaseHandler.execute(this::onResult);
+    }
+
+    private void onResult(Result result) {
+        /* do nothing */
     }
 }

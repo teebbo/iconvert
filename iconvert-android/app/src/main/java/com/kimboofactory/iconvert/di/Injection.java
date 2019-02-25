@@ -2,8 +2,18 @@ package com.kimboofactory.iconvert.di;
 
 import android.content.Context;
 
+import com.kimboofactory.iconvert.domain.UseCaseHandler;
+import com.kimboofactory.iconvert.domain.usecases.GetCurrencies;
+import com.kimboofactory.iconvert.domain.usecases.GetRate;
+import com.kimboofactory.iconvert.domain.usecases.GetRatesAndCurrencies;
+import com.kimboofactory.iconvert.persistence.api.OpenXchangeRateAPI;
 import com.kimboofactory.iconvert.persistence.local.AppDatabase;
+import com.kimboofactory.iconvert.persistence.local.LocalCurrencyDataSource;
+import com.kimboofactory.iconvert.persistence.remote.RemoteDataSource;
 import com.kimboofactory.iconvert.persistence.repository.CurrencyRepository;
+import com.kimboofactory.iconvert.util.AppExecutors;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by CK_ALEENGO on 25/02/2019.
@@ -13,12 +23,32 @@ public class Injection {
 
     private Injection() {}
 
-    public static CurrencyRepository provideCurrencyRepository(Context context) {
+    public static CurrencyRepository provideCurrencyRepository(@NonNull Context context) {
+        final AppDatabase db = AppDatabase.getInstance(context);
 
-        final AppDatabase db = AppDatabase.getInstance();
+        final AppExecutors appExecutors = new AppExecutors();
+        final LocalCurrencyDataSource localDataSource =
+                LocalCurrencyDataSource.getInstance(appExecutors, db.convertDAO());
+        final RemoteDataSource remoteDataSource =
+                RemoteDataSource.getInstance(appExecutors, OpenXchangeRateAPI.getInstance());
 
+        return new CurrencyRepository(localDataSource, remoteDataSource);
+    }
 
-        return null;
+    public static UseCaseHandler provideUseCaseHandler() {
+        return UseCaseHandler.getInstance();
+    }
+
+    public static GetCurrencies provideGetCurrencies(@NonNull Context context) {
+        return new GetCurrencies(provideCurrencyRepository(context));
+    }
+
+    public static GetRate provideGetRates(@NonNull Context context) {
+        return new GetRate(provideCurrencyRepository(context));
+    }
+
+    public static GetRatesAndCurrencies provideGetRatesAndCurrencies(@NonNull Context context) {
+        return new GetRatesAndCurrencies(provideCurrencyRepository(context));
     }
 
 }

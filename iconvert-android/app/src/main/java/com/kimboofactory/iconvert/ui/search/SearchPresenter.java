@@ -1,16 +1,11 @@
 package com.kimboofactory.iconvert.ui.search;
 
-import com.aleengo.peach.toolbox.commons.factory.Singleton;
 import com.aleengo.peach.toolbox.commons.model.Result;
 import com.kimboofactory.iconvert.common.AbstractPresenter;
 import com.kimboofactory.iconvert.domain.UseCase;
 import com.kimboofactory.iconvert.domain.UseCaseHandler;
 import com.kimboofactory.iconvert.domain.common.QueryValue;
-import com.kimboofactory.iconvert.domain.usecases.GetCurrencies;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
-import com.kimboofactory.iconvert.persistence.local.LocalCurrencyDataSource;
-import com.kimboofactory.iconvert.persistence.remote.RemoteDataSource;
-import com.kimboofactory.iconvert.persistence.repository.CurrencyRepository;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -28,9 +23,12 @@ public class SearchPresenter extends AbstractPresenter
 
     @Getter
     private List<CurrencyIHM> selectedItems = new LinkedList<>();
-    private UseCase<QueryValue> getCurrenciesUseCase;
+    private UseCase<QueryValue> mGetCurrenciesUseCase;
+    private UseCaseHandler mUseCaseHandler;
 
-    public SearchPresenter() {
+    public SearchPresenter(UseCaseHandler useCaseHandler, UseCase getCurrenciesUseCase) {
+        mUseCaseHandler = useCaseHandler;
+        this.mGetCurrenciesUseCase = getCurrenciesUseCase;
     }
 
     @Override
@@ -53,12 +51,7 @@ public class SearchPresenter extends AbstractPresenter
 
     @Override
     public void loadCurrencies() {
-        getCurrenciesUseCase = new GetCurrencies();
-        getCurrenciesUseCase
-                .setRepository(new CurrencyRepository(Singleton.of(LocalCurrencyDataSource.class),
-                        Singleton.of(RemoteDataSource.class)));
-
-        Singleton.of(UseCaseHandler.class).setUseCase(null, getCurrenciesUseCase);
-        Singleton.of(UseCaseHandler.class).execute((Result result) -> EventBus.getDefault().post(result));
+       mUseCaseHandler.setUseCase(null, mGetCurrenciesUseCase);
+       mUseCaseHandler.execute((Result result) -> EventBus.getDefault().post(result));
     }
 }

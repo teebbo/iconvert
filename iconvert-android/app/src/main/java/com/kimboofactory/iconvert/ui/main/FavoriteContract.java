@@ -20,7 +20,7 @@ public interface FavoriteContract {
         void updateListView(int resultCode, Serializable data);
         void addCurrency();
 
-        void loadRatesAndCurrencies();
+        void loadRatesAndCurrencies(boolean forceUpdate);
     }
 
     interface View extends BaseView {

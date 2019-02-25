@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.BaseActivity;
+import com.kimboofactory.iconvert.di.Injection;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.util.Helper;
 import com.kimboofactory.widget.KFYToolbar;
@@ -49,7 +50,7 @@ public class MainActivity extends BaseActivity {
 
     @Getter
     private FavoritesAdapter favoritesAdapter;
-    private FavoritePresenter mPresenter;
+    private MainPresenter mPresenter;
     private FavoriteView mMvpView;
     private CurrencyIHM mCurrency;
 
@@ -76,7 +77,11 @@ public class MainActivity extends BaseActivity {
         mMvpView = new FavoriteView();
         mMvpView.attachUi(this);
 
-        mPresenter = new FavoritePresenter();
+        mPresenter = new MainPresenter(Injection.provideUseCaseHandler(),
+                Injection.provideGetCurrencies(getApplicationContext()),
+                Injection.provideGetRates(getApplicationContext()),
+                Injection.provideGetRatesAndCurrencies(getApplicationContext()));
+
         mPresenter.attach(mMvpView);
 
         amountET.addTextChangedListener(new TextWatcher() {
@@ -88,7 +93,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s != null && s.length() > 0) {
-                    mCurrency = new CurrencyIHM("EUR", "EURO", false);
+                    mCurrency = new CurrencyIHM("EUR", "EURO", false, "1.0");
                     mCurrency.setResult(s.toString());
 
                     (new Handler()).postDelayed(() -> mPresenter.loadCurrency(mCurrency), Helper.DELAY_MILLIS_2000);
@@ -100,15 +105,6 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        // load all currencies and rates
-        mPresenter.loadCurrencies();
-
     }
 
     @Override
@@ -124,7 +120,7 @@ public class MainActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
 
-        mPresenter.loadRatesAndCurrencies();
+        mPresenter.loadRatesAndCurrencies(false);
     }
 
     @Override

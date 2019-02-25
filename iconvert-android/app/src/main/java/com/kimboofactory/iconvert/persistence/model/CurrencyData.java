@@ -21,13 +21,10 @@ public class CurrencyData implements Model {
     private String code;
     @ColumnInfo(name = "libelle")
     private String libelle;
-    @ColumnInfo(name = "rate")
-    private String value;
 
-    public CurrencyData(String code, String libelle, String value) {
+    public CurrencyData(String code, String libelle) {
         this.code = code;
         this.libelle = libelle;
-        this.value = value;
     }
 
     public Long getCurrencyId() {
@@ -52,13 +49,5 @@ public class CurrencyData implements Model {
 
     public void setLibelle(String libelle) {
         this.libelle = libelle;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
     }
 }

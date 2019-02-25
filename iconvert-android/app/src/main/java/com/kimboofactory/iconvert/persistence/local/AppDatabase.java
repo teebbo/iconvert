@@ -20,27 +20,23 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DB_NAME = "iconvert.db";
 
-    private static Context context;
+    private static AppDatabase instance;
 
     public AppDatabase() {
         super();
     }
 
-    public abstract FavoriteDAO favoriteDAO();
-    public abstract CurrencyDAO currencyDAO();
-    public abstract RateDAO rateDAO();
+    public abstract IConvertDAO convertDAO();
 
-    private static class LazyHolder {
-        private static final AppDatabase INSTANCE = Room
-                .databaseBuilder(AppDatabase.context.getApplicationContext(),
-                        AppDatabase.class, DB_NAME)
-                .build();
-    }
-
-    public static AppDatabase getDb(Context context) {
-        if (AppDatabase.context == null) {
-            AppDatabase.context = context;
+    public static AppDatabase getInstance(Context context) {
+        if (instance == null) {
+            synchronized (AppDatabase.class) {
+                if (instance == null) {
+                    instance = Room.databaseBuilder(context.getApplicationContext(),
+                                    AppDatabase.class, DB_NAME).build();
+                }
+            }
         }
-        return LazyHolder.INSTANCE;
+        return instance;
     }
 }

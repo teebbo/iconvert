@@ -11,14 +11,17 @@ import java.util.List;
  */
 public interface Repository {
     interface GetCallback {
-        void onLoaded(Response response);
+        void onFinished(Response response);
     }
 
     interface SearchCallback {
         void onDataLoaded(Response response);
     }
 
-    void find(String query, SearchCallback callback);
+    void search(String query, SearchCallback callback);
     void addAll(List<CurrencyData> currencies);
+    void getCurrencies(GetCallback callback);
+    void getRates(GetCallback callback);
+    void addRatesAndCurrencies();
 
 }

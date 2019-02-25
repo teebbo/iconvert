@@ -2,8 +2,7 @@ package com.kimboofactory.iconvert.persistence;
 
 
 import com.aleengo.peach.toolbox.commons.model.Response;
-
-import java.util.List;
+import com.kimboofactory.iconvert.dto.ResponseDTO;
 
 /**
  * Created by CK_ALEENGO on 13/02/2019.
@@ -17,6 +16,10 @@ public interface CurrencyDataSource {
 
     interface GetCurrenciesCallback {
         void currenciesLoaded(Response response);
+    }
+
+    interface GetCallback {
+        void onFinished(ResponseDTO response);
     }
 
     void getCurrencyByCode(String code, GetCurrencyCallback callback);

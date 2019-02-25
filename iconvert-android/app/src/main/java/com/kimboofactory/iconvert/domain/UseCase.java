@@ -19,7 +19,8 @@ public abstract class UseCase<Q> {
     @Setter @Getter
     private Q queryValue;
 
-    public UseCase() {
+    public UseCase(Repository repository) {
+        this.repository = repository;
     }
 
     protected abstract void executeUseCase();

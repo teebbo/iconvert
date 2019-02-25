@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import com.kimboofactory.iconvert.domain.Repository;
 import com.kimboofactory.iconvert.domain.UseCase;
 import com.kimboofactory.iconvert.domain.common.QueryValue;
 import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
@@ -34,14 +35,15 @@ public class GetCurrencies extends UseCase<QueryValue> {
 
     public static final String TAG = "GetCurrenciesUseCase";
 
-    public GetCurrencies() {
+    public GetCurrencies(Repository repository) {
+        super(repository);
     }
 
     @Override
     protected void executeUseCase() {
         final String query = getQueryValue() == null ?
                 null : getQueryValue().getValue();
-        getRepository().find(query, this::onDataLoaded);
+        getRepository().search(query, this::onDataLoaded);
     }
 
     private void onDataLoaded(Response response) {
@@ -95,7 +97,7 @@ public class GetCurrencies extends UseCase<QueryValue> {
             rateEntities.forEach(rateEntity -> {
                 currencyEntities.forEach(currencyEntity -> {
                     if (currencyEntity.getCode().equals(rateEntity.getCode())) {
-                        items.add(new CurrencyData(rateEntity.getCode(), currencyEntity.getLibelle(), rateEntity.getValue()));
+                        items.add(new CurrencyData(rateEntity.getCode(), currencyEntity.getLibelle()));
                     }
                 });
             });

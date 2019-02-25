@@ -38,7 +38,7 @@ versions.timber = "4.5.1"
 versions.volley = "1.1.0"
 versions.lombok = "1.16.20"
 versions.room = "2.1.0-alpha04"
-versions.toolbox= "master-SNAPSHOT"
+versions.toolbox= "-SNAPSHOT"
 
 // android build versions
 def build_versions = [:]

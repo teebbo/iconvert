@@ -6,6 +6,7 @@ import com.kimboofactory.iconvert.domain.Repository;
 import com.kimboofactory.iconvert.persistence.local.LocalCurrencyDataSource;
 import com.kimboofactory.iconvert.persistence.model.CurrencyData;
 import com.kimboofactory.iconvert.persistence.remote.RemoteDataSource;
+import com.kimboofactory.iconvert.util.Mapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,24 +28,46 @@ public class CurrencyRepository implements Repository {
     }
 
     @Override
-    public void find(final String query, SearchCallback callback) {
+    public void search(final String query, SearchCallback callback) {
       if (localDataSource.isEmpty()) {
-          Log.d(TAG, "CurrencyRepository.find " + Thread.currentThread().getName());
+          Log.d(TAG, "CurrencyRepository.search " + Thread.currentThread().getName());
           remoteDataSource.getCurrencies(response -> {
-              Log.d(TAG, "CurrencyRepository.find " + Thread.currentThread().getName());
+              Log.d(TAG, "CurrencyRepository.search " + Thread.currentThread().getName());
               callback.onDataLoaded(response);
               if (response.getError() == null) {
-                  localDataSource.saveAll(new ArrayList<>());
+                  localDataSource.saveAllCurrencies(new ArrayList<>(0));
               }
           });
       } else {
-          Log.d(TAG, "CurrencyRepository.find " + Thread.currentThread().getName());
+          Log.d(TAG, "CurrencyRepository.search " + Thread.currentThread().getName());
           localDataSource.getCurrencies(callback::onDataLoaded);
       }
     }
 
     @Override
     public void addAll(List<CurrencyData> currencies) {
-        localDataSource.saveAll(currencies);
+        localDataSource.saveAllCurrencies(currencies);
+    }
+
+    @Override
+    public void getCurrencies(GetCallback callback) {
+
+    }
+
+    @Override
+    public void getRates(GetCallback callback) {
+
+    }
+
+    @Override
+    public void addRatesAndCurrencies() {
+        final Mapper mapper = new Mapper();
+        remoteDataSource.getRatesAndCurrencies(responseDTO -> {
+            if ("CURRENCIES".equals(responseDTO.getRequestId())) {
+                localDataSource.saveAllCurrencies(mapper.map2Currencies(responseDTO.getResponse()));
+            } else if ("RATES".equals(responseDTO.getRequestId())) {
+                localDataSource.saveAllRates(mapper.map2Rates(responseDTO.getResponse()));
+            }
+        });
     }
 }

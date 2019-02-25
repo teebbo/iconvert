@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
  */
 public class AppExecutors {
 
-    private static final int MAX_THREADS = 3;
+    private static final int MAX_THREADS = 2;
     private DiskIOThreadExecutor mDiskIO;
     private Executor mNetworkIO;
 

@@ -7,13 +7,11 @@ import com.aleengo.peach.toolbox.commons.strategy.RawJSONDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
+import com.kimboofactory.iconvert.domain.Repository;
 import com.kimboofactory.iconvert.domain.UseCase;
 import com.kimboofactory.iconvert.domain.common.QueryValue;
-import com.kimboofactory.iconvert.dto.CurrencyIHM;
 
 import java.io.StringReader;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by CK_ALEENGO on 11/02/2019.
@@ -21,7 +19,8 @@ import java.util.stream.Collectors;
  */
 public class GetRate extends UseCase<QueryValue> {
 
-    public GetRate() {
+    public GetRate(Repository repository) {
+        super(repository);
     }
 
     private void onDataLoaded(Response response) {
@@ -39,17 +38,17 @@ public class GetRate extends UseCase<QueryValue> {
         final RawJSON rawData = gson.fromJson(new JsonReader(new StringReader(json)),
                 RawJSON.class);
 
-        final List<CurrencyIHM> list = rawData.getItems().entrySet()
+        /*final List<CurrencyIHM> list = rawData.getItems().entrySet()
                 .stream()
                 .map(entrySet -> new CurrencyIHM(entrySet.getKey(), entrySet.getValue(), false))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
 
-        getUseCaseCallback().onResult(new Result(list, null));
+        getUseCaseCallback().onResult(new Result(null, null));
     }
 
     @Override
     protected void executeUseCase() {
         final String query = getQueryValue().getValue();
-        getRepository().find(query, this::onDataLoaded);
+        getRepository().search(query, this::onDataLoaded);
     }
 }

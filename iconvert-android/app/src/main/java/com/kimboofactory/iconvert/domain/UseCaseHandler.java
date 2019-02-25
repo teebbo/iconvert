@@ -19,8 +19,17 @@ public class UseCaseHandler {
         this.useCase = useCase;
     }
 
+    public static UseCaseHandler getInstance() {
+        //instance = Singleton.of(UseCaseHandler.class, instance);
+        return LazyHolder.INSTANCE;
+    }
+
     public void execute(final UseCase.Callback callback) {
         useCase.setUseCaseCallback(callback);
         useCase.run();
+    }
+
+    private static class LazyHolder {
+        private static final UseCaseHandler INSTANCE = new UseCaseHandler();
     }
 }

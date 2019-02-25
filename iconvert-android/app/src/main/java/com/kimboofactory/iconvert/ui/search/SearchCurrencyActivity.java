@@ -12,15 +12,12 @@ import android.widget.ListView;
 import com.google.android.material.snackbar.Snackbar;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.BaseActivity;
+import com.kimboofactory.iconvert.di.Injection;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.util.Helper;
 import com.kimboofactory.widget.KFYToolbar;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.NoSuchElementException;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -85,7 +82,9 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
         mMvpView = new SearchCurrencyView();
         mMvpView.attachUi(this);
 
-        presenter = new SearchPresenter();
+        presenter = new SearchPresenter(Injection.provideUseCaseHandler(),
+                Injection.provideGetCurrencies(this));
+
         presenter.attach(mMvpView);
 
         // setting SwipeRefresh
@@ -96,9 +95,7 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(mMvpView);
-
         swipeRefreshLayout.setRefreshing(true);
-
         presenter.loadCurrencies();
     }
 

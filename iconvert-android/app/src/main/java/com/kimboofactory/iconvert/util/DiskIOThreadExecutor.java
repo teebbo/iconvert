@@ -17,6 +17,7 @@ public class DiskIOThreadExecutor implements Executor {
 
     @Override
     public void execute(Runnable command) {
+        System.out.println("DiskIOThreadExecutor.execute " + Thread.currentThread().getName());
         mDiskIOService.execute(command);
     }
 }
