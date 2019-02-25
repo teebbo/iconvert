@@ -8,7 +8,6 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -92,7 +91,7 @@ public class MainActivity extends BaseActivity {
                     mCurrency = new CurrencyIHM("EUR", "EURO", false);
                     mCurrency.setResult(s.toString());
 
-                    (new Handler()).postDelayed(() -> mPresenter.loadRate(mCurrency), Helper.DELAY_MILLIS_2000);
+                    (new Handler()).postDelayed(() -> mPresenter.loadCurrency(mCurrency), Helper.DELAY_MILLIS_2000);
                 }
             }
 
@@ -101,6 +100,15 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // load all currencies and rates
+        mPresenter.loadCurrencies();
+
     }
 
     @Override
