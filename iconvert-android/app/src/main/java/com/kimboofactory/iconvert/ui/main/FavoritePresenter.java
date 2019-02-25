@@ -8,9 +8,6 @@ import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by CK_ALEENGO on 11/02/2019.
@@ -45,5 +42,10 @@ public class FavoritePresenter extends AbstractPresenter
     @Override
     public void getCurrencies() {
         getCurrencies = new GetCurrencies();
+    }
+
+    @Override
+    public void loadRatesAndCurrencies() {
+
     }
 }

@@ -19,6 +19,8 @@ public interface FavoriteContract {
 
         void updateListView(int resultCode, Serializable data);
         void addCurrency();
+
+        void loadRatesAndCurrencies();
     }
 
     interface View extends BaseView {

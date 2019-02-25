@@ -113,6 +113,13 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        mPresenter.loadRatesAndCurrencies();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.detach();
