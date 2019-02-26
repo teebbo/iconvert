@@ -1,7 +1,6 @@
 package com.kimboofactory.iconvert.persistence.remote;
 
 import com.aleengo.peach.toolbox.commons.factory.Singleton;
-import com.kimboofactory.iconvert.dto.ResponseDTO;
 import com.kimboofactory.iconvert.persistence.CurrencyDataSource;
 import com.kimboofactory.iconvert.persistence.api.API;
 import com.kimboofactory.iconvert.persistence.api.OpenXchangeRateAPI;
@@ -47,15 +46,7 @@ public class RemoteDataSource implements CurrencyDataSource {
     }
 
     public void getRatesAndCurrencies(CurrencyDataSource.GetCallback callback) {
-        final Runnable currenciesCommand = () -> ((OpenXchangeRateAPI) api)
-                .getCurrencies(response ->
-                        callback.onFinished(new ResponseDTO("CURRENCIES", response)));
-
-        final Runnable rateCommand = () -> ((OpenXchangeRateAPI) api)
-                .getRates(response ->
-                        callback.onFinished(new ResponseDTO("RATES", response)));
-
-        appExecutors.networkIO().execute(currenciesCommand);
-        appExecutors.networkIO().execute(rateCommand);
+        final Runnable command = () -> ((OpenXchangeRateAPI) api).getRatesAndCurrencies(callback::onFinished);
+        appExecutors.networkIO().execute(command);
     }
 }

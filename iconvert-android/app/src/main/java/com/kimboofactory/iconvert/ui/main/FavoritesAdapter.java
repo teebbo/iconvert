@@ -10,7 +10,6 @@ import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,10 +53,10 @@ public class FavoritesAdapter
     public void onBindViewHolder(ViewHolder holder, int position) {
         final CurrencyIHM item = (CurrencyIHM) getItem(position);
 
-        holder.codeTV.setText(item.getCode());
-        holder.libelleTV.setText(item.getLibelle());
-        /*holder.rateTV.setText(item.getRate());
-        holder.resultTV.setText(item.getResult());*/
+        holder.codeTV.setText(item.getEntity().getCode());
+        holder.libelleTV.setText(item.getEntity().getLibelle());
+        /*holder.rateTV.setText(item.getComputeRate());
+        holder.resultTV.setText(item.getComputeRate());*/
     }
 
 

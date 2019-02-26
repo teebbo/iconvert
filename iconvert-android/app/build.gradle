@@ -52,6 +52,10 @@ dependencies {
     implementation deps.room.runtime
     annotationProcessor deps.room.compiler
 
+    //stetho
+    implementation deps.stetho.runtime
+    implementation deps.stetho.network_helper
+
     testImplementation deps.junit
     androidTestImplementation deps.android_test_runner
     androidTestImplementation deps.espresso.core

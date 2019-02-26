@@ -9,13 +9,13 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.aleengo.peach.toolbox.widget.PeachToolbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.BaseActivity;
 import com.kimboofactory.iconvert.di.Injection;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.util.Helper;
-import com.kimboofactory.widget.KFYToolbar;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,7 +36,7 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
     SwipeRefreshLayout swipeRefreshLayout;
 
     @BindView(R.id.search_toolbar)
-    KFYToolbar toolbar;
+    PeachToolbar toolbar;
 
     @BindView(R.id.iv_back)
     ImageView mBack;

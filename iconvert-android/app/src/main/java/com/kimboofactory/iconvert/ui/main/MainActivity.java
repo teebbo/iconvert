@@ -2,7 +2,6 @@ package com.kimboofactory.iconvert.ui.main;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -93,10 +92,10 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s != null && s.length() > 0) {
-                    mCurrency = new CurrencyIHM("EUR", "EURO", false, "1.0");
-                    mCurrency.setResult(s.toString());
+                    /*mCurrency = new CurrencyIHM("EUR", "EURO", false, "1.0");
+                    mCurrency.setComputeRate(s.toString());
 
-                    (new Handler()).postDelayed(() -> mPresenter.loadCurrency(mCurrency), Helper.DELAY_MILLIS_2000);
+                    (new Handler()).postDelayed(() -> mPresenter.loadCurrency(mCurrency), Helper.DELAY_MILLIS_2000);*/
                 }
             }
 
@@ -112,7 +111,7 @@ public class MainActivity extends BaseActivity {
         if (requestCode == SEARCH_CURRENCY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
 
             final Serializable extras = data.getSerializableExtra(Helper.EXTRA_SELECTED_ITEM);
-            mPresenter.updateListView(resultCode, extras);
+            mPresenter.updateFavorites(resultCode, extras);
         }
     }
 

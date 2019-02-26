@@ -8,6 +8,7 @@ import android.view.View;
 import com.aleengo.peach.toolbox.commons.model.Result;
 import com.google.android.material.snackbar.Snackbar;
 import com.kimboofactory.iconvert.R;
+import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.util.Helper;
 
@@ -15,8 +16,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by CK_ALEENGO on 13/02/2019.
@@ -38,10 +39,13 @@ public class SearchCurrencyView implements SearchContract.View {
             return;
         }
 
-        final List<CurrencyIHM> currencies = (List<CurrencyIHM>) event.getValue();
+        final List<CurrencyEntity> currenciesEntity = (List<CurrencyEntity>) event.getValue();
         activity.getAdapter().clear();
-        activity.getAdapter().updateItems(currencies);
-
+        activity.getAdapter().updateItems(
+                currenciesEntity.stream()
+                        .map(CurrencyIHM::new)
+                        .collect(Collectors.toList())
+        );
         // stop the refresh
         activity.getSwipeRefreshLayout().setRefreshing(false);
     }
@@ -87,10 +91,9 @@ public class SearchCurrencyView implements SearchContract.View {
     private void performedClick(List<CurrencyIHM> items) {
         final Intent data = new Intent();
 
-        final HashMap<Integer, CurrencyIHM> finalItems = new LinkedHashMap<>();
-        for (int ix = 0; ix < items.size(); ix++) {
-            finalItems.put(ix, items.get(ix));
-        }
+        final HashMap<Integer, CurrencyIHM> finalItems = (HashMap<Integer, CurrencyIHM>)
+                items.stream()
+                        .collect(Collectors.toMap(item -> items.indexOf(item), item -> item));
 
         data.putExtra(Helper.EXTRA_SELECTED_ITEM, finalItems);
         activity.setResult(Activity.RESULT_OK, data);

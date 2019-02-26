@@ -38,7 +38,8 @@ versions.timber = "4.5.1"
 versions.volley = "1.1.0"
 versions.lombok = "1.16.20"
 versions.room = "2.1.0-alpha04"
-versions.toolbox= "-SNAPSHOT"
+versions.toolbox= "6b9291acc5"
+versions.stetho = "1.5.0"
 
 // android build versions
 def build_versions = [:]
@@ -59,6 +60,7 @@ deps.constraint_layout = "androidx.constraintlayout:constraintlayout:$versions.c
 deps.timber = "com.jakewharton.timber:timber:$versions.timber"
 deps.junit = "junit:junit:$versions.junit"
 deps.lombok = "org.projectlombok:lombok:$versions.lombok"
+
 
 def toolbox = [:]
 toolbox.android = "com.github.aleengo.peach-toolbox:toolbox:$versions.toolbox"
@@ -104,6 +106,11 @@ def room = [:]
 room.runtime = "androidx.room:room-runtime:$versions.room"
 room.compiler = "androidx.room:room-compiler:$versions.room"
 deps.room = room
+
+def stetho = [:]
+stetho.runtime = "com.facebook.stetho:stetho:$versions.stetho"
+stetho.network_helper = "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
+deps.stetho = stetho
 
 // adding the deps object to ext (extensions) object
 ext.deps = deps

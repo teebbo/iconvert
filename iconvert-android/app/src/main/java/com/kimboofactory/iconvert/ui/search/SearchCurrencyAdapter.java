@@ -67,8 +67,8 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
     public void onBindViewHolder(ViewHolder holder, int position) {
         final CurrencyIHM currencyIHM = (CurrencyIHM) getItem(position);
 
-        holder.codeTV.setText(currencyIHM.getCode());
-        holder.libelleTV.setText(currencyIHM.getLibelle());
+        holder.codeTV.setText(currencyIHM.getEntity().getCode());
+        holder.libelleTV.setText(currencyIHM.getEntity().getLibelle());
         holder.checkBox.setChecked(currencyIHM.getChecked());
     }
 
@@ -105,8 +105,8 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
         }
 
         private boolean accept(CurrencyIHM currencyIHM, final String query) {
-            return currencyIHM.getCode().toLowerCase().trim().contains(query) ||
-                    currencyIHM.getLibelle().toLowerCase().trim().contains(query);
+            return currencyIHM.getEntity().getCode().toLowerCase().trim().contains(query) ||
+                    currencyIHM.getEntity().getLibelle().toLowerCase().trim().contains(query);
         }
 
         @Override

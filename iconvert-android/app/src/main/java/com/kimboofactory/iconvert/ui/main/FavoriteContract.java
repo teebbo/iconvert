@@ -17,7 +17,7 @@ public interface FavoriteContract {
         void loadCurrency(CurrencyIHM currencyIHM);
         void loadCurrencies();
 
-        void updateListView(int resultCode, Serializable data);
+        void updateFavorites(int resultCode, Serializable data);
         void addCurrency();
 
         void loadRatesAndCurrencies(boolean forceUpdate);
@@ -26,6 +26,6 @@ public interface FavoriteContract {
     interface View extends BaseView {
         void showSearchActivity();
 
-        void updateFavoriteList(List<CurrencyIHM> currencies);
+        void updateFavoritesList(List<CurrencyIHM> currencies);
     }
 }

@@ -5,8 +5,6 @@ import android.content.Intent;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.ui.search.SearchCurrencyActivity;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -32,7 +30,7 @@ public class FavoriteView implements FavoriteContract.View {
     }
 
     @Override
-    public void updateFavoriteList(List<CurrencyIHM> currencies) {
+    public void updateFavoritesList(List<CurrencyIHM> currencies) {
         //activity.getFavoritesAdapter().clear();
         activity.getFavoritesAdapter().updateItems(currencies);
     }

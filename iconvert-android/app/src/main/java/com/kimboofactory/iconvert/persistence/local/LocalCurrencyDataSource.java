@@ -4,12 +4,16 @@ import android.util.Log;
 
 import com.aleengo.peach.toolbox.commons.factory.Singleton;
 import com.aleengo.peach.toolbox.commons.model.Response;
+import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
 import com.kimboofactory.iconvert.persistence.CurrencyDataSource;
 import com.kimboofactory.iconvert.persistence.model.CurrencyData;
 import com.kimboofactory.iconvert.persistence.model.RateData;
 import com.kimboofactory.iconvert.util.AppExecutors;
+import com.kimboofactory.iconvert.util.NamedCallable;
+import com.kimboofactory.iconvert.util.NamedRunnable;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -42,44 +46,64 @@ public class LocalCurrencyDataSource implements CurrencyDataSource {
 
     @Override
     public void getCurrencyByCode(String code, GetCurrencyCallback callback) {
-        Log.d(TAG, "LocalDataSource.getCurrencyByCode " + Thread.currentThread().getName());
-
         final Runnable task = () -> {
-            Log.d(TAG, "LocalDataSource.runnable " + Thread.currentThread().getName());
-            CurrencyData currency = dao.getCurrencyByCode(code);
+            Log.d(TAG, "LocalDataSource.getCurrencyByCode " + Thread.currentThread().getName());
+            CurrencyEntity currency = dao.getCurrencyByCode(code);
             callback.currencyLoaded(new Response(currency, null));
         };
-        appExecutors.diskIO().execute(task);
+        final NamedRunnable runnable = new NamedRunnable("LocalDataSource.getCurrencyByCode") {
+            @Override
+            protected void execute() {
+                CurrencyEntity currency = dao.getCurrencyByCode(code);
+                callback.currencyLoaded(new Response(currency, null));
+            }
+        };
+        appExecutors.diskIO().execute(runnable);
     }
 
     @Override
     public void getCurrencies(GetCurrenciesCallback callback) {
-        Log.d(TAG, "LocalDataSource.loadCurrencies " + Thread.currentThread().getName());
         final Runnable command = () -> {
-            final List<CurrencyData> currencies = dao.getAllCurrencies();
+            Log.d(TAG, "LocalDataSource.loadCurrencies " + Thread.currentThread().getName());
+            final List<CurrencyEntity> currencies = dao.getAllCurrencies();
             callback.currenciesLoaded(new Response(currencies, null));
         };
+
         appExecutors.diskIO().execute(command);
     }
 
     public boolean isEmpty() {
-        Log.d(TAG, "LocalDataSource.isEmpty " + Thread.currentThread().getName());
-        final String USD_CODE = "USD";
-        return dao.getCurrencyByCode(USD_CODE) == null;
+        final String BASE_CODE = "USD";
+        final Callable<Boolean> command = () -> {
+            Log.d(TAG, "LocalDataSource.isEmpty " + Thread.currentThread().getName());
+            return dao.getCurrencyByCode(BASE_CODE) == null;
+        };
+
+        final NamedCallable<Boolean> callable = new NamedCallable<Boolean>("LocalDataSource.isEmpty") {
+            @Override
+            protected Boolean execute() {
+                return dao.getCurrencyByCode(BASE_CODE) == null;
+            }
+        };
+        return appExecutors.diskIO().execute(callable);
     }
 
     public void saveAllCurrencies(List<CurrencyData> currencies) {
-        Log.d(TAG, "LocalDataSource.saveAllCurrencies " + Thread.currentThread().getName());
         if (currencies != null && currencies.size() > 0) {
-            final Runnable command = () -> dao.saveAllCurrencies(currencies);
+            final Runnable command = () -> {
+                Log.d(TAG, "LocalDataSource.saveAllCurrencies " + Thread.currentThread().getName());
+                dao.saveAllCurrencies(currencies);
+            };
             appExecutors.diskIO().execute(command);
         }
     }
 
     public void saveAllRates(List<RateData> rates) {
-        Log.d(TAG, "LocalDataSource.saveAllRates " + Thread.currentThread().getName());
         if (rates != null && rates.size() > 0) {
-            final Runnable command = () -> dao.saveAllRates(rates);
+            final Runnable command = () -> {
+                Log.d(TAG, "LocalDataSource.saveAllRates " + Thread.currentThread().getName());
+                dao.saveAllRates(rates);
+            };
             appExecutors.diskIO().execute(command);
         }
     }

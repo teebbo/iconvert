@@ -1,5 +1,6 @@
 package com.kimboofactory.iconvert.dto;
 
+import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
 import com.kimboofactory.iconvert.model.Model;
 
 import lombok.Getter;
@@ -18,12 +19,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CurrencyIHM implements Model {
     @NonNull
-    private String code;
-    @NonNull
-    private String libelle;
-    @NonNull
-    private Boolean checked;
-    @NonNull
-    private String rate;
-    private String result;
+    private CurrencyEntity entity;
+    private Boolean checked = false;
+    private String computeRate;
+    private String amount;
 }

@@ -1,5 +1,6 @@
 package com.kimboofactory.iconvert.persistence.local;
 
+import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
 import com.kimboofactory.iconvert.persistence.model.CurrencyData;
 import com.kimboofactory.iconvert.persistence.model.FavoriteData;
 import com.kimboofactory.iconvert.persistence.model.RateData;
@@ -26,11 +27,14 @@ public interface IConvertDAO {
     void deleteAllRates();
 
     // currencies
-    @Query("SELECT * FROM currency")
-    List<CurrencyData> getAllCurrencies();
+    @Query("SELECT c.code, c.libelle, r.rate as value FROM currency c " +
+            "INNER JOIN rate r ON c.code = r.code")
+    List<CurrencyEntity> getAllCurrencies();
 
-    @Query("SELECT * FROM currency WHERE code = :code")
-    CurrencyData getCurrencyByCode(String code);
+    @Query("SELECT c.code, c.libelle, r.rate as value FROM currency c " +
+            "INNER JOIN rate r ON r.code = c.code " +
+            "WHERE c.code = :code")
+    CurrencyEntity getCurrencyByCode(String code);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void saveAllCurrencies(List<CurrencyData> currencies);

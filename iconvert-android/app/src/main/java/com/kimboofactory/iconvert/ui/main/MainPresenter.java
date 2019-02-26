@@ -43,9 +43,9 @@ public class MainPresenter extends AbstractPresenter
     }
 
     @Override
-    public void updateListView(int resultCode, Serializable data) {
+    public void updateFavorites(int resultCode, Serializable data) {
         final HashMap<Integer, CurrencyIHM> currencies = (HashMap<Integer, CurrencyIHM>) data;
-        ((FavoriteView) getMvpView()).updateFavoriteList(new ArrayList<>(currencies.values()));
+        ((FavoriteView) getMvpView()).updateFavoritesList(new ArrayList<>(currencies.values()));
     }
 
     @Override
