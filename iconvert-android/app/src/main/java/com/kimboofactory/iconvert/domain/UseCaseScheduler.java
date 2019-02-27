@@ -1,9 +1,6 @@
 package com.kimboofactory.iconvert.domain;
 
-import com.kimboofactory.iconvert.util.Utils;
-
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
+import com.aleengo.peach.toolbox.commons.concurrent.PeachFixedThreadExecutor;
 
 /**
  * Created by CK_ALEENGO on 26/02/2019.
@@ -12,10 +9,12 @@ import java.util.concurrent.ThreadPoolExecutor;
 public final class UseCaseScheduler {
 
     private static final int MAX_THREADS = 3;
-    private ThreadPoolExecutor executor;
+    private static final String POOL_NAME = "UseCaseSchedulerPool";
+
+    private PeachFixedThreadExecutor executor;
 
     public UseCaseScheduler() {
-        executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(MAX_THREADS, Utils.threadFactory("UseCaseHandler", false));
+        executor = new PeachFixedThreadExecutor(POOL_NAME);
     }
 
     public void execute(Runnable command) {

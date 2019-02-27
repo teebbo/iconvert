@@ -2,6 +2,7 @@ package com.kimboofactory.iconvert.di;
 
 import android.content.Context;
 
+import com.aleengo.peach.toolbox.commons.util.AppExecutors;
 import com.kimboofactory.iconvert.domain.UseCaseHandler;
 import com.kimboofactory.iconvert.domain.usecases.GetCurrencies;
 import com.kimboofactory.iconvert.domain.usecases.GetRate;
@@ -11,7 +12,6 @@ import com.kimboofactory.iconvert.persistence.local.AppDatabase;
 import com.kimboofactory.iconvert.persistence.local.LocalCurrencyDataSource;
 import com.kimboofactory.iconvert.persistence.remote.RemoteDataSource;
 import com.kimboofactory.iconvert.persistence.repository.CurrencyRepository;
-import com.kimboofactory.iconvert.util.AppExecutors;
 
 import androidx.annotation.NonNull;
 

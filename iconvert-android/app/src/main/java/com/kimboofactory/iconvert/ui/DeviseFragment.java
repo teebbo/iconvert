@@ -150,7 +150,7 @@ public class DeviseFragment extends BaseFragment
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        // The onFinished useCaseCallback returns with our data results
+        // The onReceived useCaseCallback returns with our data results
         // Here you update the UI based on the results of your filter.
         Log.d(TAG, "onLoadFinished() is called");
         mAdapter.updateDataSet(new ArrayList<>());

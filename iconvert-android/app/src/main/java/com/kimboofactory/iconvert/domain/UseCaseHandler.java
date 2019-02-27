@@ -1,7 +1,7 @@
 package com.kimboofactory.iconvert.domain;
 
+import com.aleengo.peach.toolbox.commons.common.NamedRunnable;
 import com.kimboofactory.iconvert.domain.common.QueryValue;
-import com.kimboofactory.iconvert.util.NamedRunnable;
 
 /**
  * Created by CK_ALEENGO on 14/02/2019.
@@ -9,7 +9,6 @@ import com.kimboofactory.iconvert.util.NamedRunnable;
  */
 public class UseCaseHandler {
 
-    private static UseCaseHandler instance;
     private UseCase useCase;
     private UseCaseScheduler useCaseScheduler;
 
@@ -23,23 +22,18 @@ public class UseCaseHandler {
     }
 
     public static UseCaseHandler getInstance() {
-        //instance = Singleton.of(UseCaseHandler.class, instance);
         return LazyHolder.INSTANCE;
     }
 
     public void execute(final UseCase.Callback callback) {
         useCase.setUseCaseCallback(callback);
 
-        final NamedRunnable task = new NamedRunnable("%s", "UseCaseHandler") {
+        final NamedRunnable task = new NamedRunnable("%s", "UseCaseHandler.execute()") {
             @Override
             protected void execute() {
                 useCase.run();
             }
         };
-        /*Runnable task = () -> {
-            System.out.println("UseCaseScheduler.execute: " + Thread.currentThread().getName());
-            useCase.run();
-        };*/
         useCaseScheduler.execute(task);
     }
 
