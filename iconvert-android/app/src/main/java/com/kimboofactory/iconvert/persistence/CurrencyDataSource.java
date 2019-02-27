@@ -14,11 +14,11 @@ public interface CurrencyDataSource {
     }
 
     interface GetCurrenciesCallback {
-        void currenciesLoaded(Response response);
+        void onCurrenciesReceived(Response response);
     }
 
     interface GetCallback {
-        void onFinished(Response response);
+        void onReceived(Response response);
     }
 
     void getCurrencyByCode(String code, GetCurrencyCallback callback);

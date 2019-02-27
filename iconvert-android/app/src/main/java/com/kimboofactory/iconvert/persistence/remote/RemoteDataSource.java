@@ -1,10 +1,11 @@
 package com.kimboofactory.iconvert.persistence.remote;
 
+import com.aleengo.peach.toolbox.commons.common.NamedRunnable;
 import com.aleengo.peach.toolbox.commons.factory.Singleton;
+import com.aleengo.peach.toolbox.commons.util.AppExecutors;
 import com.kimboofactory.iconvert.persistence.CurrencyDataSource;
 import com.kimboofactory.iconvert.persistence.api.API;
 import com.kimboofactory.iconvert.persistence.api.OpenXchangeRateAPI;
-import com.kimboofactory.iconvert.util.AppExecutors;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -40,13 +41,22 @@ public class RemoteDataSource implements CurrencyDataSource {
 
     @Override
     public void getCurrencies(GetCurrenciesCallback callback) {
-        final Runnable command = () -> ((OpenXchangeRateAPI) api)
-                .getCurrencies(callback::currenciesLoaded);
+        final NamedRunnable command = new NamedRunnable("%s.%s", "RemoteDataSource", "getCurrencies") {
+            @Override
+            protected void execute() {
+                ((OpenXchangeRateAPI) api).getCurrencies(callback::onCurrenciesReceived);
+            }
+        };
         appExecutors.networkIO().execute(command);
     }
 
     public void getRatesAndCurrencies(CurrencyDataSource.GetCallback callback) {
-        final Runnable command = () -> ((OpenXchangeRateAPI) api).getRatesAndCurrencies(callback::onFinished);
+        final NamedRunnable command = new NamedRunnable("%s.%s", "RemoteDataSource", "getRatesAndCurrencies") {
+            @Override
+            protected void execute() {
+                ((OpenXchangeRateAPI) api).getRatesAndCurrencies(callback::onReceived);
+            }
+        };
         appExecutors.networkIO().execute(command);
     }
 }
