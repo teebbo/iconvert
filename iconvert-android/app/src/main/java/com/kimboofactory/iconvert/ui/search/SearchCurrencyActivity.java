@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 
 import com.aleengo.peach.toolbox.widget.PeachToolbar;
 import com.google.android.material.snackbar.Snackbar;
@@ -15,6 +16,7 @@ import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.BaseActivity;
 import com.kimboofactory.iconvert.di.Injection;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
+import com.kimboofactory.iconvert.ui.main.MainActivity;
 import com.kimboofactory.iconvert.util.Helper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,6 +28,8 @@ import butterknife.BindView;
 import lombok.Getter;
 
 public class SearchCurrencyActivity extends BaseActivity implements SearchView.OnQueryTextListener {
+
+    private static final int NO_EXTRA = -1;
 
     @Getter
     @BindView(R.id.coordinator_layout)
@@ -54,6 +58,7 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
 
     @Getter
     private SearchCurrencyAdapter adapter;
+    private int mRequestCode;
 
     @Override
     public String getClassName() {
@@ -70,7 +75,9 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
 
         setSupportActionBar(toolbar);
 
-        adapter = new SearchCurrencyAdapter(this, Helper.CURRENCY_IHMS_EMPTY_LIST);
+        mRequestCode = getIntent().getIntExtra(MainActivity.REQUEST_CODE, NO_EXTRA);
+
+        adapter = new SearchCurrencyAdapter(this, Helper.CURRENCY_IHMS_EMPTY_LIST, mRequestCode);
         searchCurrencyLV.setAdapter(adapter);
         searchCurrencyLV.setOnItemClickListener(this::OnItemClick);
 
@@ -160,27 +167,26 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
                 (SearchCurrencyAdapter.ViewHolder) view.getTag();
 
         final CheckBox checkBox = viewHolder.getCheckBox();
+        final RadioButton radioButton = viewHolder.getRadioButton();
+
         checkBox.setChecked(!checkBox.isChecked());
+        radioButton.setChecked(!radioButton.isChecked());
 
         final CurrencyIHM currencyIHM = (CurrencyIHM) adapter.getItem(position);
-        currencyIHM.setChecked(checkBox.isChecked());
+        currencyIHM.setChecked(mRequestCode == MainActivity.SEARCH_CURRENCY_REQUEST_CODE ?
+                checkBox.isChecked() : radioButton.isChecked());
         adapter.notifyDataSetChanged();
 
-        presenter.itemSelected(currencyIHM);
+        switch (mRequestCode) {
+            case MainActivity.SEARCH_CURRENCY_REQUEST_CODE:
+                presenter.itemSelectedCheckbox(currencyIHM);
+                break;
+            case MainActivity.CHOOSE_CURRENCY_REQUEST_CODE:
+                presenter.itemSelectedRadioButton(currencyIHM);
+                break;
+            default:
+                break;
+        }
+
     }
-
-
-    /*private List<CurrencyIHM> getData() {
-
-        final List<CurrencyIHM> data = new LinkedList<>();
-
-        data.add(new CurrencyIHM( "USD", "United State Dollar", false));
-        data.add(new CurrencyIHM( "AUD", "Australian Dollar", false));
-        data.add(new CurrencyIHM( "EUR", "Euro", false));
-        data.add(new CurrencyIHM( "JPN", "Japanese Yen", false));
-        data.add(new CurrencyIHM( "CHY", "Chinese Yen", false));
-        data.add(new CurrencyIHM( "XAF", "CFA Franc", false));
-
-        return data;
-    }*/
 }

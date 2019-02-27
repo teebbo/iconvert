@@ -88,6 +88,15 @@ public class SearchCurrencyView implements SearchContract.View {
         }
     }
 
+    @Override
+    public void showCurrency(CurrencyIHM item) {
+        final Intent data = new Intent();
+        data.putExtra(Helper.EXTRA_SELECTED_ITEM, item);
+
+        activity.setResult(Activity.RESULT_OK, data);
+        activity.finish();
+    }
+
     private void performedClick(List<CurrencyIHM> items) {
         final Intent data = new Intent();
 
@@ -95,8 +104,9 @@ public class SearchCurrencyView implements SearchContract.View {
                 items.stream()
                         .collect(Collectors.toMap(item -> items.indexOf(item), item -> item));
 
-        data.putExtra(Helper.EXTRA_SELECTED_ITEM, finalItems);
+        data.putExtra(Helper.EXTRA_SELECTED_ITEMS, finalItems);
         activity.setResult(Activity.RESULT_OK, data);
         activity.finish();
     }
+
 }

@@ -13,7 +13,8 @@ import java.util.List;
 public interface SearchContract {
 
     interface Presenter extends BasePresenter {
-        void itemSelected(CurrencyIHM item);
+        void itemSelectedCheckbox(CurrencyIHM item);
+        void itemSelectedRadioButton(CurrencyIHM item);
         void filter(String query);
         void loadCurrencies();
     }
@@ -21,6 +22,7 @@ public interface SearchContract {
     interface View extends BaseView {
         void filter(String query);
         void toggleSnackbar(boolean show, List<CurrencyIHM> items);
+        void showCurrency(CurrencyIHM item);
 
         default void showMessage(String message){}
         default void showMessage(int resId){}

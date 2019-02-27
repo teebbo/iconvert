@@ -18,14 +18,18 @@ public interface FavoriteContract {
         void loadCurrencies();
 
         void updateFavorites(int resultCode, Serializable data);
-        void addCurrency();
+        void updateSourceCurrency(int resultCode, Serializable data);
+        void addFavorite(int requestCode);
 
         void loadRatesAndCurrencies(boolean forceUpdate);
+        void loadDefaultCurrency();
     }
 
     interface View extends BaseView {
-        void showSearchActivity();
+        void showSearchActivity(int requestCode);
+        //void chooseSourceCurrency();
 
         void updateFavoritesList(List<CurrencyIHM> currencies);
+        void updateSourceCurrency(CurrencyIHM item);
     }
 }

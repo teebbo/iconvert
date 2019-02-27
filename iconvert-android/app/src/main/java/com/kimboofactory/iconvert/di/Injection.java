@@ -5,6 +5,7 @@ import android.content.Context;
 import com.aleengo.peach.toolbox.commons.util.AppExecutors;
 import com.kimboofactory.iconvert.domain.UseCaseHandler;
 import com.kimboofactory.iconvert.domain.usecases.GetCurrencies;
+import com.kimboofactory.iconvert.domain.usecases.GetCurrency;
 import com.kimboofactory.iconvert.domain.usecases.GetRate;
 import com.kimboofactory.iconvert.domain.usecases.GetRatesAndCurrencies;
 import com.kimboofactory.iconvert.persistence.api.OpenXchangeRateAPI;
@@ -41,6 +42,10 @@ public class Injection {
 
     public static GetCurrencies provideGetCurrencies(@NonNull Context context) {
         return new GetCurrencies(provideCurrencyRepository(context));
+    }
+
+    public static GetCurrency provideGetCurrency(@NonNull Context context) {
+        return new GetCurrency(provideCurrencyRepository(context));
     }
 
     public static GetRate provideGetRates(@NonNull Context context) {

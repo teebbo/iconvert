@@ -6,9 +6,12 @@ import com.kimboofactory.iconvert.domain.UseCase;
 import com.kimboofactory.iconvert.domain.UseCaseHandler;
 import com.kimboofactory.iconvert.domain.common.QueryValue;
 import com.kimboofactory.iconvert.domain.usecases.GetCurrencies;
+import com.kimboofactory.iconvert.domain.usecases.GetCurrency;
 import com.kimboofactory.iconvert.domain.usecases.GetRate;
 import com.kimboofactory.iconvert.domain.usecases.GetRatesAndCurrencies;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,34 +26,50 @@ public class MainPresenter extends AbstractPresenter
 
     private GetRate mGetRateUseCase;
     private GetCurrencies mGetCurrenciesUseCase;
+    private GetCurrency mGetCurrencyUseCase;
     private GetRatesAndCurrencies mGetRatesAndCurrenciesUseCase;
     private UseCaseHandler mUseCaseHandler;
 
     private boolean mFirstLoad = true;
 
     public MainPresenter(UseCaseHandler useCaseHandler,
-                         GetCurrencies getCurrencies, GetRate getRate,
+                         GetCurrencies getCurrencies,
+                         GetCurrency getCurrency,
+                         GetRate getRate,
                          GetRatesAndCurrencies getRatesAndCurrencies) {
         mUseCaseHandler = useCaseHandler;
         mGetCurrenciesUseCase = getCurrencies;
+        mGetCurrencyUseCase = getCurrency;
         mGetRateUseCase = getRate;
         mGetRatesAndCurrenciesUseCase = getRatesAndCurrencies;
     }
 
     @Override
-    public void addCurrency() {
-        ((FavoriteView) getMvpView()).showSearchActivity();
+    public void addFavorite(int requestCode) {
+        ((MainView) getMvpView()).showSearchActivity(requestCode);
     }
 
     @Override
     public void updateFavorites(int resultCode, Serializable data) {
         final HashMap<Integer, CurrencyIHM> currencies = (HashMap<Integer, CurrencyIHM>) data;
-        ((FavoriteView) getMvpView()).updateFavoritesList(new ArrayList<>(currencies.values()));
+        ((MainView) getMvpView()).updateFavoritesList(new ArrayList<>(currencies.values()));
+    }
+
+    @Override
+    public void updateSourceCurrency(int resultCode, Serializable data) {
+        final CurrencyIHM item = (CurrencyIHM) data;
+        ((MainView) getMvpView()).updateSourceCurrency(item);
     }
 
     @Override
     public void loadCurrency(CurrencyIHM currencyIHM) {
         //getRate.setRepository(new);
+    }
+
+    @Override
+    public void loadDefaultCurrency() {
+        mUseCaseHandler.setUseCase(new QueryValue("USD"), mGetCurrencyUseCase);
+        mUseCaseHandler.execute(result -> EventBus.getDefault().post(result));
     }
 
     @Override

@@ -10,7 +10,7 @@ import com.aleengo.peach.toolbox.commons.model.Response;
 public interface CurrencyDataSource {
 
     interface GetCurrencyCallback {
-        void currencyLoaded(Response response);
+        void onReceived(Response response);
     }
 
     interface GetCurrenciesCallback {
@@ -21,6 +21,6 @@ public interface CurrencyDataSource {
         void onReceived(Response response);
     }
 
-    void getCurrencyByCode(String code, GetCurrencyCallback callback);
+    void getCurrency(String code, GetCurrencyCallback callback);
     void getCurrencies(GetCurrenciesCallback callback);
 }

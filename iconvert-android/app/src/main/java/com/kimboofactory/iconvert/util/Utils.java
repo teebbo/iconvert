@@ -1,5 +1,7 @@
 package com.kimboofactory.iconvert.util;
 
+import com.kimboofactory.iconvert.dto.CurrencyIHM;
+
 import java.util.concurrent.ThreadFactory;
 
 public class Utils {
@@ -17,5 +19,12 @@ public class Utils {
                 return thread;
             }
         };
+    }
+
+    public static CurrencyIHM computeAmount(CurrencyIHM src, CurrencyIHM dst) {
+        final float computeRate = Float.valueOf(dst.getEntity().getValue()) / Float.valueOf(src.getEntity().getValue());
+        dst.setComputeRate("" + computeRate);
+        dst.setAmount("" + computeRate * Float.valueOf(src.getAmount()));
+        return dst;
     }
 }

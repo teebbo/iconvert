@@ -29,6 +29,12 @@ public class CurrencyRepository implements Repository {
 
     @Override
     public void search(final String query, SearchCallback callback) {
+
+    }
+
+    @Override
+    public void getCurrency(String query, GetCallback callback) {
+        localDataSource.getCurrency(query, callback::onReceived);
     }
 
     @Override
@@ -40,13 +46,13 @@ public class CurrencyRepository implements Repository {
     public void getCurrencies(GetCallback callback) {
         if (localDataSource.isEmpty()) {
             remoteDataSource.getCurrencies(response -> {
-                callback.onFinished(response);
+                callback.onReceived(response);
                 if (response.getError() == null) {
                     localDataSource.saveAllCurrencies(new ArrayList<>(0));
                 }
             });
         } else {
-            localDataSource.getCurrencies(callback::onFinished);
+            localDataSource.getCurrencies(callback::onReceived);
         }
     }
 

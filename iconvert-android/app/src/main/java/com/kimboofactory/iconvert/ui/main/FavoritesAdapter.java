@@ -55,8 +55,8 @@ public class FavoritesAdapter
 
         holder.codeTV.setText(item.getEntity().getCode());
         holder.libelleTV.setText(item.getEntity().getLibelle());
-        /*holder.rateTV.setText(item.getComputeRate());
-        holder.resultTV.setText(item.getComputeRate());*/
+        //holder.rateTV.setText(item.getComputeRate());
+        holder.resultTV.setText(item.getAmount());
     }
 
 

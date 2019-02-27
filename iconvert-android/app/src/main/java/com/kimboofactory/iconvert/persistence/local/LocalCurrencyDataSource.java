@@ -42,12 +42,12 @@ public class LocalCurrencyDataSource implements CurrencyDataSource {
     }
 
     @Override
-    public void getCurrencyByCode(String code, GetCurrencyCallback callback) {
-        final NamedRunnable command = new NamedRunnable("%s.%s", "LocalDataSource", "getCurrencyByCode") {
+    public void getCurrency(String query, GetCurrencyCallback callback) {
+        final NamedRunnable command = new NamedRunnable("%s.%s", "LocalDataSource", "getCurrency") {
             @Override
             protected void execute() {
-                CurrencyEntity currency = dao.getCurrencyByCode(code);
-                callback.currencyLoaded(new Response(currency, null));
+                final CurrencyEntity currency = dao.getCurrency(query);
+                callback.onReceived(new Response(currency, null));
             }
         };
         appExecutors.diskIO().execute(command);
@@ -70,7 +70,7 @@ public class LocalCurrencyDataSource implements CurrencyDataSource {
         final NamedCallable<Boolean> callable = new NamedCallable<Boolean>("%s", "LocalDataSource.isEmpty") {
             @Override
             protected Boolean execute() {
-                return dao.getCurrencyByCode(BASE_CODE) == null;
+                return dao.getCurrency(BASE_CODE) == null;
             }
         };
         return appExecutors.diskIO().execute(callable);

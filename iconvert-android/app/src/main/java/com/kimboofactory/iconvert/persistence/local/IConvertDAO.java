@@ -34,7 +34,7 @@ public interface IConvertDAO {
     @Query("SELECT c.code, c.libelle, r.rate as value FROM currency c " +
             "INNER JOIN rate r ON r.code = c.code " +
             "WHERE c.code = :code")
-    CurrencyEntity getCurrencyByCode(String code);
+    CurrencyEntity getCurrency(String code);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void saveAllCurrencies(List<CurrencyData> currencies);

@@ -38,9 +38,10 @@
 
     <!-- MainActivity -->
     <string name="label_update_date">Mis à jour:</string>
+    <string name="base_usd_label">BASE: USD - United States Dollar</string>
     <string name="label_code">Code</string>
     <string name="label_libelle">Libelle</string>
-    <string name="label_code_libelle">Code - Libelle</string>
+    <string name="label_code_libelle">%1$s - %2$s</string>
     <!-- Search Currrency activity -->
     <string name="snackbar_message">%1$s item(s)</string>
     <string name="snackbar_add_action">ADD</string>

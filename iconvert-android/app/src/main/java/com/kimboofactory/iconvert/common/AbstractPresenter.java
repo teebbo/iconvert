@@ -1,7 +1,5 @@
 package com.kimboofactory.iconvert.common;
 
-import com.kimboofactory.iconvert.common.BasePresenter;
-
 import lombok.Getter;
 
 /**

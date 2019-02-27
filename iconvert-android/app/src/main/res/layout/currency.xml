@@ -20,6 +20,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/image_view_logo"
         android:layout_centerInParent="true"
-        android:padding="@dimen/dim_2dp"
-        android:text="@string/label_code_libelle" />
+        android:padding="@dimen/dim_2dp"/>
 </RelativeLayout>

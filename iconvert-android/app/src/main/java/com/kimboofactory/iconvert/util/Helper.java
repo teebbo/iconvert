@@ -14,8 +14,10 @@ public class Helper {
     public static final String BASE_URL = "https://openexchangerates.org";
     public static final String LATEST = "latest.json";
     public static final String CURRENCIES = "currencies.json";
-    public static final String EXTRA_SELECTED_ITEM = "com.kimboofactory.iconvert.EXTRA_SELECTED_ITEMS";
+    public static final String EXTRA_SELECTED_ITEMS = "com.kimboofactory.iconvert.EXTRA_SELECTED_ITEMS";
+    public static final String EXTRA_SELECTED_ITEM = "com.kimboofactory.iconvert.EXTRA_SELECTED_ITEM";
     public static final String EMPTY_STRING = "";
+    public static final long DELAY_MILLIS_400 = 400;
     public static final long DELAY_MILLIS_2000 = 2000;
     public static final long DELAY_MILLIS_4000 = 4000;
     public static final long DELAY_MILLIS_5000 = 5000;

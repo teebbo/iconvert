@@ -39,6 +39,11 @@
             android:background="@null"/>
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/base_usd_label"
+        android:padding="@dimen/dim_4dp"/>
     <ListView
         android:id="@+id/lv_favorites"
         android:layout_width="match_parent"

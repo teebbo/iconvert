@@ -32,7 +32,7 @@ public class SearchPresenter extends AbstractPresenter
     }
 
     @Override
-    public void itemSelected(final CurrencyIHM item) {
+    public void itemSelectedCheckbox(final CurrencyIHM item) {
 
         if (item.getChecked()) {
             selectedItems.add(item);
@@ -42,6 +42,11 @@ public class SearchPresenter extends AbstractPresenter
 
         final boolean show = selectedItems.size() > 0;
         ((SearchCurrencyView) getMvpView()).toggleSnackbar(show, selectedItems);
+    }
+
+    @Override
+    public void itemSelectedRadioButton(CurrencyIHM item) {
+        ((SearchCurrencyView) getMvpView()).showCurrency(item);
     }
 
     @Override

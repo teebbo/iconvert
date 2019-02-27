@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface Repository {
     interface GetCallback {
-        void onFinished(Response response);
+        void onReceived(Response response);
     }
 
     interface SearchCallback {
@@ -19,6 +19,7 @@ public interface Repository {
     }
 
     void search(String query, SearchCallback callback);
+    void getCurrency(String query, GetCallback callback);
     void addAll(List<CurrencyData> currencies);
     void getCurrencies(GetCallback callback);
     void getRates(GetCallback callback);

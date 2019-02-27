@@ -35,7 +35,7 @@ public class RemoteDataSource implements CurrencyDataSource {
         return instance;
     }
     @Override
-    public void getCurrencyByCode(String code, GetCurrencyCallback callback) {
+    public void getCurrency(String code, GetCurrencyCallback callback) {
 
     }
 
