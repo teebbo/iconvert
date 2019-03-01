@@ -2,9 +2,7 @@ package com.kimboofactory.iconvert.ui.main;
 
 import com.kimboofactory.iconvert.common.BasePresenter;
 import com.kimboofactory.iconvert.common.BaseView;
-import com.kimboofactory.iconvert.domain.model.FavoriteEntity;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
-import com.kimboofactory.iconvert.persistence.model.FavoriteData;
 
 import java.io.Serializable;
 import java.util.List;
@@ -31,6 +29,7 @@ public interface FavoriteContract {
         void saveFavorite(CurrencyIHM favorite);
 
         void removeFavorites();
+        void removeFavorite(int position);
     }
 
     interface View extends BaseView {
@@ -39,5 +38,13 @@ public interface FavoriteContract {
 
         void updateFavoritesList(List<CurrencyIHM> currencies);
         void updateSourceCurrency(CurrencyIHM item);
+
+        List<CurrencyIHM> getAdapterItems();
+        void updateAdapterItems(List<CurrencyIHM> newFavorites);
+        void clearAdapterItems();
+
+        CurrencyIHM getDefaultCurrency();
+
+        CurrencyIHM removeFavoriteAt(int position);
     }
 }

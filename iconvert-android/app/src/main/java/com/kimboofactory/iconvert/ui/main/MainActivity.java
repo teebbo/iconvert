@@ -14,9 +14,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aleengo.peach.toolbox.commons.common.NamedRunnable;
+import com.aleengo.peach.toolbox.commons.common.PeachConfig;
 import com.aleengo.peach.toolbox.widget.PeachToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kimboofactory.iconvert.R;
+import com.kimboofactory.iconvert.application.IConvertApplication;
 import com.kimboofactory.iconvert.common.BaseActivity;
 import com.kimboofactory.iconvert.di.Injection;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
@@ -25,6 +27,7 @@ import com.kimboofactory.iconvert.util.Helper;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -68,7 +71,7 @@ public class MainActivity extends BaseActivity {
     private MainView mMvpView;
     private ListViewListener listener;
     @Getter @Setter
-    private CurrencyIHM currencySource = new CurrencyIHM();
+    private CurrencyIHM currencySource;
 
     private boolean mFirstLoad = true;
 
@@ -87,7 +90,7 @@ public class MainActivity extends BaseActivity {
 
         setSupportActionBar(toolbar);
 
-        listener = new ListViewListener();
+        listener = new ListViewListener(new WeakReference<>(this));
 
         favoritesAdapter = new FavoritesAdapter(this, new LinkedList<>());
         favoritesLV.setAdapter(favoritesAdapter);
@@ -108,7 +111,8 @@ public class MainActivity extends BaseActivity {
                 Injection.provideGetFavorites(getApplicationContext()),
                 Injection.provideSaveFavorite(getApplicationContext()),
                 Injection.provideSaveFavorites(getApplicationContext()),
-                Injection.provideDeleteFavorites(getApplicationContext()));
+                Injection.provideDeleteFavorites(getApplicationContext()),
+                Injection.provideDeleteFavorite(getApplicationContext()));
 
         presenter.attach(mMvpView);
 
@@ -121,10 +125,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s != null && s.length() > 0) {
-                    /*mCurrency = new CurrencyIHM("EUR", "EURO", false, "1.0");
-                    mCurrency.setComputeRate(s.toString());
-
-                    (new Handler()).postDelayed(() -> presenter.loadCurrency(mCurrency), Helper.DELAY_MILLIS_2000);*/
                     currencySource.setAmount(s.toString());
                     final NamedRunnable task = new NamedRunnable("%s", "OnTextChanged") {
                         @Override
@@ -171,7 +171,12 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         if (mFirstLoad) {
-            presenter.loadDefaultCurrency();
+            currencySource = mMvpView.getDefaultCurrency();
+
+            final String codeLibelle = getResources().getString(R.string.label_code_libelle,
+                    currencySource.getEntity().getCode(), currencySource.getEntity().getLibelle());
+            textViewCodeSrc.setText(codeLibelle);
+
             mFirstLoad = false;
         }
         presenter.loadFavorites();
@@ -189,6 +194,11 @@ public class MainActivity extends BaseActivity {
         presenter.detach();
         presenter = null;
         mMvpView = null;
+        listener = null;
+
+        if (PeachConfig.isDebug()) {
+            IConvertApplication.getRefWatcher(MainActivity.this).watch(MainActivity.this);
+        }
     }
 
     @Override

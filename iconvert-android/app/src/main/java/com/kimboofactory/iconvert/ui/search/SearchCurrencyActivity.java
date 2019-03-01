@@ -10,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 
+import com.aleengo.peach.toolbox.commons.common.PeachConfig;
 import com.aleengo.peach.toolbox.widget.PeachToolbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.kimboofactory.iconvert.R;
+import com.kimboofactory.iconvert.application.IConvertApplication;
 import com.kimboofactory.iconvert.common.BaseActivity;
 import com.kimboofactory.iconvert.di.Injection;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
@@ -84,8 +86,8 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
         setupSearchView();
 
         mBack.setOnClickListener( (View v) -> onBackPressed());
-        snackbar = Snackbar.make(coordinatorLayout, Helper.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE);
 
+        snackbar = Snackbar.make(coordinatorLayout, Helper.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE);
         mMvpView = new SearchCurrencyView();
         mMvpView.attachUi(this);
 
@@ -115,9 +117,15 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        snackbar = null;
+        adapter = null;
         presenter.detach();
         presenter = null;
         mMvpView = null;
+
+        if(PeachConfig.isDebug()) {
+            IConvertApplication.getRefWatcher(this).watch(this);
+        }
     }
 
     @Override

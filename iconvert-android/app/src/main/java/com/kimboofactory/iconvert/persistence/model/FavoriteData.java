@@ -11,9 +11,7 @@ import androidx.room.PrimaryKey;
  * Created by CK_ALEENGO on 14/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-@Entity(
-        tableName = "favorite"
-)
+@Entity(tableName = "favorite")
 public class FavoriteData {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="_id")

@@ -6,15 +6,14 @@ import lombok.Getter;
  * Created by CK_ALEENGO on 11/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public abstract class AbstractPresenter {
+public abstract class AbstractPresenter<MvpView extends BaseView> {
 
     @Getter
-    private BaseView mvpView;
+    private MvpView mvpView;
 
-    public AbstractPresenter() {
-    }
+    public AbstractPresenter() { }
 
-    public void attach(BaseView mvpView) {
+    public void attach(MvpView mvpView) {
         if (this.mvpView != null) {
             throw new IllegalArgumentException("mvpView is already attached");
         }

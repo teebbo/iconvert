@@ -36,5 +36,6 @@ public interface Repository {
     void addFavorite(FavoriteEntity favorite, AddCallback callback);
     void addAllFavorites(List<FavoriteEntity> favorites, AddCallback callback);
     void removeFavorites();
+    void removeFavorite(FavoriteEntity favorite);
 
 }

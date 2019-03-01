@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
+import android.widget.Filter;
 
 import com.aleengo.peach.toolbox.commons.model.Result;
 import com.google.android.material.snackbar.Snackbar;
@@ -69,7 +70,7 @@ public class SearchCurrencyView implements SearchContract.View {
 
     @Override
     public void filter(String query) {
-        this.activity.getAdapter().getFilter().filter(query);
+        getFilter().filter(query);
     }
 
     @Override
@@ -107,6 +108,10 @@ public class SearchCurrencyView implements SearchContract.View {
         data.putExtra(Helper.EXTRA_SELECTED_ITEMS, finalItems);
         activity.setResult(Activity.RESULT_OK, data);
         activity.finish();
+    }
+
+    private Filter getFilter() {
+        return this.activity.getAdapter().getFilter();
     }
 
 }

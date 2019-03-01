@@ -134,12 +134,15 @@ public class LocalCurrencyDataSource implements CurrencyDataSource {
         final NamedRunnable task = new NamedRunnable("%s", "saveFavorites") {
             @Override
             protected void execute() {
+                // delete old values
+                dao.deleteAllFavorites();
 
                 final List<FavoriteData> favoritesToSave = favorites.stream()
                         .map(e -> new FavoriteData(e.getSource(), e.getDest(),
                                 e.getComputedRate(), e.getComputedAmount()))
                         .collect(Collectors.toList());
 
+                // save new ones
                 dao.saveFavorites(favoritesToSave);
             }
         };
@@ -148,6 +151,11 @@ public class LocalCurrencyDataSource implements CurrencyDataSource {
 
     public void deleteAllFavorites() {
         final Runnable task = dao::deleteAllFavorites;
+        appExecutors.diskIO().execute(task);
+    }
+
+    public void deleteFavorite(String code) {
+        final Runnable task = () -> dao.deleteFavorite(code);
         appExecutors.diskIO().execute(task);
     }
 }

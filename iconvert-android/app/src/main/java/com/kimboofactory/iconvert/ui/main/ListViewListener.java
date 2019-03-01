@@ -4,6 +4,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.kimboofactory.iconvert.domain.model.FavoriteEntity;
+
+import java.lang.ref.WeakReference;
+import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by CK_ALEENGO on 28/02/2019.
  * Copyright (c) 2019. All rights reserved.
@@ -11,7 +19,12 @@ import android.widget.ListView;
 public final class ListViewListener implements
         ListView.OnItemClickListener, ListView.OnItemLongClickListener {
 
-    public ListViewListener() {
+    @Getter @Setter
+    private List<FavoriteEntity> favoritesToDelete;
+    private WeakReference<MainActivity> activityRef;
+
+    public ListViewListener(WeakReference<MainActivity> activityRef) {
+        this.activityRef = activityRef;
     }
 
     @Override
@@ -21,6 +34,32 @@ public final class ListViewListener implements
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        return false;
+        activityRef.get().getPresenter().removeFavorite(position);
+
+        /*final FavoritesAdapter.ViewHolder viewHolder =
+                (FavoritesAdapter.ViewHolder) view.getTag();
+
+
+        final CheckBox checkBox = viewHolder.checkBox;
+        checkBox.setChecked(!checkBox.isChecked());
+        checkBox.setVisibility(View.VISIBLE);
+
+        // add the favorite to list
+        final Integer pos = (Integer) checkBox.getTag();
+        final CurrencyIHM ihm = (CurrencyIHM) adapter.getItem(position);
+
+        final FavoriteEntity favorite = new FavoriteEntity(null, ihm.getEntity(),
+                ihm.getComputeRate(), ihm.getAmount());
+
+        checkBox.setOnClickListener(v -> {
+            v.setVisibility(View.GONE);
+            favoritesToDelete.remove(favorite);
+        });
+
+        if (checkBox.isChecked()) {
+            favoritesToDelete.add(favorite);
+        }*/
+
+        return true;
     }
 }

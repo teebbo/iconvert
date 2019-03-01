@@ -56,6 +56,10 @@ dependencies {
     implementation deps.stetho.runtime
     implementation deps.stetho.network_helper
 
+    // leak canary
+    debugImplementation deps.leakcanary.runtime
+    releaseImplementation deps.leakcanary.android_noop
+
     testImplementation deps.junit
     androidTestImplementation deps.android_test_runner
     androidTestImplementation deps.espresso.core

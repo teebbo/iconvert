@@ -18,7 +18,7 @@ import lombok.Getter;
  * Created by CK_ALEENGO on 13/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public class SearchPresenter extends AbstractPresenter
+public class SearchPresenter extends AbstractPresenter<SearchCurrencyView>
         implements SearchContract.Presenter {
 
     @Getter
@@ -41,17 +41,17 @@ public class SearchPresenter extends AbstractPresenter
         }
 
         final boolean show = selectedItems.size() > 0;
-        ((SearchCurrencyView) getMvpView()).toggleSnackbar(show, selectedItems);
+        getMvpView().toggleSnackbar(show, selectedItems);
     }
 
     @Override
     public void itemSelectedRadioButton(CurrencyIHM item) {
-        ((SearchCurrencyView) getMvpView()).showCurrency(item);
+        getMvpView().showCurrency(item);
     }
 
     @Override
     public void filter(String query) {
-        ((SearchCurrencyView) getMvpView()).filter(query);
+        getMvpView().filter(query);
     }
 
     @Override

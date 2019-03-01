@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.aleengo.peach.toolbox.commons.util.AppExecutors;
 import com.kimboofactory.iconvert.domain.UseCaseHandler;
+import com.kimboofactory.iconvert.domain.usecases.DeleteFavorite;
 import com.kimboofactory.iconvert.domain.usecases.DeleteFavorites;
 import com.kimboofactory.iconvert.domain.usecases.GetCurrencies;
 import com.kimboofactory.iconvert.domain.usecases.GetCurrency;
@@ -66,6 +67,10 @@ public class Injection {
 
     public static DeleteFavorites provideDeleteFavorites(@NonNull Context context) {
         return new DeleteFavorites(provideCurrencyRepository(context));
+    }
+
+    public static DeleteFavorite provideDeleteFavorite(@NonNull Context context) {
+        return new DeleteFavorite(provideCurrencyRepository(context));
     }
 
     public static GetRate provideGetRates(@NonNull Context context) {

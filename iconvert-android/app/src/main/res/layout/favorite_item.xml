@@ -4,23 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!--<ImageView
-        android:id="@+id/iv_delete_logo"
-        android:layout_width="28dp"
-        android:layout_height="80dp"
-        android:src="@drawable/ic_delete_black_24dp"
-        android:tint="@android:color/white"
-        android:background="@android:color/holo_red_light"
-        android:layout_alignParentTop="true"
-        android:padding="@dimen/dim_4"/>-->
-
     <include
         layout="@layout/checkbox"
         android:id="@+id/cb_favorite_selected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/dim_2dp"/>
+        android:layout_marginRight="@dimen/dim_4dp"
+        android:visibility="gone"
+        android:focusable="true"
+        android:clickable="true"
+        android:focusableInTouchMode="true"/>
 
     <RelativeLayout
         android:id="@+id/rl_side_view"

@@ -6,8 +6,8 @@ import com.kimboofactory.iconvert.common.AbstractPresenter;
 import com.kimboofactory.iconvert.domain.UseCase;
 import com.kimboofactory.iconvert.domain.UseCaseHandler;
 import com.kimboofactory.iconvert.domain.common.QueryValue;
-import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
 import com.kimboofactory.iconvert.domain.model.FavoriteEntity;
+import com.kimboofactory.iconvert.domain.usecases.DeleteFavorite;
 import com.kimboofactory.iconvert.domain.usecases.DeleteFavorites;
 import com.kimboofactory.iconvert.domain.usecases.GetCurrencies;
 import com.kimboofactory.iconvert.domain.usecases.GetCurrency;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * Created by CK_ALEENGO on 11/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public class MainPresenter extends AbstractPresenter
+public class MainPresenter extends AbstractPresenter<MainView>
         implements FavoriteContract.Presenter {
 
     private GetRate mGetRateUseCase;
@@ -43,6 +43,7 @@ public class MainPresenter extends AbstractPresenter
     private SaveFavorite saveFavoriteUseCase;
     private SaveFavorites saveFavoritesUseCase;
     private DeleteFavorites deleteFavorites;
+    private DeleteFavorite deleteFavorite;
 
     private UseCaseHandler mUseCaseHandler;
 
@@ -56,7 +57,8 @@ public class MainPresenter extends AbstractPresenter
                          GetFavorites getFavorites,
                          SaveFavorite saveFavorite,
                          SaveFavorites saveFavorites,
-                         DeleteFavorites deleteFavorites) {
+                         DeleteFavorites deleteFavorites,
+                         DeleteFavorite deleteFavorite) {
         mUseCaseHandler = useCaseHandler;
         mGetCurrenciesUseCase = getCurrencies;
         mGetCurrencyUseCase = getCurrency;
@@ -66,18 +68,33 @@ public class MainPresenter extends AbstractPresenter
         this.saveFavoritesUseCase = saveFavorites;
         this.saveFavoriteUseCase = saveFavorite;
         this.deleteFavorites = deleteFavorites;
+        this.deleteFavorite = deleteFavorite;
     }
 
     @Override
     public void addFavorite(int requestCode) {
-        ((MainView) getMvpView()).showSearchActivity(requestCode);
+        getMvpView().showSearchActivity(requestCode);
     }
 
     @Override
     public void removeFavorites() {
-        ((MainView) getMvpView()).updateFavoritesList(Helper.CURRENCY_IHMS_EMPTY_LIST);
 
         mUseCaseHandler.setUseCase(Helper.NO_QUERY, deleteFavorites);
+        mUseCaseHandler.execute(this::doNothing);
+
+        getMvpView().updateFavoritesList(new ArrayList<>(0));
+    }
+
+    @Override
+    public void removeFavorite(int position) {
+        // update the ui
+        final CurrencyIHM itemToDelete = getMvpView().removeFavoriteAt(position);
+
+        // update the database
+        final FavoriteEntity favorite = new FavoriteEntity(null, itemToDelete.getEntity(),
+                itemToDelete.getComputeRate(), itemToDelete.getAmount());
+
+        mUseCaseHandler.setUseCase(new DeleteFavorite.QueryVal(favorite), deleteFavorite);
         mUseCaseHandler.execute(this::doNothing);
     }
 
@@ -86,24 +103,30 @@ public class MainPresenter extends AbstractPresenter
         final HashMap<Integer, CurrencyIHM> currencies = (HashMap<Integer, CurrencyIHM>) data;
 
         final List<CurrencyIHM> list = new ArrayList<>(currencies.values());
-        ((MainView) getMvpView()).updateFavoritesList(list);
 
-        // clean the favorite table
-        removeFavorites();
+        list.addAll(list.size(), getMvpView().getAdapterItems());
+        getMvpView().updateFavoritesList(list);
 
         // save the new ones
-        saveFavorites(((MainView) getMvpView()).getActivity().getFavoritesAdapter().getItems());
+        saveFavorites(getMvpView().getAdapterItems());
     }
 
     @Override
     public void updateSourceCurrency(int resultCode, Serializable data) {
         final CurrencyIHM item = (CurrencyIHM) data;
-        ((MainView) getMvpView()).updateSourceCurrency(item);
+
+        // update the source and the adapter based on the new source
+        getMvpView().updateSourceCurrency(item);
+
+        // update the database based on the new source
+        saveFavorites(getMvpView().getAdapterItems());
     }
 
     @Override
     public void loadCurrency(CurrencyIHM currencyIHM) {
-        //getRate.setRepository(new);
+        final QueryValue<String> query = new QueryValue<>(currencyIHM.getEntity().getCode());
+        mUseCaseHandler.setUseCase(query, mGetCurrencyUseCase);
+        mUseCaseHandler.execute(result -> EventBus.getDefault().post(result));
     }
 
     @Override
@@ -153,9 +176,9 @@ public class MainPresenter extends AbstractPresenter
                     final CurrencyIHM source = new CurrencyIHM(f.getSource());
                     if (f.getComputedRate() != null) {
                         final Float cachedAmount = Float.valueOf(f.getComputedAmount()) / Float.valueOf(f.getComputedRate());
-                        source.setAmount(String.format(Locale.US, "%.2f", cachedAmount.floatValue()));
+                        source.setAmount(String.format(Locale.US, Helper.FORMAT_AMOUNT, cachedAmount.floatValue()));
                     } else {
-                        source.setAmount("1");
+                        source.setAmount(Helper.DEFAULT_AMOUNT);
                     }
                     EventBus.getDefault().post(new GetFavoriteEvent(source, currencies));
                 }
@@ -165,7 +188,7 @@ public class MainPresenter extends AbstractPresenter
 
     @Override
     public void saveFavorites(List<CurrencyIHM> currencies) {
-        final CurrencyIHM source = ((MainView) getMvpView()).getActivity().getCurrencySource();
+        final CurrencyIHM source = getMvpView().getActivity().getCurrencySource();
 
         final List<FavoriteEntity> favorites = currencies.stream()
                 .map(currencyIHM ->  new FavoriteEntity(source.getEntity(),
@@ -179,7 +202,7 @@ public class MainPresenter extends AbstractPresenter
 
     @Override
     public void saveFavorite(CurrencyIHM currencyIHM) {
-        final CurrencyIHM source = ((MainView) getMvpView()).getActivity().getCurrencySource();
+        final CurrencyIHM source = getMvpView().getActivity().getCurrencySource();
 
         final FavoriteEntity favorite = new FavoriteEntity(source.getEntity(),
                 currencyIHM.getEntity(), currencyIHM.getComputeRate(), currencyIHM.getAmount());

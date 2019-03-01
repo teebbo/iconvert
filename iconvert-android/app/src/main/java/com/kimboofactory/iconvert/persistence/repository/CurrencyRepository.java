@@ -54,6 +54,11 @@ public class CurrencyRepository implements Repository {
     }
 
     @Override
+    public void removeFavorite(FavoriteEntity favorite) {
+        localDataSource.deleteFavorite(favorite.getDest().getCode());
+    }
+
+    @Override
     public void search(final String query, SearchCallback callback) {
 
     }

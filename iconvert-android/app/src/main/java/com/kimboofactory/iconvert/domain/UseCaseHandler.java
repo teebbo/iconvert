@@ -28,7 +28,7 @@ public class UseCaseHandler {
     public void execute(final UseCase.Callback callback) {
         useCase.setUseCaseCallback(callback);
 
-        final NamedRunnable task = new NamedRunnable("%s", "UseCaseHandler.execute()") {
+        final NamedRunnable task = new NamedRunnable("%s", "") {
             @Override
             protected void execute() {
                 useCase.run();

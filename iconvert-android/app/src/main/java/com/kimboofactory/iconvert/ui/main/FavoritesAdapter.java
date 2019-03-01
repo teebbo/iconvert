@@ -2,12 +2,12 @@ package com.kimboofactory.iconvert.ui.main;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aleengo.peach.toolbox.adapter.ListViewAdapter;
 import com.kimboofactory.iconvert.R;
-import com.kimboofactory.iconvert.domain.model.FavoriteEntity;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.util.Helper;
 
@@ -40,10 +40,20 @@ public class FavoritesAdapter
 
     @Override
     public void updateItems(List<CurrencyIHM> newItems) {
-        if (newItems != null && newItems.size() > 0) {
+        if (newItems != null) {
             getItems().addAll(newItems);
             notifyDataSetChanged();
         }
+    }
+
+    public void removeItem(int position) {
+        getItems().remove(position);
+        notifyDataSetChanged();
+    }
+
+    public void removeItem(CurrencyIHM item) {
+        getItems().remove(item);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -70,6 +80,8 @@ public class FavoritesAdapter
         TextView resultTV;
         @BindView(R.id.tv_rate)
         TextView rateTV;
+        @BindView(R.id.cb_favorite_selected)
+        CheckBox checkBox;
 
         public ViewHolder(View itemView) {
             super(itemView);

@@ -40,6 +40,7 @@ versions.lombok = "1.16.20"
 versions.room = "2.1.0-alpha04"
 versions.toolbox= "master-SNAPSHOT"
 versions.stetho = "1.5.0"
+versions.leakcanary="1.6.3"
 
 // android build versions
 def build_versions = [:]
@@ -111,6 +112,12 @@ def stetho = [:]
 stetho.runtime = "com.facebook.stetho:stetho:$versions.stetho"
 stetho.network_helper = "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
 deps.stetho = stetho
+
+
+def leakcanary = [:]
+leakcanary.runtime = "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
+leakcanary.android_noop = "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
+deps.leakcanary = leakcanary
 
 // adding the deps object to ext (extensions) object
 ext.deps = deps

@@ -15,7 +15,7 @@ import androidx.room.RoomDatabase;
  * Created by CK_ALEENGO on 14/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-@Database(entities = {FavoriteData.class, CurrencyData.class, RateData.class}, version = 2, exportSchema = false)
+@Database(entities = {CurrencyData.class, RateData.class, FavoriteData.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DB_NAME = "iconvert.db";

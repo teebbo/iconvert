@@ -1,7 +1,6 @@
 package com.kimboofactory.iconvert.persistence.local;
 
 import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
-import com.kimboofactory.iconvert.domain.model.FavoriteEntity;
 import com.kimboofactory.iconvert.persistence.model.CurrencyData;
 import com.kimboofactory.iconvert.persistence.model.FavoriteData;
 import com.kimboofactory.iconvert.persistence.model.RateData;
@@ -52,6 +51,9 @@ public interface IConvertDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void saveFavorites(List<FavoriteData> favorites);
+
+    @Query("DELETE FROM favorite WHERE dest_code = :code")
+    void deleteFavorite(String code);
 
     @Query("DELETE FROM favorite")
     void deleteAllFavorites();
