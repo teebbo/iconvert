@@ -20,7 +20,7 @@ import okhttp3.OkHttpClient;
 public class OpenXchangeRateAPI implements API {
 
     public static final String BASE_URL = "https://openexchangerates.org/api/";
-    public static final String RATE_END_POINT = "latest.json";
+    public static final String RATE_END_POINT = "latest.json?app_id=d1ff258466994304854884d3600a75aa";
     public static final String CURRENCIES_END_POINT = "currencies.json";
 
     public static final String REQUEST_RATE = "REQUEST_RATE";

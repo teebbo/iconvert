@@ -4,10 +4,14 @@ import android.content.Context;
 
 import com.aleengo.peach.toolbox.commons.util.AppExecutors;
 import com.kimboofactory.iconvert.domain.UseCaseHandler;
+import com.kimboofactory.iconvert.domain.usecases.DeleteFavorites;
 import com.kimboofactory.iconvert.domain.usecases.GetCurrencies;
 import com.kimboofactory.iconvert.domain.usecases.GetCurrency;
+import com.kimboofactory.iconvert.domain.usecases.GetFavorites;
 import com.kimboofactory.iconvert.domain.usecases.GetRate;
 import com.kimboofactory.iconvert.domain.usecases.GetRatesAndCurrencies;
+import com.kimboofactory.iconvert.domain.usecases.SaveFavorite;
+import com.kimboofactory.iconvert.domain.usecases.SaveFavorites;
 import com.kimboofactory.iconvert.persistence.api.OpenXchangeRateAPI;
 import com.kimboofactory.iconvert.persistence.local.AppDatabase;
 import com.kimboofactory.iconvert.persistence.local.LocalCurrencyDataSource;
@@ -48,6 +52,22 @@ public class Injection {
         return new GetCurrency(provideCurrencyRepository(context));
     }
 
+    public static GetFavorites provideGetFavorites(@NonNull Context context) {
+        return new GetFavorites(provideCurrencyRepository(context));
+    }
+
+    public static SaveFavorite provideSaveFavorite(@NonNull Context context) {
+        return new SaveFavorite(provideCurrencyRepository(context));
+    }
+
+    public static SaveFavorites provideSaveFavorites(@NonNull Context context) {
+        return new SaveFavorites(provideCurrencyRepository(context));
+    }
+
+    public static DeleteFavorites provideDeleteFavorites(@NonNull Context context) {
+        return new DeleteFavorites(provideCurrencyRepository(context));
+    }
+
     public static GetRate provideGetRates(@NonNull Context context) {
         return new GetRate(provideCurrencyRepository(context));
     }
@@ -55,5 +75,4 @@ public class Injection {
     public static GetRatesAndCurrencies provideGetRatesAndCurrencies(@NonNull Context context) {
         return new GetRatesAndCurrencies(provideCurrencyRepository(context));
     }
-
 }

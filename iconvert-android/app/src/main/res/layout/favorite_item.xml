@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -13,12 +14,22 @@
         android:layout_alignParentTop="true"
         android:padding="@dimen/dim_4"/>-->
 
+    <include
+        layout="@layout/checkbox"
+        android:id="@+id/cb_favorite_selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dim_2dp"/>
+
     <RelativeLayout
+        android:id="@+id/rl_side_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:padding="@dimen/dim_2dp">
+        android:padding="@dimen/dim_2dp"
+        android:layout_toRightOf="@id/cb_favorite_selected">
 
         <ImageView
             android:id="@+id/iv_currency_logo"
@@ -36,9 +47,9 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/iv_currency_logo"
             android:paddingLeft="@dimen/dim_2dp"
-            android:text="@string/label_code"
             android:layout_centerVertical="true"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            tools:text="@string/label_code"/>
 
         <TextView
             android:id="@+id/tv_libelle"
@@ -46,17 +57,16 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_currency_logo"
             android:layout_alignParentLeft="true"
-            android:paddingTop="@dimen/dim_8dp"
-            android:text="@string/label_libelle" />
+            android:paddingTop="@dimen/dim_12dp"
+            tools:text="@string/label_libelle"/>
 
         <TextView
             android:id="@+id/tv_rate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dim_75dp"
+            android:layout_height="@dimen/dim_56dp"
             android:layout_centerInParent="true"
-            android:paddingLeft="@dimen/dim_12dp"
-            android:paddingRight="@dimen/dim_12dp"
-            android:text="rate: 1.99" />
+            android:padding="@dimen/dim_12dp"
+            tools:text="Rate 1.9999"/>
 
         <TextView
             android:id="@+id/tv_result"
@@ -66,6 +76,6 @@
             android:layout_centerVertical="true"
             android:paddingLeft="@dimen/dim_10dp"
             android:paddingRight="@dimen/dim_10dp"
-            android:text="2.052" />
+            tools:text="2.500"/>
     </RelativeLayout>
 </RelativeLayout>

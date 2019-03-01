@@ -21,25 +21,21 @@
         android:padding="@dimen/dim_4dp"
         android:layout_below="@id/code_devise_textview"/>
 
-    <CheckBox
+    <include
+        layout="@layout/checkbox"
         android:id="@+id/cb_choose_currency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:focusable="false"
-        android:clickable="false"
-        android:focusableInTouchMode="false"
         android:visibility="gone"/>
 
-    <RadioButton
+    <include
+        layout="@layout/radio_button"
         android:id="@+id/rb_choose_currency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:focusable="false"
-        android:clickable="false"
-        android:focusableInTouchMode="false"
         android:visibility="gone"/>
 </RelativeLayout>

@@ -40,7 +40,7 @@ public class GetRate extends UseCase<QueryValue> {
 
         /*final List<CurrencyIHM> list = rawData.getItems().entrySet()
                 .stream()
-                .map(entrySet -> new CurrencyIHM(entrySet.getKey(), entrySet.getValue(), false))
+                .map(entrySet -> new CurrencyIHM(entrySet.getKey(), entrySet.getAmount(), false))
                 .collect(Collectors.toList());*/
 
         getUseCaseCallback().onResult(new Result(null, null));
@@ -48,7 +48,7 @@ public class GetRate extends UseCase<QueryValue> {
 
     @Override
     protected void executeUseCase() {
-        final String query = getQueryValue().getValue();
+        final String query = (String) getQueryValue().getValue();
         getRepository().search(query, this::onDataLoaded);
     }
 }

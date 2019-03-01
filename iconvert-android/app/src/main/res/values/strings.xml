@@ -30,15 +30,19 @@
     <!-- Image view content description-->
     <string name="iv_content_descr"> Swap </string>
 
-    <string name="refresh">Refresh</string>
+    <string name="menu_action_refresh">Refresh</string>
+    <string name="menu_action_clear">Clear All</string>
+
     <string name="search_hint">Rechercher...</string>
     <string name="home_tab_title">Home</string>
     <string name="fragment_convert_tab_title">Convert</string>
     <string name="fragment_devise_tab_title">Devises</string>
 
     <!-- MainActivity -->
+    <string name="amount_hint">1</string>
     <string name="label_update_date">Mis à jour:</string>
     <string name="base_usd_label">BASE: USD - United States Dollar</string>
+    <string name="rate_label">Rate %1$s</string>
     <string name="label_code">Code</string>
     <string name="label_libelle">Libelle</string>
     <string name="label_code_libelle">%1$s - %2$s</string>

@@ -7,7 +7,9 @@ import android.widget.TextView;
 
 import com.aleengo.peach.toolbox.adapter.ListViewAdapter;
 import com.kimboofactory.iconvert.R;
+import com.kimboofactory.iconvert.domain.model.FavoriteEntity;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
+import com.kimboofactory.iconvert.util.Helper;
 
 import java.util.List;
 
@@ -31,11 +33,6 @@ public class FavoritesAdapter
         return R.layout.favorite_item;
     }
 
-   /* @Override
-    public Object onNewViewHolder(View view) {
-       ;
-    }*/
-
     @Override
     protected ViewHolder onNewViewHolder(View view) {
         return new ViewHolder(view);
@@ -55,10 +52,9 @@ public class FavoritesAdapter
 
         holder.codeTV.setText(item.getEntity().getCode());
         holder.libelleTV.setText(item.getEntity().getLibelle());
-        //holder.rateTV.setText(item.getComputeRate());
+        holder.rateTV.setText(Helper.RATE + "\n" + item.getComputeRate());
         holder.resultTV.setText(item.getAmount());
     }
-
 
     public static class ViewHolder extends ListViewAdapter.ViewHolder {
 

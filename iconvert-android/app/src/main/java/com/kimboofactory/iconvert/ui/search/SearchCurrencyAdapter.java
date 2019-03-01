@@ -117,6 +117,7 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
             this.adapter = adapter;
         }
 
+        /* filter on both code and libelle */
         private boolean accept(CurrencyIHM currencyIHM, final String query) {
             return currencyIHM.getEntity().getCode().toLowerCase().trim().contains(query) ||
                     currencyIHM.getEntity().getLibelle().toLowerCase().trim().contains(query);
@@ -127,7 +128,7 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
 
             // this method is called on the background thread
 
-            List<CurrencyIHM> filteredList = new LinkedList<>();
+            List<CurrencyIHM> filteredList;
 
             if (constraint != null && constraint.length() > 0) {
                 final String query = constraint.toString().toLowerCase().trim();
@@ -136,7 +137,7 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
                         .filter(currencyIHM -> accept(currencyIHM, query))
                         .collect(Collectors.toList());
             } else {
-                Helper.copy(adapter.getOriginalList(), filteredList);
+                filteredList = Helper.copy(adapter.getOriginalList());
             }
 
             final FilterResults results = new FilterResults();

@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/rl_currency"
-            android:hint="100"
+            android:hint="@string/amount_hint"
             android:gravity="center"
             android:textSize="28sp"
             android:inputType="numberDecimal"

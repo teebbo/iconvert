@@ -18,7 +18,7 @@ public class GetCurrency extends UseCase<QueryValue> {
 
     @Override
     protected void executeUseCase() {
-        final String query = getQueryValue().getValue();
+        final String query = (String) getQueryValue().getValue();
         getRepository().getCurrency(query, response -> {
 
             if (response.getError() != null) {

@@ -13,6 +13,6 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class QueryValue {
-    private String value;
+public class QueryValue<T> {
+    private T value;
 }

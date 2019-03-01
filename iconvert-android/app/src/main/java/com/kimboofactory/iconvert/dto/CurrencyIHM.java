@@ -17,10 +17,15 @@ import lombok.Setter;
 @Getter
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class CurrencyIHM implements Model {
+public class CurrencyIHM implements Model, Cloneable {
     @NonNull
     private CurrencyEntity entity;
     private Boolean checked = false;
     private String computeRate;
-    private String amount;
+    private String amount = "0";
+
+    @Override
+    public CurrencyIHM clone() throws CloneNotSupportedException {
+        return (CurrencyIHM) super.clone();
+    }
 }

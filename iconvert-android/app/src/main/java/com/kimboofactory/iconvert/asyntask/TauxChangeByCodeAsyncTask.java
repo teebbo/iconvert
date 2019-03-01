@@ -23,7 +23,7 @@ public class TauxChangeByCodeAsyncTask extends AsyncTask<String, Void, Double> {
         final String code = params[0];
         //final RateData tauxChange = tauxChangeDao.getByCode(code);
 
-        //return Double.valueOf(tauxChange.getValue());
+        //return Double.valueOf(tauxChange.getAmount());
         return 0.0;
     }
 

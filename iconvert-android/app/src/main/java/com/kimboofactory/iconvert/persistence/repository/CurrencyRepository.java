@@ -1,6 +1,8 @@
 package com.kimboofactory.iconvert.persistence.repository;
 
+import com.aleengo.peach.toolbox.commons.model.Response;
 import com.kimboofactory.iconvert.domain.Repository;
+import com.kimboofactory.iconvert.domain.model.FavoriteEntity;
 import com.kimboofactory.iconvert.persistence.api.OpenXchangeRateAPI;
 import com.kimboofactory.iconvert.persistence.local.LocalCurrencyDataSource;
 import com.kimboofactory.iconvert.persistence.model.CurrencyData;
@@ -25,6 +27,30 @@ public class CurrencyRepository implements Repository {
     public CurrencyRepository(LocalCurrencyDataSource localDataSource, RemoteDataSource remoteDataSource) {
         this.localDataSource = localDataSource;
         this.remoteDataSource = remoteDataSource;
+    }
+
+
+    // favorite
+    @Override
+    public List<FavoriteEntity> getFavorites() {
+        return localDataSource.getFavorites();
+    }
+
+    @Override
+    public void addFavorite(FavoriteEntity favorite, AddCallback callback) {
+        localDataSource.saveFavorite(favorite);
+        callback.onAdded(new Response(favorite, null));
+    }
+
+    @Override
+    public void addAllFavorites(List<FavoriteEntity> favorites, AddCallback callback) {
+        localDataSource.saveFavorites(favorites);
+        callback.onAdded(new Response(favorites, null));
+    }
+
+    @Override
+    public void removeFavorites() {
+        localDataSource.deleteAllFavorites();
     }
 
     @Override
@@ -60,6 +86,7 @@ public class CurrencyRepository implements Repository {
     public void getRates(GetCallback callback) {
 
     }
+
 
     @Override
     public void addRatesAndCurrencies() {

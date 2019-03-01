@@ -4,9 +4,17 @@
     tools:context="com.lemonstack.khranyt.iconvert.activity.MainActivity">
 
     <item
-        android:id="@+id/action_refresh"
-        android:title="@string/refresh"
+        android:id="@+id/action_clear"
+        android:title="@string/menu_action_clear"
+        android:icon="@drawable/ic_delete_black_24dp"
+        android:iconTint="@android:color/white"
         android:orderInCategory="1"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_refresh"
+        android:title="@string/menu_action_refresh"
+        android:orderInCategory="2"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_settings"

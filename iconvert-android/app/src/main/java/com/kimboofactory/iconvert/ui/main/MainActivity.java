@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.aleengo.peach.toolbox.commons.common.NamedRunnable;
 import com.aleengo.peach.toolbox.widget.PeachToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kimboofactory.iconvert.R;
@@ -25,6 +26,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -61,8 +63,10 @@ public class MainActivity extends BaseActivity {
 
     @Getter
     private FavoritesAdapter favoritesAdapter;
-    private MainPresenter mPresenter;
+    @Getter
+    private MainPresenter presenter;
     private MainView mMvpView;
+    private ListViewListener listener;
     @Getter @Setter
     private CurrencyIHM currencySource = new CurrencyIHM();
 
@@ -83,21 +87,30 @@ public class MainActivity extends BaseActivity {
 
         setSupportActionBar(toolbar);
 
+        listener = new ListViewListener();
+
         favoritesAdapter = new FavoritesAdapter(this, new LinkedList<>());
         favoritesLV.setAdapter(favoritesAdapter);
 
-        fab.setOnClickListener((View v) -> mPresenter.addFavorite(SEARCH_CURRENCY_REQUEST_CODE));
+        favoritesLV.setOnItemClickListener(listener);
+        favoritesLV.setOnItemLongClickListener(listener);
+
+        fab.setOnClickListener((View v) -> presenter.addFavorite(SEARCH_CURRENCY_REQUEST_CODE));
 
         mMvpView = new MainView();
         mMvpView.attachUi(this);
 
-        mPresenter = new MainPresenter(Injection.provideUseCaseHandler(),
+        presenter = new MainPresenter(Injection.provideUseCaseHandler(),
                 Injection.provideGetCurrencies(getApplicationContext()),
                 Injection.provideGetCurrency(getApplicationContext()),
                 Injection.provideGetRates(getApplicationContext()),
-                Injection.provideGetRatesAndCurrencies(getApplicationContext()));
+                Injection.provideGetRatesAndCurrencies(getApplicationContext()),
+                Injection.provideGetFavorites(getApplicationContext()),
+                Injection.provideSaveFavorite(getApplicationContext()),
+                Injection.provideSaveFavorites(getApplicationContext()),
+                Injection.provideDeleteFavorites(getApplicationContext()));
 
-        mPresenter.attach(mMvpView);
+        presenter.attach(mMvpView);
 
         amountET.addTextChangedListener(new TextWatcher() {
             @Override
@@ -111,10 +124,17 @@ public class MainActivity extends BaseActivity {
                     /*mCurrency = new CurrencyIHM("EUR", "EURO", false, "1.0");
                     mCurrency.setComputeRate(s.toString());
 
-                    (new Handler()).postDelayed(() -> mPresenter.loadCurrency(mCurrency), Helper.DELAY_MILLIS_2000);*/
+                    (new Handler()).postDelayed(() -> presenter.loadCurrency(mCurrency), Helper.DELAY_MILLIS_2000);*/
                     currencySource.setAmount(s.toString());
-                    final Runnable task = () -> mMvpView.updateFavoritesList(favoritesAdapter.getItems());
-                    new Handler().postDelayed(task, Helper.DELAY_MILLIS_400);
+                    final NamedRunnable task = new NamedRunnable("%s", "OnTextChanged") {
+                        @Override
+                        protected void execute() {
+                            final List<CurrencyIHM> oldItems = Helper.copy(favoritesAdapter.getItems());
+                            favoritesAdapter.clear();
+                            mMvpView.updateFavoritesList(oldItems);
+                        }
+                    };
+                    new Handler().postDelayed(task, Helper.DELAY_MILLIS_500);
                 }
             }
 
@@ -124,24 +144,26 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        currencyRL.setOnClickListener(v -> mPresenter.addFavorite(CHOOSE_CURRENCY_REQUEST_CODE));
+        currencyRL.setOnClickListener(v -> presenter.addFavorite(CHOOSE_CURRENCY_REQUEST_CODE));
     }
 
     @Override
     protected void onResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == SEARCH_CURRENCY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == SEARCH_CURRENCY_REQUEST_CODE &&
+                resultCode == Activity.RESULT_OK) {
             final Serializable extras = data.getSerializableExtra(Helper.EXTRA_SELECTED_ITEMS);
-            mPresenter.updateFavorites(resultCode, extras);
-        } else if (requestCode == CHOOSE_CURRENCY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            presenter.updateFavorites(resultCode, extras);
+        } else if (requestCode == CHOOSE_CURRENCY_REQUEST_CODE &&
+                resultCode == Activity.RESULT_OK) {
             final Serializable extra = data.getSerializableExtra(Helper.EXTRA_SELECTED_ITEM);
-            mPresenter.updateSourceCurrency(resultCode, extra);
+            presenter.updateSourceCurrency(resultCode, extra);
         }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        mPresenter.loadRatesAndCurrencies(false);
+        presenter.loadRatesAndCurrencies(false);
         EventBus.getDefault().register(mMvpView);
     }
 
@@ -149,10 +171,10 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         if (mFirstLoad) {
-            mPresenter.loadDefaultCurrency();
+            presenter.loadDefaultCurrency();
             mFirstLoad = false;
-
         }
+        presenter.loadFavorites();
     }
 
     @Override
@@ -164,8 +186,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.detach();
-        mPresenter = null;
+        presenter.detach();
+        presenter = null;
         mMvpView = null;
     }
 
@@ -187,6 +209,9 @@ public class MainActivity extends BaseActivity {
                return true;
             case R.id.action_refresh:
                 final String appId = getString(R.string.openexchangerates_app_id);
+                return true;
+            case R.id.action_clear:
+                presenter.removeFavorites();
                 return true;
             default:
                 break;

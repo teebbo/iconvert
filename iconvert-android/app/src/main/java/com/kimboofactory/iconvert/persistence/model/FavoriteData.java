@@ -1,6 +1,9 @@
 package com.kimboofactory.iconvert.persistence.model;
 
+import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
+
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -15,20 +18,20 @@ public class FavoriteData {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="_id")
     private long favoriteId;
-    @ColumnInfo(name = "src_code")
-    private String source;
-    @ColumnInfo(name="dest_code")
-    private String dest;
+    @Embedded(prefix = "source_")
+    private CurrencyEntity source;
+    @Embedded(prefix = "dest_")
+    private CurrencyEntity dest;
     @ColumnInfo(name = "computed_rate")
     private String computedRate;
-    @ColumnInfo(name = "value")
-    private String value;
+    @ColumnInfo(name = "computed_amount")
+    private String amount;
 
-    public FavoriteData(String source, String dest, String computedRate, String value) {
+    public FavoriteData( CurrencyEntity source, CurrencyEntity dest, String computedRate, String amount) {
         this.source = source;
         this.dest = dest;
         this.computedRate = computedRate;
-        this.value = value;
+        this.amount = amount;
     }
 
     public long getFavoriteId() {
@@ -39,19 +42,19 @@ public class FavoriteData {
         this.favoriteId = favoriteId;
     }
 
-    public String getSource() {
+    public CurrencyEntity getSource() {
         return source;
     }
 
-    public void setSource(String source) {
+    public void setSource(CurrencyEntity source) {
         this.source = source;
     }
 
-    public String getDest() {
+    public CurrencyEntity getDest() {
         return dest;
     }
 
-    public void setDest(String dest) {
+    public void setDest(CurrencyEntity dest) {
         this.dest = dest;
     }
 
@@ -63,11 +66,11 @@ public class FavoriteData {
         this.computedRate = computedRate;
     }
 
-    public String getValue() {
-        return value;
+    public String getAmount() {
+        return amount;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 }
