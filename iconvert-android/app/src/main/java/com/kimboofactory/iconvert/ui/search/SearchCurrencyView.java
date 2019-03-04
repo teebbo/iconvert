@@ -31,7 +31,8 @@ public class SearchCurrencyView implements SearchContract.View {
     private SearchCurrencyActivity activity;
 
     @Inject
-    public SearchCurrencyView() {
+    public SearchCurrencyView(SearchCurrencyActivity activity) {
+        this.activity = activity;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -18,7 +18,7 @@ import androidx.room.RoomDatabase;
 @Database(entities = {CurrencyData.class, RateData.class, FavoriteData.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
-    private static final String DB_NAME = "iconvert.db";
+    public static final String DB_NAME = "iconvert.db";
 
     private static AppDatabase instance;
 

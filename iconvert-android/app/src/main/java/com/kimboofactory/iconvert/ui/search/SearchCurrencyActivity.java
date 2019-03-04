@@ -1,6 +1,7 @@
 package com.kimboofactory.iconvert.ui.search;
 
 import android.app.SearchManager;
+import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -11,11 +12,11 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 
 import com.aleengo.peach.toolbox.commons.common.PeachConfig;
+import com.aleengo.peach.toolbox.ui.BaseActivity;
 import com.aleengo.peach.toolbox.widget.PeachToolbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.application.IConvertApplication;
-import com.kimboofactory.iconvert.common.BaseActivity;
 import com.kimboofactory.iconvert.di.modules.SearchActivityModule;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.ui.main.MainActivity;
@@ -25,6 +26,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -33,7 +35,7 @@ import lombok.Getter;
 
 public class SearchCurrencyActivity extends BaseActivity implements SearchView.OnQueryTextListener {
 
-    private static final int NO_EXTRA = -1;
+    public static final int NO_EXTRA = -1;
 
     @Getter
     @BindView(R.id.coordinator_layout)
@@ -50,7 +52,6 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
     ImageView mBack;
     @BindView(R.id.sv_search)
     SearchView mSearchView;
-
     @BindView(R.id.lv_currencies)
     ListView searchCurrencyLV;
 
@@ -59,17 +60,16 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
 
     @Inject
     SearchCurrencyView mMvpView;
-    @Inject
-    @Getter
+    @Inject @Getter
     SearchPresenter presenter;
-
-    @Getter
-    private SearchCurrencyAdapter adapter;
-    private int mRequestCode;
+    @Inject @Getter
+    SearchCurrencyAdapter adapter;
+    @Inject
+    Integer mRequestCode;
 
 
     @Override
-    public String getClassName() {
+    public String logTag() {
         return "SearchCurrencyActivity";
     }
 
@@ -79,13 +79,20 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
     }
 
     @Override
-    public void onInitialize() {
+    public void daggerConfiguration() {
+        // Dagger config
+        IConvertApplication.getApplication(this)
+                .daggerAppComponent()
+                .searchComponentBuilder()
+                .searchActivityModule(new SearchActivityModule(this))
+                .build()
+                .inject(this);
+    }
 
+    @Override
+    protected void initialize(@Nullable Bundle savedInstanceState) {
         setSupportActionBar(toolbar);
 
-        mRequestCode = getIntent().getIntExtra(MainActivity.REQUEST_CODE, NO_EXTRA);
-
-        adapter = new SearchCurrencyAdapter(this, Helper.CURRENCY_IHMS_EMPTY_LIST, mRequestCode);
         searchCurrencyLV.setAdapter(adapter);
         searchCurrencyLV.setOnItemClickListener(this::OnItemClick);
 
@@ -94,22 +101,6 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
         mBack.setOnClickListener( (View v) -> onBackPressed());
 
         snackbar = Snackbar.make(coordinatorLayout, Helper.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE);
-       /* DaggerSearchActivityComponent.builder()
-                .appComponent(getAppComponent())
-                .build()
-                .inject(this);*/
-        getAppComponent()
-                .searchActivityComponentBuilder()
-                .searchActivityModule(new SearchActivityModule(this))
-                .build()
-                .inject(this);
-
-        //mMvpView = new SearchCurrencyView();
-        //mMvpView = daggerComponent.searchCurrencyView();
-        mMvpView.attachUi(this);
-
-        //presenter = new SearchPresenter(null, null);
-
         presenter.attach(mMvpView);
 
         // setting SwipeRefresh
@@ -134,10 +125,7 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
     protected void onDestroy() {
         super.onDestroy();
         snackbar = null;
-        adapter = null;
         presenter.detach();
-        presenter = null;
-        mMvpView = null;
 
         if(PeachConfig.isDebug()) {
             IConvertApplication.getRefWatcher(this).watch(this);

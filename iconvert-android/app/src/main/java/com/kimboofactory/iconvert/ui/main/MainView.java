@@ -31,7 +31,8 @@ public class MainView implements FavoriteContract.View {
     private MainActivity activity;
 
     @Inject
-    public MainView() {
+    public MainView(MainActivity activity) {
+        this.activity = activity;
     }
 
     @Override

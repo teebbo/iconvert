@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.aleengo.peach.toolbox.commons.common.PeachConfig;
 import com.facebook.stetho.Stetho;
 import com.kimboofactory.iconvert.di.component.AppComponent;
 import com.kimboofactory.iconvert.di.component.DaggerAppComponent;
@@ -27,6 +28,8 @@ public class IConvertApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        PeachConfig.setDebug(true);
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
@@ -54,7 +57,7 @@ public class IConvertApplication extends Application {
         return application.refWatcher;
     }
 
-    public AppComponent appComponent() {
+    public AppComponent daggerAppComponent() {
         return appComponent;
     }
 }

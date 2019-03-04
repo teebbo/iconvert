@@ -2,6 +2,7 @@ package com.kimboofactory.iconvert.ui.main;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,20 +16,18 @@ import android.widget.TextView;
 
 import com.aleengo.peach.toolbox.commons.common.NamedRunnable;
 import com.aleengo.peach.toolbox.commons.common.PeachConfig;
+import com.aleengo.peach.toolbox.ui.BaseActivity;
 import com.aleengo.peach.toolbox.widget.PeachToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.application.IConvertApplication;
-import com.kimboofactory.iconvert.common.BaseActivity;
-import com.kimboofactory.iconvert.di.modules.MainActivityModule;
+import com.kimboofactory.iconvert.di.modules.HomeModule;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.util.Helper;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
-import java.lang.ref.WeakReference;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,8 +43,6 @@ public class MainActivity extends BaseActivity {
     public static final int SEARCH_CURRENCY_REQUEST_CODE = 100;
     public static final int CHOOSE_CURRENCY_REQUEST_CODE = 101;
     public static final String REQUEST_CODE = "com.kimboofactory.iconvert.REQUEST_CODE";
-
-    private static final long DELAY_MILLIS = 400;
 
     @BindView(R.id.toolbar)
     PeachToolbar toolbar;
@@ -66,23 +63,33 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
-    @Getter
-    private FavoritesAdapter favoritesAdapter;
-
+    @Inject @Getter
+    FavoritesAdapter favoritesAdapter;
     @Inject
     MainView mMvpView;
-    @Inject
-    @Getter
+    @Inject @Getter
     MainPresenter presenter;
-    private ListViewListener listener;
+    @Inject
+    ListViewListener listener;
+
     @Getter @Setter
     private CurrencyIHM currencySource;
 
     private boolean mFirstLoad = true;
 
     @Override
-    public String getClassName() {
+    public String logTag() {
         return "MainActivity";
+    }
+
+    @Override
+    public void daggerConfiguration() {
+        IConvertApplication.getApplication(this)
+                .daggerAppComponent()
+                .homeComponentBuilder()
+                .homeModule(new HomeModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -91,37 +98,15 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    public void onInitialize() {
+    protected void initialize(@Nullable Bundle savedInstanceState) {
 
         setSupportActionBar(toolbar);
 
-        listener = new ListViewListener(new WeakReference<>(this));
-
-        favoritesAdapter = new FavoritesAdapter(this, new LinkedList<>());
         favoritesLV.setAdapter(favoritesAdapter);
-
         favoritesLV.setOnItemClickListener(listener);
         favoritesLV.setOnItemLongClickListener(listener);
 
         fab.setOnClickListener((View v) -> presenter.addFavorite(SEARCH_CURRENCY_REQUEST_CODE));
-
-       /* DaggerMainActivityComponent.builder()
-                .appComponent(getAppComponent())
-                .build()
-                .inject(this);*/
-        getAppComponent()
-                .mainActivityComponentBuilder()
-                .mainActivityModule(new MainActivityModule(this))
-                .build()
-                .inject(this);
-
-        //mMvpView = new MainView();
-        //mMvpView = daggerComponent.mainView();
-        mMvpView.attachUi(MainActivity.this);
-        //presenter = daggerComponent.mainPresenter();
-
-        //presenter = new MainPresenter(null);
-
         presenter.attach(mMvpView);
 
         amountET.addTextChangedListener(new TextWatcher() {
@@ -156,7 +141,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult (int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == SEARCH_CURRENCY_REQUEST_CODE &&
                 resultCode == Activity.RESULT_OK) {
             final Serializable extras = data.getSerializableExtra(Helper.EXTRA_SELECTED_ITEMS);
@@ -200,9 +185,6 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         presenter.detach();
-        presenter = null;
-        mMvpView = null;
-        listener = null;
 
         if (PeachConfig.isDebug()) {
             IConvertApplication.getRefWatcher(MainActivity.this).watch(MainActivity.this);

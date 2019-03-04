@@ -15,10 +15,8 @@ import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.BaseFragment;
 import com.kimboofactory.iconvert.fragment.dialog.DialogUi;
 import com.kimboofactory.iconvert.persistence.model.CurrencyData;
-import com.kimboofactory.iconvert.ui.main.MainPresenter;
 import com.kimboofactory.iconvert.ui.main.FavoritesAdapter;
-
-import java.util.LinkedList;
+import com.kimboofactory.iconvert.ui.main.MainPresenter;
 
 import butterknife.BindView;
 
@@ -102,7 +100,7 @@ public class ConversionFragment extends BaseFragment
         //currencyTo.setOnClickListener(this::onClick);
         //mConvertBtn.setOnClickListener(this::onClick);
 
-        mAdapter = new FavoritesAdapter(getActivity(), new LinkedList<>());
+        //mAdapter = new FavoritesAdapter(getActivity(), new LinkedList<>());
         favoritesCurrenciesLV.setAdapter(mAdapter);
     }
 

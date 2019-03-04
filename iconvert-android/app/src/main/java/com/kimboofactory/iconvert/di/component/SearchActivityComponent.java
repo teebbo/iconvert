@@ -13,6 +13,7 @@ import dagger.Subcomponent;
 @ActivityScope
 @Subcomponent(modules = {SearchActivityModule.class})
 public interface SearchActivityComponent {
+
     void inject(SearchCurrencyActivity activity);
 
     @Subcomponent.Builder

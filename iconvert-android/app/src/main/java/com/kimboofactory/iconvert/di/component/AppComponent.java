@@ -2,7 +2,6 @@ package com.kimboofactory.iconvert.di.component;
 
 import com.kimboofactory.iconvert.di.modules.AppModule;
 import com.kimboofactory.iconvert.di.modules.NetworkModule;
-import com.kimboofactory.iconvert.di.modules.PersistenceModule;
 import com.kimboofactory.iconvert.di.scope.ApplicationScope;
 
 import dagger.Component;
@@ -14,10 +13,16 @@ import dagger.Component;
 @ApplicationScope
 @Component(modules = {
         AppModule.class,
-        NetworkModule.class,
-        PersistenceModule.class
+        NetworkModule.class
 })
 public interface AppComponent {
-    MainActivityComponent.Builder mainActivityComponentBuilder();
-    SearchActivityComponent.Builder searchActivityComponentBuilder();
+
+    HomeComponent.Builder homeComponentBuilder();
+    SearchActivityComponent.Builder searchComponentBuilder();
+
+    @Component.Builder
+    interface Builder {
+        AppComponent build();
+        Builder appModule(AppModule module);
+    }
 }

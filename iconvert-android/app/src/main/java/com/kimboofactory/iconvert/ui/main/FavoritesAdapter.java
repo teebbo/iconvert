@@ -1,6 +1,5 @@
 package com.kimboofactory.iconvert.ui.main;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -13,6 +12,8 @@ import com.kimboofactory.iconvert.util.Helper;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -24,7 +25,8 @@ public class FavoritesAdapter
         extends ListViewAdapter<CurrencyIHM, FavoritesAdapter.ViewHolder> {
 
 
-    public FavoritesAdapter(Context context, List<CurrencyIHM> favorites) {
+    @Inject
+    public FavoritesAdapter(MainActivity context, List<CurrencyIHM> favorites) {
         super(context, favorites);
     }
 

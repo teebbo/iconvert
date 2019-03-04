@@ -4,9 +4,6 @@ import com.aleengo.peach.toolbox.commons.model.Response;
 import com.aleengo.peach.toolbox.commons.model.Result;
 import com.kimboofactory.iconvert.common.AbstractPresenter;
 import com.kimboofactory.iconvert.domain.Repository;
-import com.kimboofactory.iconvert.domain.UseCase;
-import com.kimboofactory.iconvert.domain.UseCaseHandler;
-import com.kimboofactory.iconvert.domain.common.QueryValue;
 import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.persistence.repository.CurrencyRepository;
@@ -30,13 +27,9 @@ public class SearchPresenter extends AbstractPresenter<SearchCurrencyView>
     private Repository repository;
     @Getter
     private List<CurrencyIHM> selectedItems = new LinkedList<>();
-    private UseCase<QueryValue> mGetCurrenciesUseCase;
-    private UseCaseHandler mUseCaseHandler;
 
     @Inject
     public SearchPresenter(CurrencyRepository repository) {
-        /*mUseCaseHandler = useCaseHandler;
-        this.mGetCurrenciesUseCase = getCurrenciesUseCase;*/
         this.repository = repository;
     }
 
@@ -65,8 +58,6 @@ public class SearchPresenter extends AbstractPresenter<SearchCurrencyView>
 
     @Override
     public void loadCurrencies() {
-      /* mUseCaseHandler.setUseCase(null, mGetCurrenciesUseCase);
-       mUseCaseHandler.execute((Result result) -> EventBus.getDefault().post(result));*/
        repository.getCurrencies((Response response) -> {
 
            final Result<List<CurrencyEntity>> result = new Result<>(null, null);

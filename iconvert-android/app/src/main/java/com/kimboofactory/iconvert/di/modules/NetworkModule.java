@@ -14,17 +14,17 @@ import okhttp3.OkHttpClient;
  * Copyright (c) 2019. All rights reserved.
  */
 @Module
-public class NetworkModule {
+public abstract class NetworkModule {
 
     @Provides
     @ApplicationScope
-    public StethoInterceptor stethoInterceptor() {
+    public static StethoInterceptor stethoInterceptor() {
         return new StethoInterceptor();
     }
 
     @Provides
     @ApplicationScope
-    public OkHttpClient okHttpClient(StethoInterceptor stethoInterceptor) {
+    public static OkHttpClient okHttpClient(StethoInterceptor stethoInterceptor) {
         return HttpClient.getInstance().get()
                 .newBuilder()
                 .addNetworkInterceptor(stethoInterceptor)
@@ -33,7 +33,7 @@ public class NetworkModule {
 
     @Provides
     @ApplicationScope
-    public OpenXchangeRateAPI openXchangeRateAPI(OkHttpClient client) {
+    public static OpenXchangeRateAPI openXchangeRateAPI(OkHttpClient client) {
         return new OpenXchangeRateAPI(client);
     }
 }

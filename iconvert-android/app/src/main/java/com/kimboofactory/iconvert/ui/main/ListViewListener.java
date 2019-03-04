@@ -9,6 +9,8 @@ import com.kimboofactory.iconvert.domain.model.FavoriteEntity;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +25,7 @@ public final class ListViewListener implements
     private List<FavoriteEntity> favoritesToDelete;
     private WeakReference<MainActivity> activityRef;
 
+    @Inject
     public ListViewListener(WeakReference<MainActivity> activityRef) {
         this.activityRef = activityRef;
     }

@@ -1,6 +1,5 @@
 package com.kimboofactory.iconvert.ui.search;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Filter;
@@ -18,6 +17,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lombok.Getter;
@@ -34,10 +35,12 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
     private SearchCurrencyFilter mFilter;
     @Getter
     private List<CurrencyIHM> originalList;
-    private int requestCode;
+    private Integer requestCode;
     private boolean isOriginalListEmpty = true;
 
-    public SearchCurrencyAdapter(Context mContext, List<CurrencyIHM> currencies, int requestCode) {
+    @Inject
+    public SearchCurrencyAdapter(SearchCurrencyActivity mContext,
+                                 List<CurrencyIHM> currencies, Integer requestCode) {
       super(mContext, currencies);
       this.originalList = new LinkedList<>();
       this.requestCode = requestCode;
@@ -74,9 +77,9 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
         holder.codeTV.setText(currencyIHM.getEntity().getCode());
         holder.libelleTV.setText(currencyIHM.getEntity().getLibelle());
 
-        holder.checkBox.setVisibility(requestCode == MainActivity.SEARCH_CURRENCY_REQUEST_CODE ?
+        holder.checkBox.setVisibility(requestCode.intValue() == MainActivity.SEARCH_CURRENCY_REQUEST_CODE ?
                 View.VISIBLE : View.GONE);
-        holder.radioButton.setVisibility(requestCode == MainActivity.SEARCH_CURRENCY_REQUEST_CODE ?
+        holder.radioButton.setVisibility(requestCode.intValue() == MainActivity.SEARCH_CURRENCY_REQUEST_CODE ?
                 View.GONE : View.VISIBLE);
         holder.checkBox.setChecked(currencyIHM.getChecked());
         holder.radioButton.setChecked(currencyIHM.getChecked());
