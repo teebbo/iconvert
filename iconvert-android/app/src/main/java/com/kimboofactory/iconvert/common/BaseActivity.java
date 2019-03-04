@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.kimboofactory.iconvert.R;
+import com.kimboofactory.iconvert.application.IConvertApplication;
+import com.kimboofactory.iconvert.di.component.AppComponent;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
+import lombok.Getter;
 
 /**
  * Created by CK_ALEENGO on 28/06/2018.
@@ -18,6 +20,9 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity implements UiCommon {
 
     private static final boolean DEBUG = true;
+
+    @Getter
+    private AppComponent appComponent;
 
     protected void onResult(int requestCode, int resultCode, @Nullable Intent data) {
         // do nothing
@@ -29,6 +34,9 @@ public abstract class BaseActivity extends AppCompatActivity implements UiCommon
 
         if (DEBUG) Log.d(getClassName(), "onCreate() method called");
         setContentView(getLayoutResId());
+
+        appComponent = IConvertApplication.getApplication(this)
+                .appComponent();
 
         ButterKnife.bind(this);
         onInitialize();

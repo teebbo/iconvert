@@ -46,16 +46,6 @@ public class FavoritesAdapter
         }
     }
 
-    public void removeItem(int position) {
-        getItems().remove(position);
-        notifyDataSetChanged();
-    }
-
-    public void removeItem(CurrencyIHM item) {
-        getItems().remove(item);
-        notifyDataSetChanged();
-    }
-
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final CurrencyIHM item = (CurrencyIHM) getItem(position);

@@ -4,12 +4,15 @@ import com.kimboofactory.iconvert.domain.Repository;
 import com.kimboofactory.iconvert.domain.UseCase;
 import com.kimboofactory.iconvert.domain.common.QueryValue;
 
+import javax.inject.Inject;
+
 /**
  * Created by CK_ALEENGO on 25/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
 public class GetRatesAndCurrencies extends UseCase<GetRatesAndCurrencies.QueryVal> {
 
+    @Inject
     public GetRatesAndCurrencies(Repository repository) {
         super(repository);
     }

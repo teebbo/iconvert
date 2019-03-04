@@ -1,26 +1,5 @@
 package com.kimboofactory.iconvert.di;
 
-import android.content.Context;
-
-import com.aleengo.peach.toolbox.commons.util.AppExecutors;
-import com.kimboofactory.iconvert.domain.UseCaseHandler;
-import com.kimboofactory.iconvert.domain.usecases.DeleteFavorite;
-import com.kimboofactory.iconvert.domain.usecases.DeleteFavorites;
-import com.kimboofactory.iconvert.domain.usecases.GetCurrencies;
-import com.kimboofactory.iconvert.domain.usecases.GetCurrency;
-import com.kimboofactory.iconvert.domain.usecases.GetFavorites;
-import com.kimboofactory.iconvert.domain.usecases.GetRate;
-import com.kimboofactory.iconvert.domain.usecases.GetRatesAndCurrencies;
-import com.kimboofactory.iconvert.domain.usecases.SaveFavorite;
-import com.kimboofactory.iconvert.domain.usecases.SaveFavorites;
-import com.kimboofactory.iconvert.persistence.api.OpenXchangeRateAPI;
-import com.kimboofactory.iconvert.persistence.local.AppDatabase;
-import com.kimboofactory.iconvert.persistence.local.LocalCurrencyDataSource;
-import com.kimboofactory.iconvert.persistence.remote.RemoteDataSource;
-import com.kimboofactory.iconvert.persistence.repository.CurrencyRepository;
-
-import androidx.annotation.NonNull;
-
 /**
  * Created by CK_ALEENGO on 25/02/2019.
  * Copyright (c) 2019. All rights reserved.
@@ -29,14 +8,14 @@ public class Injection {
 
     private Injection() {}
 
-    public static CurrencyRepository provideCurrencyRepository(@NonNull Context context) {
+    /*public static CurrencyRepository provideCurrencyRepository(@NonNull Context context) {
         final AppDatabase db = AppDatabase.getInstance(context);
 
         final AppExecutors appExecutors = new AppExecutors();
         final LocalCurrencyDataSource localDataSource =
                 LocalCurrencyDataSource.getInstance(appExecutors, db.convertDAO());
-        final RemoteDataSource remoteDataSource =
-                RemoteDataSource.getInstance(appExecutors, OpenXchangeRateAPI.getInstance());
+        final RemoteDataSource remoteDataSource = null;
+                //RemoteDataSource.getInstance(appExecutors, OpenXchangeRateAPI.getInstance());
 
         return new CurrencyRepository(localDataSource, remoteDataSource);
     }
@@ -79,5 +58,5 @@ public class Injection {
 
     public static GetRatesAndCurrencies provideGetRatesAndCurrencies(@NonNull Context context) {
         return new GetRatesAndCurrencies(provideCurrencyRepository(context));
-    }
+    }*/
 }

@@ -5,12 +5,15 @@ import com.kimboofactory.iconvert.domain.UseCase;
 import com.kimboofactory.iconvert.domain.common.QueryValue;
 import com.kimboofactory.iconvert.domain.model.FavoriteEntity;
 
+import javax.inject.Inject;
+
 /**
  * Created by CK_ALEENGO on 28/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
 public class DeleteFavorite extends UseCase<QueryValue> {
 
+    @Inject
     public DeleteFavorite(Repository repository) {
         super(repository);
     }

@@ -60,6 +60,13 @@ dependencies {
     debugImplementation deps.leakcanary.runtime
     releaseImplementation deps.leakcanary.android_noop
 
+    // dagger
+    implementation deps.dagger2.runtime
+    annotationProcessor deps.dagger2.compiler
+    implementation deps.dagger2.android
+    implementation deps.dagger2.android_support
+    //annotationProcessor deps.dagger2.android_processor
+
     testImplementation deps.junit
     androidTestImplementation deps.android_test_runner
     androidTestImplementation deps.espresso.core

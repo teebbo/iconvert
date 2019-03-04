@@ -20,7 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.application.IConvertApplication;
 import com.kimboofactory.iconvert.common.BaseActivity;
-import com.kimboofactory.iconvert.di.Injection;
+import com.kimboofactory.iconvert.di.modules.MainActivityModule;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.util.Helper;
 
@@ -30,6 +30,8 @@ import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -66,9 +68,12 @@ public class MainActivity extends BaseActivity {
 
     @Getter
     private FavoritesAdapter favoritesAdapter;
+
+    @Inject
+    MainView mMvpView;
+    @Inject
     @Getter
-    private MainPresenter presenter;
-    private MainView mMvpView;
+    MainPresenter presenter;
     private ListViewListener listener;
     @Getter @Setter
     private CurrencyIHM currencySource;
@@ -100,19 +105,22 @@ public class MainActivity extends BaseActivity {
 
         fab.setOnClickListener((View v) -> presenter.addFavorite(SEARCH_CURRENCY_REQUEST_CODE));
 
-        mMvpView = new MainView();
-        mMvpView.attachUi(this);
+       /* DaggerMainActivityComponent.builder()
+                .appComponent(getAppComponent())
+                .build()
+                .inject(this);*/
+        getAppComponent()
+                .mainActivityComponentBuilder()
+                .mainActivityModule(new MainActivityModule(this))
+                .build()
+                .inject(this);
 
-        presenter = new MainPresenter(Injection.provideUseCaseHandler(),
-                Injection.provideGetCurrencies(getApplicationContext()),
-                Injection.provideGetCurrency(getApplicationContext()),
-                Injection.provideGetRates(getApplicationContext()),
-                Injection.provideGetRatesAndCurrencies(getApplicationContext()),
-                Injection.provideGetFavorites(getApplicationContext()),
-                Injection.provideSaveFavorite(getApplicationContext()),
-                Injection.provideSaveFavorites(getApplicationContext()),
-                Injection.provideDeleteFavorites(getApplicationContext()),
-                Injection.provideDeleteFavorite(getApplicationContext()));
+        //mMvpView = new MainView();
+        //mMvpView = daggerComponent.mainView();
+        mMvpView.attachUi(MainActivity.this);
+        //presenter = daggerComponent.mainPresenter();
+
+        //presenter = new MainPresenter(null);
 
         presenter.attach(mMvpView);
 

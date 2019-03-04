@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
+
 /**
  * Created by CK_ALEENGO on 13/02/2019.
  * Copyright (c) 2019. All rights reserved.
@@ -28,6 +30,7 @@ public class SearchCurrencyView implements SearchContract.View {
 
     private SearchCurrencyActivity activity;
 
+    @Inject
     public SearchCurrencyView() {
     }
 

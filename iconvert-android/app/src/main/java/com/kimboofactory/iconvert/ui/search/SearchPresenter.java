@@ -1,16 +1,22 @@
 package com.kimboofactory.iconvert.ui.search;
 
+import com.aleengo.peach.toolbox.commons.model.Response;
 import com.aleengo.peach.toolbox.commons.model.Result;
 import com.kimboofactory.iconvert.common.AbstractPresenter;
+import com.kimboofactory.iconvert.domain.Repository;
 import com.kimboofactory.iconvert.domain.UseCase;
 import com.kimboofactory.iconvert.domain.UseCaseHandler;
 import com.kimboofactory.iconvert.domain.common.QueryValue;
+import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
+import com.kimboofactory.iconvert.persistence.repository.CurrencyRepository;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import lombok.Getter;
 
@@ -21,14 +27,17 @@ import lombok.Getter;
 public class SearchPresenter extends AbstractPresenter<SearchCurrencyView>
         implements SearchContract.Presenter {
 
+    private Repository repository;
     @Getter
     private List<CurrencyIHM> selectedItems = new LinkedList<>();
     private UseCase<QueryValue> mGetCurrenciesUseCase;
     private UseCaseHandler mUseCaseHandler;
 
-    public SearchPresenter(UseCaseHandler useCaseHandler, UseCase getCurrenciesUseCase) {
-        mUseCaseHandler = useCaseHandler;
-        this.mGetCurrenciesUseCase = getCurrenciesUseCase;
+    @Inject
+    public SearchPresenter(CurrencyRepository repository) {
+        /*mUseCaseHandler = useCaseHandler;
+        this.mGetCurrenciesUseCase = getCurrenciesUseCase;*/
+        this.repository = repository;
     }
 
     @Override
@@ -56,7 +65,20 @@ public class SearchPresenter extends AbstractPresenter<SearchCurrencyView>
 
     @Override
     public void loadCurrencies() {
-       mUseCaseHandler.setUseCase(null, mGetCurrenciesUseCase);
-       mUseCaseHandler.execute((Result result) -> EventBus.getDefault().post(result));
+      /* mUseCaseHandler.setUseCase(null, mGetCurrenciesUseCase);
+       mUseCaseHandler.execute((Result result) -> EventBus.getDefault().post(result));*/
+       repository.getCurrencies((Response response) -> {
+
+           final Result<List<CurrencyEntity>> result = new Result<>(null, null);
+
+           if (response.getError() != null) {
+               result.setError(response.getError());
+               EventBus.getDefault().post(result);
+               return;
+           }
+           final List<CurrencyEntity> data = (List<CurrencyEntity>) response.getValue();
+           result.setValue(data);
+           EventBus.getDefault().post(result);
+       });
     }
 }

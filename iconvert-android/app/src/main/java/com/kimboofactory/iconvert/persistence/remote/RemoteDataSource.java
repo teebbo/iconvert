@@ -1,11 +1,12 @@
 package com.kimboofactory.iconvert.persistence.remote;
 
 import com.aleengo.peach.toolbox.commons.common.NamedRunnable;
-import com.aleengo.peach.toolbox.commons.factory.Singleton;
 import com.aleengo.peach.toolbox.commons.util.AppExecutors;
 import com.kimboofactory.iconvert.persistence.CurrencyDataSource;
 import com.kimboofactory.iconvert.persistence.api.API;
 import com.kimboofactory.iconvert.persistence.api.OpenXchangeRateAPI;
+
+import javax.inject.Inject;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,19 +22,23 @@ public class RemoteDataSource implements CurrencyDataSource {
     @Getter @Setter
     private AppExecutors appExecutors;
 
-    private static RemoteDataSource instance;
+    //private static RemoteDataSource instance;
 
-    private RemoteDataSource() {
+    @Inject
+    public RemoteDataSource(AppExecutors appExecutors, OpenXchangeRateAPI api) {
+        this.api = api;
+        this.appExecutors = appExecutors;
     }
 
-    public static RemoteDataSource getInstance(AppExecutors appExecutors, API api) {
+   /* public static RemoteDataSource getInstance(AppExecutors appExecutors, API api) {
         if (instance == null) {
             instance = Singleton.of(RemoteDataSource.class, instance);
             instance.setApi(api);
             instance.setAppExecutors(appExecutors);
         }
         return instance;
-    }
+    }*/
+
     @Override
     public void getCurrency(String code, GetCurrencyCallback callback) {
 

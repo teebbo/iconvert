@@ -2,7 +2,6 @@ package com.kimboofactory.iconvert.persistence.local;
 
 import com.aleengo.peach.toolbox.commons.common.NamedCallable;
 import com.aleengo.peach.toolbox.commons.common.NamedRunnable;
-import com.aleengo.peach.toolbox.commons.factory.Singleton;
 import com.aleengo.peach.toolbox.commons.model.Response;
 import com.aleengo.peach.toolbox.commons.util.AppExecutors;
 import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
@@ -14,6 +13,8 @@ import com.kimboofactory.iconvert.persistence.model.RateData;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.inject.Inject;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -30,19 +31,24 @@ public class LocalCurrencyDataSource implements CurrencyDataSource {
 
     @Getter @Setter
     private IConvertDAO dao;
+
     @Getter @Setter
     private AppExecutors appExecutors;
 
-    private LocalCurrencyDataSource() {}
+    @Inject
+    public LocalCurrencyDataSource(AppExecutors appExecutors, IConvertDAO dao) {
+        this.appExecutors = appExecutors;
+        this.dao = dao;
+    }
 
-    public static LocalCurrencyDataSource getInstance(AppExecutors appExecutors, IConvertDAO dao) {
+   /* public static LocalCurrencyDataSource getInstance(AppExecutors appExecutors, IConvertDAO dao) {
         if (instance == null) {
             instance = Singleton.of(LocalCurrencyDataSource.class, instance);
             instance.setAppExecutors(appExecutors);
             instance.setDao(dao);
         }
         return instance;
-    }
+    }*/
 
     @Override
     public void getCurrency(String query, GetCurrencyCallback callback) {

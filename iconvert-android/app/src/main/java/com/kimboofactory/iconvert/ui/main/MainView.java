@@ -17,6 +17,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
+
 import lombok.Getter;
 
 /**
@@ -28,6 +30,7 @@ public class MainView implements FavoriteContract.View {
     @Getter
     private MainActivity activity;
 
+    @Inject
     public MainView() {
     }
 

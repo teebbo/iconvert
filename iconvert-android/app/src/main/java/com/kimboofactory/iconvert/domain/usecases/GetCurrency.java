@@ -6,12 +6,15 @@ import com.kimboofactory.iconvert.domain.UseCase;
 import com.kimboofactory.iconvert.domain.common.QueryValue;
 import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
 
+import javax.inject.Inject;
+
 /**
  * Created by CK_ALEENGO on 27/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
 public class GetCurrency extends UseCase<QueryValue> {
 
+    @Inject
     public GetCurrency(Repository repository) {
         super(repository);
     }

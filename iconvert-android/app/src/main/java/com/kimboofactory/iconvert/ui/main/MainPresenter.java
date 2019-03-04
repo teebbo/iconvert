@@ -1,8 +1,10 @@
 package com.kimboofactory.iconvert.ui.main;
 
+import com.aleengo.peach.toolbox.commons.model.Response;
 import com.aleengo.peach.toolbox.commons.model.Result;
 import com.kimboofactory.iconvert.GetFavoriteEvent;
 import com.kimboofactory.iconvert.common.AbstractPresenter;
+import com.kimboofactory.iconvert.domain.Repository;
 import com.kimboofactory.iconvert.domain.UseCase;
 import com.kimboofactory.iconvert.domain.UseCaseHandler;
 import com.kimboofactory.iconvert.domain.common.QueryValue;
@@ -17,6 +19,7 @@ import com.kimboofactory.iconvert.domain.usecases.GetRatesAndCurrencies;
 import com.kimboofactory.iconvert.domain.usecases.SaveFavorite;
 import com.kimboofactory.iconvert.domain.usecases.SaveFavorites;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
+import com.kimboofactory.iconvert.persistence.repository.CurrencyRepository;
 import com.kimboofactory.iconvert.util.Helper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -28,6 +31,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
+
 /**
  * Created by CK_ALEENGO on 11/02/2019.
  * Copyright (c) 2019. All rights reserved.
@@ -35,6 +40,7 @@ import java.util.stream.Collectors;
 public class MainPresenter extends AbstractPresenter<MainView>
         implements FavoriteContract.Presenter {
 
+    private Repository repository;
     private GetRate mGetRateUseCase;
     private GetCurrencies mGetCurrenciesUseCase;
     private GetCurrency mGetCurrencyUseCase;
@@ -49,26 +55,9 @@ public class MainPresenter extends AbstractPresenter<MainView>
 
     private boolean mFirstLoad = true;
 
-    public MainPresenter(UseCaseHandler useCaseHandler,
-                         GetCurrencies getCurrencies,
-                         GetCurrency getCurrency,
-                         GetRate getRate,
-                         GetRatesAndCurrencies getRatesAndCurrencies,
-                         GetFavorites getFavorites,
-                         SaveFavorite saveFavorite,
-                         SaveFavorites saveFavorites,
-                         DeleteFavorites deleteFavorites,
-                         DeleteFavorite deleteFavorite) {
-        mUseCaseHandler = useCaseHandler;
-        mGetCurrenciesUseCase = getCurrencies;
-        mGetCurrencyUseCase = getCurrency;
-        mGetRateUseCase = getRate;
-        mGetRatesAndCurrenciesUseCase = getRatesAndCurrencies;
-        this.getFavoritesUseCase = getFavorites;
-        this.saveFavoritesUseCase = saveFavorites;
-        this.saveFavoriteUseCase = saveFavorite;
-        this.deleteFavorites = deleteFavorites;
-        this.deleteFavorite = deleteFavorite;
+    @Inject
+    public MainPresenter(CurrencyRepository repository) {
+       this.repository = repository;
     }
 
     @Override
@@ -79,9 +68,9 @@ public class MainPresenter extends AbstractPresenter<MainView>
     @Override
     public void removeFavorites() {
 
-        mUseCaseHandler.setUseCase(Helper.NO_QUERY, deleteFavorites);
-        mUseCaseHandler.execute(this::doNothing);
-
+        /*mUseCaseHandler.setUseCase(Helper.NO_QUERY, deleteFavorites);
+        mUseCaseHandler.execute(this::doNothing);*/
+        repository.removeFavorites();
         getMvpView().updateFavoritesList(new ArrayList<>(0));
     }
 
@@ -94,8 +83,9 @@ public class MainPresenter extends AbstractPresenter<MainView>
         final FavoriteEntity favorite = new FavoriteEntity(null, itemToDelete.getEntity(),
                 itemToDelete.getComputeRate(), itemToDelete.getAmount());
 
-        mUseCaseHandler.setUseCase(new DeleteFavorite.QueryVal(favorite), deleteFavorite);
-        mUseCaseHandler.execute(this::doNothing);
+       /* mUseCaseHandler.setUseCase(new DeleteFavorite.QueryVal(favorite), deleteFavorite);
+        mUseCaseHandler.execute(this::doNothing);*/
+       repository.removeFavorite(favorite);
     }
 
     @Override
@@ -148,40 +138,48 @@ public class MainPresenter extends AbstractPresenter<MainView>
 
     @Override
     public void loadRatesAndCurrencies(boolean forceUpdate) {
-        final QueryValue queryVal =
+       /* final QueryValue queryVal =
                 new GetRatesAndCurrencies.QueryVal(forceUpdate || mFirstLoad, null);
-        mFirstLoad = false;
+        mFirstLoad = false;*/
 
-        mUseCaseHandler.setUseCase(queryVal, mGetRatesAndCurrenciesUseCase);
-        mUseCaseHandler.execute(this::doNothing);
+        if (forceUpdate || mFirstLoad) {
+            repository.addRatesAndCurrencies();
+            mFirstLoad = false;
+        }
+        /*mUseCaseHandler.setUseCase(queryVal, mGetRatesAndCurrenciesUseCase);
+        mUseCaseHandler.execute(this::doNothing);*/
     }
 
     @Override
     public void loadFavorites() {
-        mUseCaseHandler.setUseCase(Helper.NO_QUERY, getFavoritesUseCase);
+        /*mUseCaseHandler.setUseCase(Helper.NO_QUERY, getFavoritesUseCase);
         mUseCaseHandler.execute(new UseCase.Callback() {
             @Override
             public void onResult(Result result) {
-                final List<FavoriteEntity> list = (List<FavoriteEntity>) result.getValue();
-                if (list.size() > 0) {
-                    final List<CurrencyIHM> currencies = list.stream()
-                            .map(e -> {
-                                final CurrencyIHM currencyIHM = new CurrencyIHM(e.getDest());
-                                currencyIHM.setComputeRate(e.getComputedRate());
-                                currencyIHM.setAmount(e.getComputedAmount());
-                                return currencyIHM;
-                            }).collect(Collectors.toList());
 
-                    final FavoriteEntity f = list.get(0);
-                    final CurrencyIHM source = new CurrencyIHM(f.getSource());
-                    if (f.getComputedRate() != null) {
-                        final Float cachedAmount = Float.valueOf(f.getComputedAmount()) / Float.valueOf(f.getComputedRate());
-                        source.setAmount(String.format(Locale.US, Helper.FORMAT_AMOUNT, cachedAmount.floatValue()));
-                    } else {
-                        source.setAmount(Helper.DEFAULT_AMOUNT);
-                    }
-                    EventBus.getDefault().post(new GetFavoriteEvent(source, currencies));
+            }
+        });*/
+
+        repository.getFavorites( response -> {
+            final List<FavoriteEntity> list = (List<FavoriteEntity>) response.getValue();
+            if (list.size() > 0) {
+                final List<CurrencyIHM> currencies = list.stream()
+                        .map(e -> {
+                            final CurrencyIHM currencyIHM = new CurrencyIHM(e.getDest());
+                            currencyIHM.setComputeRate(e.getComputedRate());
+                            currencyIHM.setAmount(e.getComputedAmount());
+                            return currencyIHM;
+                        }).collect(Collectors.toList());
+
+                final FavoriteEntity f = list.get(0);
+                final CurrencyIHM source = new CurrencyIHM(f.getSource());
+                if (f.getComputedRate() != null) {
+                    final Float cachedAmount = Float.valueOf(f.getComputedAmount()) / Float.valueOf(f.getComputedRate());
+                    source.setAmount(String.format(Locale.US, Helper.FORMAT_AMOUNT, cachedAmount.floatValue()));
+                } else {
+                    source.setAmount(Helper.DEFAULT_AMOUNT);
                 }
+                EventBus.getDefault().post(new GetFavoriteEvent(source, currencies));
             }
         });
     }
@@ -195,9 +193,10 @@ public class MainPresenter extends AbstractPresenter<MainView>
                         currencyIHM.getEntity(), currencyIHM.getComputeRate(), currencyIHM.getAmount()))
                 .collect(Collectors.toList());
 
-        final SaveFavorites.QueryVal values = new SaveFavorites.QueryVal(favorites);
+        /*final SaveFavorites.QueryVal values = new SaveFavorites.QueryVal(favorites);
         mUseCaseHandler.setUseCase(values, saveFavoritesUseCase);
-        mUseCaseHandler.execute(this::doNothing);
+        mUseCaseHandler.execute(this::doNothing);*/
+        repository.addAllFavorites(favorites, this::doNothing);
     }
 
     @Override
@@ -207,12 +206,17 @@ public class MainPresenter extends AbstractPresenter<MainView>
         final FavoriteEntity favorite = new FavoriteEntity(source.getEntity(),
                 currencyIHM.getEntity(), currencyIHM.getComputeRate(), currencyIHM.getAmount());
 
-        final SaveFavorite.QueryVal value = new SaveFavorite.QueryVal(favorite);
+        /*final SaveFavorite.QueryVal value = new SaveFavorite.QueryVal(favorite);
         mUseCaseHandler.setUseCase(value, saveFavoriteUseCase);
-        mUseCaseHandler.execute(this::doNothing);
+        mUseCaseHandler.execute(this::doNothing);*/
+        repository.addFavorite(favorite, this::doNothing);
     }
 
     private void doNothing(Result result) {
+        /* do nothing */
+    }
+
+    private void doNothing(Response response) {
         /* do nothing */
     }
 }

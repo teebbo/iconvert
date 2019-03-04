@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 /**
  * Created by CK_ALEENGO on 13/02/2019.
  * Copyright (c) 2019. All rights reserved.
@@ -24,16 +26,17 @@ public class CurrencyRepository implements Repository {
     private LocalCurrencyDataSource localDataSource;
     private RemoteDataSource remoteDataSource;
 
+    @Inject
     public CurrencyRepository(LocalCurrencyDataSource localDataSource, RemoteDataSource remoteDataSource) {
         this.localDataSource = localDataSource;
         this.remoteDataSource = remoteDataSource;
     }
 
-
     // favorite
     @Override
-    public List<FavoriteEntity> getFavorites() {
-        return localDataSource.getFavorites();
+    public void getFavorites(GetCallback callback) {
+        List<FavoriteEntity> favoriteEntities = localDataSource.getFavorites();
+        callback.onReceived(new Response(favoriteEntities, null));
     }
 
     @Override

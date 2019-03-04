@@ -13,12 +13,15 @@ import com.kimboofactory.iconvert.domain.common.QueryValue;
 
 import java.io.StringReader;
 
+import javax.inject.Inject;
+
 /**
  * Created by CK_ALEENGO on 11/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
 public class GetRate extends UseCase<QueryValue> {
 
+    @Inject
     public GetRate(Repository repository) {
         super(repository);
     }

@@ -32,7 +32,7 @@ public interface Repository {
     void addRatesAndCurrencies();
 
     // favorite
-    List<FavoriteEntity> getFavorites();
+    void getFavorites(GetCallback callback);
     void addFavorite(FavoriteEntity favorite, AddCallback callback);
     void addAllFavorites(List<FavoriteEntity> favorites, AddCallback callback);
     void removeFavorites();

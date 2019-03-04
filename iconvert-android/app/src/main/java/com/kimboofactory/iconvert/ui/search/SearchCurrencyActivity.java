@@ -16,12 +16,14 @@ import com.google.android.material.snackbar.Snackbar;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.application.IConvertApplication;
 import com.kimboofactory.iconvert.common.BaseActivity;
-import com.kimboofactory.iconvert.di.Injection;
+import com.kimboofactory.iconvert.di.modules.SearchActivityModule;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.ui.main.MainActivity;
 import com.kimboofactory.iconvert.util.Helper;
 
 import org.greenrobot.eventbus.EventBus;
+
+import javax.inject.Inject;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -54,13 +56,17 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
 
     @Getter
     private Snackbar snackbar;
+
+    @Inject
+    SearchCurrencyView mMvpView;
+    @Inject
     @Getter
-    private SearchPresenter presenter;
-    private SearchCurrencyView mMvpView;
+    SearchPresenter presenter;
 
     @Getter
     private SearchCurrencyAdapter adapter;
     private int mRequestCode;
+
 
     @Override
     public String getClassName() {
@@ -88,11 +94,21 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
         mBack.setOnClickListener( (View v) -> onBackPressed());
 
         snackbar = Snackbar.make(coordinatorLayout, Helper.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE);
-        mMvpView = new SearchCurrencyView();
+       /* DaggerSearchActivityComponent.builder()
+                .appComponent(getAppComponent())
+                .build()
+                .inject(this);*/
+        getAppComponent()
+                .searchActivityComponentBuilder()
+                .searchActivityModule(new SearchActivityModule(this))
+                .build()
+                .inject(this);
+
+        //mMvpView = new SearchCurrencyView();
+        //mMvpView = daggerComponent.searchCurrencyView();
         mMvpView.attachUi(this);
 
-        presenter = new SearchPresenter(Injection.provideUseCaseHandler(),
-                Injection.provideGetCurrencies(this));
+        //presenter = new SearchPresenter(null, null);
 
         presenter.attach(mMvpView);
 
