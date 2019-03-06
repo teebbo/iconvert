@@ -6,10 +6,8 @@ import android.os.Handler;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RadioButton;
 
 import com.aleengo.peach.toolbox.commons.common.PeachConfig;
 import com.aleengo.peach.toolbox.ui.BaseActivity;
@@ -64,8 +62,8 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
     SearchPresenter presenter;
     @Inject @Getter
     SearchCurrencyAdapter adapter;
-    @Inject
-    Integer mRequestCode;
+    @Getter @Inject
+    Integer requestCode;
 
 
     @Override
@@ -175,21 +173,26 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
 
     private void OnItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-        final SearchCurrencyAdapter.ViewHolder viewHolder =
+        /*final SearchCurrencyAdapter.ViewHolder viewHolder =
                 (SearchCurrencyAdapter.ViewHolder) view.getTag();
 
         final CheckBox checkBox = viewHolder.getCheckBox();
         final RadioButton radioButton = viewHolder.getRadioButton();
 
         checkBox.setChecked(!checkBox.isChecked());
-        radioButton.setChecked(!radioButton.isChecked());
+        radioButton.setChecked(!radioButton.isChecked());*/
+
+        final SearchItemView itemView = (SearchItemView) view;
+        itemView.getCheckBox().setChecked(!itemView.getCheckBox().isChecked());
+        itemView.getRadioButton().setChecked(!itemView.getRadioButton().isChecked());
 
         final CurrencyIHM currencyIHM = (CurrencyIHM) adapter.getItem(position);
-        currencyIHM.setChecked(mRequestCode == MainActivity.SEARCH_CURRENCY_REQUEST_CODE ?
-                checkBox.isChecked() : radioButton.isChecked());
+        currencyIHM.setCheckboxChecked(itemView.getCheckBox().isChecked());
+        currencyIHM.setRadioButtonChecked(itemView.getRadioButton().isChecked());
+
         adapter.notifyDataSetChanged();
 
-        switch (mRequestCode) {
+        switch (requestCode) {
             case MainActivity.SEARCH_CURRENCY_REQUEST_CODE:
                 presenter.itemSelectedCheckbox(currencyIHM);
                 break;

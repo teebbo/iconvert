@@ -36,7 +36,7 @@ public class SearchPresenter extends AbstractPresenter<SearchCurrencyView>
     @Override
     public void itemSelectedCheckbox(final CurrencyIHM item) {
 
-        if (item.getChecked()) {
+        if (item.getCheckboxChecked()) {
             selectedItems.add(item);
         } else {
             selectedItems.remove(item);

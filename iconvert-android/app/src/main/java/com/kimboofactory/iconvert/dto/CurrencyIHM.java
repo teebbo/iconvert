@@ -21,7 +21,9 @@ import lombok.Setter;
 public class CurrencyIHM implements Model, Cloneable {
     @NonNull
     private CurrencyEntity entity;
-    private Boolean checked = false;
+    private Integer code;
+    private Boolean checkboxChecked = false;
+    private Boolean radioButtonChecked = false;
     private String computeRate;
     private String amount = Helper.DEFAULT_AMOUNT;
 

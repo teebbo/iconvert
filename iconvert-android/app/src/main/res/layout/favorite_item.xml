@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.kimboofactory.iconvert.ui.favorite.FavoriteItemView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dim_4dp">
 
-    <include
-        layout="@layout/checkbox"
-        android:id="@+id/cb_favorite_selected"
+    <ImageView
+        android:id="@+id/iv_delete_favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete_black_24dp"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/dim_4dp"
-        android:visibility="gone"
-        android:focusable="true"
-        android:clickable="true"
-        android:focusableInTouchMode="true"/>
+        android:padding="@dimen/dim_4dp"/>
 
     <RelativeLayout
         android:id="@+id/rl_side_view"
@@ -23,7 +21,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:padding="@dimen/dim_2dp"
-        android:layout_toRightOf="@id/cb_favorite_selected">
+        android:layout_toRightOf="@id/iv_delete_favorite">
 
         <ImageView
             android:id="@+id/iv_currency_logo"
@@ -72,4 +70,4 @@
             android:paddingRight="@dimen/dim_10dp"
             tools:text="2.500"/>
     </RelativeLayout>
-</RelativeLayout>
+</com.kimboofactory.iconvert.ui.favorite.FavoriteItemView>

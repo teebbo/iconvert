@@ -44,7 +44,7 @@ public final class ListViewListener implements
 
 
         final CheckBox checkBox = viewHolder.checkBox;
-        checkBox.setChecked(!checkBox.isChecked());
+        checkBox.setCheckboxChecked(!checkBox.isChecked());
         checkBox.setVisibility(View.VISIBLE);
 
         // add the favorite to list

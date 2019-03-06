@@ -1,16 +1,11 @@
 package com.kimboofactory.iconvert.ui.search;
 
-import android.view.View;
-import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.RadioButton;
-import android.widget.TextView;
 
 import com.aleengo.peach.toolbox.adapter.ListViewAdapter;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
-import com.kimboofactory.iconvert.ui.main.MainActivity;
 import com.kimboofactory.iconvert.util.Helper;
 
 import java.util.LinkedList;
@@ -19,17 +14,14 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import lombok.Getter;
-import lombok.Setter;
 
 
 /**
  * Created by CK_ALEENGO on 12/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCurrencyAdapter.ViewHolder>
+public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchItemView>
         implements Filterable {
 
     private SearchCurrencyFilter mFilter;
@@ -51,11 +43,11 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
         return R.layout.activity_search_item;
     }
 
-    @Override
+    /*@Override
     protected ViewHolder onNewViewHolder(View view) {
         return new ViewHolder(view);
     }
-
+*/
     @Override
     public void updateItems(List<CurrencyIHM> newItems) {
         if (newItems != null && newItems.size() > 0) {
@@ -70,7 +62,7 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
         }
     }
 
-    @Override
+    /*@Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final CurrencyIHM currencyIHM = (CurrencyIHM) getItem(position);
 
@@ -81,9 +73,9 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
                 View.VISIBLE : View.GONE);
         holder.radioButton.setVisibility(requestCode.intValue() == MainActivity.SEARCH_CURRENCY_REQUEST_CODE ?
                 View.GONE : View.VISIBLE);
-        holder.checkBox.setChecked(currencyIHM.getChecked());
-        holder.radioButton.setChecked(currencyIHM.getChecked());
-    }
+        holder.checkBox.setCheckboxChecked(currencyIHM.getCheckboxChecked());
+        holder.radioButton.setCheckboxChecked(currencyIHM.getCheckboxChecked());
+    }*/
 
     @Override
     public Filter getFilter() {
@@ -93,7 +85,7 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
         return mFilter;
     }
 
-    public static class ViewHolder extends ListViewAdapter.ViewHolder {
+    /*public static class ViewHolder extends ListViewAdapter.ViewHolder {
 
         @BindView(R.id.code_devise_textview)
         TextView codeTV;
@@ -110,7 +102,7 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchCu
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-    }
+    }*/
 
     public static class SearchCurrencyFilter extends Filter {
 

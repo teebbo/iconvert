@@ -1,33 +1,25 @@
 package com.kimboofactory.iconvert.ui.main;
 
-import android.view.View;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.aleengo.peach.toolbox.adapter.ListViewAdapter;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
-import com.kimboofactory.iconvert.util.Helper;
+import com.kimboofactory.iconvert.ui.favorite.FavoriteItemView;
 
 import java.util.List;
 
 import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by CK_ALEENGO on 12/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
 public class FavoritesAdapter
-        extends ListViewAdapter<CurrencyIHM, FavoritesAdapter.ViewHolder> {
-
+        extends ListViewAdapter<CurrencyIHM, FavoriteItemView> {
 
     @Inject
     public FavoritesAdapter(MainActivity context, List<CurrencyIHM> favorites) {
         super(context, favorites);
+
     }
 
     @Override
@@ -36,6 +28,14 @@ public class FavoritesAdapter
     }
 
     @Override
+    public void updateItems(List<CurrencyIHM> newItems) {
+        if (newItems != null) {
+            getItems().addAll(newItems);
+            notifyDataSetChanged();
+        }
+    }
+
+    /*@Override
     protected ViewHolder onNewViewHolder(View view) {
         return new ViewHolder(view);
     }
@@ -56,12 +56,15 @@ public class FavoritesAdapter
         holder.libelleTV.setText(item.getEntity().getLibelle());
         holder.rateTV.setText(Helper.RATE + "\n" + item.getComputeRate());
         holder.resultTV.setText(item.getAmount());
-    }
+        holder.deleteFavorite.setOnClickListener(v -> {});
+    }*/
 
-    public static class ViewHolder extends ListViewAdapter.ViewHolder {
 
-        /*@BindView(R.id.iv_delete_logo)
-        ImageView deleteIV;*/
+
+    /*public static class ViewHolder extends ListViewAdapter.ViewHolder {
+
+        *//*@BindView(R.id.iv_delete_logo)
+        ImageView deleteIV;*//*
         @BindView(R.id.iv_currency_logo)
         ImageView currencyLogoIV;
         @BindView(R.id.tv_code)
@@ -72,12 +75,12 @@ public class FavoritesAdapter
         TextView resultTV;
         @BindView(R.id.tv_rate)
         TextView rateTV;
-        @BindView(R.id.cb_favorite_selected)
-        CheckBox checkBox;
+        @BindView(R.id.iv_delete_favorite)
+        ImageView deleteFavorite;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-    }
+    }*/
 }

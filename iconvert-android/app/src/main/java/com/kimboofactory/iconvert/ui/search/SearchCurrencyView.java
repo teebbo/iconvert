@@ -48,7 +48,11 @@ public class SearchCurrencyView implements SearchContract.View {
         activity.getAdapter().clear();
         activity.getAdapter().updateItems(
                 currenciesEntity.stream()
-                        .map(CurrencyIHM::new)
+                        .map(entity -> {
+                            final CurrencyIHM item = new CurrencyIHM(entity);
+                            item.setCode(activity.getRequestCode());
+                            return item;
+                        })
                         .collect(Collectors.toList())
         );
         // stop the refresh
