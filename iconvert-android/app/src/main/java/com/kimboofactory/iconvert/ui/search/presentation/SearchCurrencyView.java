@@ -1,33 +1,13 @@
-package com.kimboofactory.iconvert.ui.search;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.view.View;
-import android.widget.Filter;
-
-import com.aleengo.peach.toolbox.commons.model.Result;
-import com.google.android.material.snackbar.Snackbar;
-import com.kimboofactory.iconvert.R;
-import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
-import com.kimboofactory.iconvert.dto.CurrencyIHM;
-import com.kimboofactory.iconvert.util.Helper;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.inject.Inject;
+package com.kimboofactory.iconvert.ui.search.presentation;
 
 /**
  * Created by CK_ALEENGO on 13/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public class SearchCurrencyView implements SearchContract.View {
-
+public class SearchCurrencyView
+        //implements SearchContract.View
+{
+/*
     private SearchCurrencyActivity activity;
 
     @Inject
@@ -120,6 +100,6 @@ public class SearchCurrencyView implements SearchContract.View {
 
     private Filter getFilter() {
         return this.activity.getAdapter().getFilter();
-    }
+    }*/
 
 }

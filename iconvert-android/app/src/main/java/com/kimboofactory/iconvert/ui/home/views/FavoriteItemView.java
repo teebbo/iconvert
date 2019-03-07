@@ -1,4 +1,4 @@
-package com.kimboofactory.iconvert.ui.favorite;
+package com.kimboofactory.iconvert.ui.home.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import com.aleengo.peach.toolbox.adapter.ItemView;
 import com.kimboofactory.iconvert.R;
+import com.kimboofactory.iconvert.common.Constant;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
-import com.kimboofactory.iconvert.util.Helper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,9 +50,12 @@ public class FavoriteItemView extends RelativeLayout implements ItemView<Currenc
 
     @Override
     public void bind(CurrencyIHM item) {
+
+        final String rate = Constant.RATE + "\n" + item.getComputeRate();
+
         codeTV.setText(item.getEntity().getCode());
         libelleTV.setText(item.getEntity().getLibelle());
-        rateTV.setText(Helper.RATE + "\n" + item.getComputeRate());
+        rateTV.setText(rate);
         resultTV.setText(item.getAmount());
         deleteFavorite.setOnClickListener(v -> {});
     }

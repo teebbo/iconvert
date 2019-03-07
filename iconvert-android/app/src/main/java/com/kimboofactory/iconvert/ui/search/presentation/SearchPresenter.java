@@ -1,4 +1,4 @@
-package com.kimboofactory.iconvert.ui.search;
+package com.kimboofactory.iconvert.ui.search.presentation;
 
 import com.aleengo.peach.toolbox.commons.model.Response;
 import com.aleengo.peach.toolbox.commons.model.Result;
@@ -21,7 +21,7 @@ import lombok.Getter;
  * Created by CK_ALEENGO on 13/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public class SearchPresenter extends AbstractPresenter<SearchCurrencyView>
+public class SearchPresenter extends AbstractPresenter<MvpSearchView>
         implements SearchContract.Presenter {
 
     private Repository repository;
@@ -31,6 +31,10 @@ public class SearchPresenter extends AbstractPresenter<SearchCurrencyView>
     @Inject
     public SearchPresenter(CurrencyRepository repository) {
         this.repository = repository;
+    }
+
+    public void start() {
+        loadCurrencies();
     }
 
     @Override

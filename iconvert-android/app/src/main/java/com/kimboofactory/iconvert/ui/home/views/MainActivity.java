@@ -1,50 +1,32 @@
-package com.kimboofactory.iconvert.ui.main;
+package com.kimboofactory.iconvert.ui.home.views;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.aleengo.peach.toolbox.commons.common.NamedRunnable;
 import com.aleengo.peach.toolbox.commons.common.PeachConfig;
 import com.aleengo.peach.toolbox.ui.BaseActivity;
-import com.aleengo.peach.toolbox.widget.PeachToolbar;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.application.IConvertApplication;
-import com.kimboofactory.iconvert.di.modules.HomeModule;
-import com.kimboofactory.iconvert.dto.CurrencyIHM;
-import com.kimboofactory.iconvert.util.Helper;
-
-import org.greenrobot.eventbus.EventBus;
+import com.kimboofactory.iconvert.common.Constant;
+import com.kimboofactory.iconvert.ui.home.dagger.HomeModule;
+import com.kimboofactory.iconvert.ui.home.presentation.MainPresenter;
+import com.kimboofactory.iconvert.ui.home.presentation.MvpHomeView;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import androidx.annotation.Nullable;
-import butterknife.BindView;
 import lombok.Getter;
-import lombok.Setter;
 
 
 public class MainActivity extends BaseActivity {
 
-    public static final int SEARCH_CURRENCY_REQUEST_CODE = 100;
-    public static final int CHOOSE_CURRENCY_REQUEST_CODE = 101;
-    public static final String REQUEST_CODE = "com.kimboofactory.iconvert.REQUEST_CODE";
-
-    @BindView(R.id.toolbar)
+    /*@BindView(R.id.toolbar)
     PeachToolbar toolbar;
 
     @BindView(R.id.rl_currency)
@@ -70,12 +52,16 @@ public class MainActivity extends BaseActivity {
     @Inject @Getter
     MainPresenter presenter;
     @Inject
-    ListViewListener listener;
+    HomeViewListener listener;
 
     @Getter @Setter
     private CurrencyIHM currencySource;
-
-    private boolean mFirstLoad = true;
+*/
+    @Inject
+    MvpHomeView mMvpView;
+    @Inject @Getter
+    MainPresenter presenter;
+//    private boolean mFirstLoad = true;
 
     @Override
     public String logTag() {
@@ -92,15 +78,20 @@ public class MainActivity extends BaseActivity {
                 .inject(this);
     }
 
-    @Override
+   /* @Override
     public int getLayoutResId() {
-        return R.layout.activity_main;
+        return mMvpView.layout();
+    }*/
+
+    @Override
+    public View getLayoutView() {
+        return mMvpView;
     }
 
     @Override
     protected void initialize(@Nullable Bundle savedInstanceState) {
 
-        setSupportActionBar(toolbar);
+        /*setSupportActionBar(toolbar);
 
         favoritesLV.setAdapter(favoritesAdapter);
         favoritesLV.setOnItemClickListener(listener);
@@ -137,18 +128,20 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        currencyRL.setOnClickListener(v -> presenter.addFavorite(CHOOSE_CURRENCY_REQUEST_CODE));
+        currencyRL.setOnClickListener(v -> presenter.addFavorite(CHOOSE_CURRENCY_REQUEST_CODE));*/
+        mMvpView.init(savedInstanceState);
+        presenter.attach(mMvpView);
     }
 
     @Override
     protected void onActivityResult (int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == SEARCH_CURRENCY_REQUEST_CODE &&
+        if (requestCode == Constant.SEARCH_CURRENCY_REQUEST_CODE &&
                 resultCode == Activity.RESULT_OK) {
-            final Serializable extras = data.getSerializableExtra(Helper.EXTRA_SELECTED_ITEMS);
+            final Serializable extras = data.getSerializableExtra(Constant.EXTRA_SELECTED_ITEMS);
             presenter.updateFavorites(resultCode, extras);
-        } else if (requestCode == CHOOSE_CURRENCY_REQUEST_CODE &&
+        } else if (requestCode == Constant.CHOOSE_CURRENCY_REQUEST_CODE &&
                 resultCode == Activity.RESULT_OK) {
-            final Serializable extra = data.getSerializableExtra(Helper.EXTRA_SELECTED_ITEM);
+            final Serializable extra = data.getSerializableExtra(Constant.EXTRA_SELECTED_ITEM);
             presenter.updateSourceCurrency(resultCode, extra);
         }
     }
@@ -157,13 +150,13 @@ public class MainActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         presenter.loadRatesAndCurrencies(false);
-        EventBus.getDefault().register(mMvpView);
+        mMvpView.connect2EventBus();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mFirstLoad) {
+       /* if (mFirstLoad) {
             currencySource = mMvpView.getDefaultCurrency();
 
             final String codeLibelle = getResources().getString(R.string.label_code_libelle,
@@ -171,24 +164,25 @@ public class MainActivity extends BaseActivity {
             textViewCodeSrc.setText(codeLibelle);
 
             mFirstLoad = false;
-        }
-        presenter.loadFavorites();
+        }*/
+       mMvpView.start();
+       presenter.loadFavorites();
     }
 
     @Override
     protected void onStop() {
+        mMvpView.disconnect2EventBus();
         super.onStop();
-        EventBus.getDefault().unregister(mMvpView);
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         presenter.detach();
 
         if (PeachConfig.isDebug()) {
             IConvertApplication.getRefWatcher(MainActivity.this).watch(MainActivity.this);
         }
+        super.onDestroy();
     }
 
     @Override

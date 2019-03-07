@@ -15,8 +15,8 @@ import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.BaseFragment;
 import com.kimboofactory.iconvert.fragment.dialog.DialogUi;
 import com.kimboofactory.iconvert.persistence.model.CurrencyData;
-import com.kimboofactory.iconvert.ui.main.FavoritesAdapter;
-import com.kimboofactory.iconvert.ui.main.MainPresenter;
+import com.kimboofactory.iconvert.ui.home.views.FavoritesAdapter;
+import com.kimboofactory.iconvert.ui.home.presentation.MainPresenter;
 
 import butterknife.BindView;
 

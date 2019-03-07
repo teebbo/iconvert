@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.kimboofactory.iconvert.ui.search.SearchItemView
+<com.kimboofactory.iconvert.ui.search.views.SearchItemView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -39,4 +39,4 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:visibility="gone"/>
-</com.kimboofactory.iconvert.ui.search.SearchItemView>
+</com.kimboofactory.iconvert.ui.search.views.SearchItemView>

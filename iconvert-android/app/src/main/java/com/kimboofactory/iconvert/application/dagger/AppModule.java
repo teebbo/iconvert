@@ -1,11 +1,10 @@
-package com.kimboofactory.iconvert.di.modules;
+package com.kimboofactory.iconvert.application.dagger;
 
 import android.content.Context;
 
 import com.aleengo.peach.toolbox.commons.util.AppExecutors;
-import com.kimboofactory.iconvert.di.component.HomeComponent;
-import com.kimboofactory.iconvert.di.component.SearchActivityComponent;
-import com.kimboofactory.iconvert.di.scope.ApplicationScope;
+import com.kimboofactory.iconvert.ui.home.dagger.HomeComponent;
+import com.kimboofactory.iconvert.ui.search.dagger.SearchComponent;
 import com.kimboofactory.iconvert.persistence.local.AppDatabase;
 import com.kimboofactory.iconvert.persistence.local.IConvertDAO;
 
@@ -19,7 +18,7 @@ import dagger.Provides;
  */
 @Module(subcomponents = {
         HomeComponent.class,
-        SearchActivityComponent.class
+        SearchComponent.class
 })
 public class AppModule {
     private Context context;
@@ -43,7 +42,7 @@ public class AppModule {
 
     @Provides
     @ApplicationScope
-    public AppDatabase db(Context context) {
+    public AppDatabase db() {
         return Room.databaseBuilder(context, AppDatabase.class, AppDatabase.DB_NAME)
                 .fallbackToDestructiveMigration()
                 .build();
