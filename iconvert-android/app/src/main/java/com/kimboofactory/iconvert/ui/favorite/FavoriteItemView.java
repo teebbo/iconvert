@@ -50,9 +50,12 @@ public class FavoriteItemView extends RelativeLayout implements ItemView<Currenc
 
     @Override
     public void bind(CurrencyIHM item) {
+
+        final String rate = Helper.RATE + "\n" + item.getComputeRate();
+
         codeTV.setText(item.getEntity().getCode());
         libelleTV.setText(item.getEntity().getLibelle());
-        rateTV.setText(Helper.RATE + "\n" + item.getComputeRate());
+        rateTV.setText(rate);
         resultTV.setText(item.getAmount());
         deleteFavorite.setOnClickListener(v -> {});
     }
