@@ -1,8 +1,7 @@
-package com.kimboofactory.iconvert.di.modules;
+package com.kimboofactory.iconvert.application.dagger;
 
 import com.aleengo.peach.toolbox.commons.net.HttpClient;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
-import com.kimboofactory.iconvert.di.scope.ApplicationScope;
 import com.kimboofactory.iconvert.persistence.api.OpenXchangeRateAPI;
 
 import dagger.Module;

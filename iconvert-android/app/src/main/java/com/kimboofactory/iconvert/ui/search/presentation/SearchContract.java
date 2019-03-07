@@ -1,4 +1,4 @@
-package com.kimboofactory.iconvert.ui.search;
+package com.kimboofactory.iconvert.ui.search.presentation;
 
 import com.kimboofactory.iconvert.common.BasePresenter;
 import com.kimboofactory.iconvert.common.BaseView;

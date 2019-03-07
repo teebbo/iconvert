@@ -1,33 +1,14 @@
-package com.kimboofactory.iconvert.ui.main;
-
-import android.content.Intent;
-
-import com.aleengo.peach.toolbox.commons.model.Result;
-import com.kimboofactory.iconvert.GetFavoriteEvent;
-import com.kimboofactory.iconvert.R;
-import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
-import com.kimboofactory.iconvert.dto.CurrencyIHM;
-import com.kimboofactory.iconvert.ui.search.SearchCurrencyActivity;
-import com.kimboofactory.iconvert.util.ComputeTask;
-import com.kimboofactory.iconvert.util.Helper;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.inject.Inject;
-
-import lombok.Getter;
+package com.kimboofactory.iconvert.ui.home.presentation;
 
 /**
  * Created by CK_ALEENGO on 11/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public class MainView implements FavoriteContract.View {
+public class MainView
+//        implements FavoriteContract.View
+{
 
-    @Getter
+    /*@Getter
     private MainActivity activity;
 
     @Inject
@@ -156,4 +137,5 @@ public class MainView implements FavoriteContract.View {
             updateAdapterItems(newItems);
         }
     }
+    */
 }

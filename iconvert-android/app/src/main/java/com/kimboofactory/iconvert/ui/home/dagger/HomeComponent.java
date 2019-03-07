@@ -1,8 +1,6 @@
-package com.kimboofactory.iconvert.di.component;
+package com.kimboofactory.iconvert.ui.home.dagger;
 
-import com.kimboofactory.iconvert.di.modules.HomeModule;
-import com.kimboofactory.iconvert.di.scope.ActivityScope;
-import com.kimboofactory.iconvert.ui.main.MainActivity;
+import com.kimboofactory.iconvert.ui.home.views.MainActivity;
 
 import dagger.Subcomponent;
 
@@ -11,7 +9,7 @@ import dagger.Subcomponent;
  * Copyright (c) 2019. All rights reserved.
  */
 
-@ActivityScope
+@HomeScope
 @Subcomponent(modules = {HomeModule.class})
 public interface HomeComponent {
 

@@ -1,4 +1,4 @@
-package com.kimboofactory.iconvert.ui.search;
+package com.kimboofactory.iconvert.ui.search.views;
 
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -31,9 +31,10 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchIt
     private boolean isOriginalListEmpty = true;
 
     @Inject
-    public SearchCurrencyAdapter(SearchCurrencyActivity mContext,
-                                 List<CurrencyIHM> currencies, Integer requestCode) {
-      super(mContext, currencies);
+    public SearchCurrencyAdapter(SearchCurrencyActivity activity,
+                                 List<CurrencyIHM> currencies,
+                                 Integer requestCode) {
+      super(activity, currencies);
       this.originalList = new LinkedList<>();
       this.requestCode = requestCode;
     }

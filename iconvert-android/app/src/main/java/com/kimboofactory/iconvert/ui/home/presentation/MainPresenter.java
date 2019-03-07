@@ -1,9 +1,10 @@
-package com.kimboofactory.iconvert.ui.main;
+package com.kimboofactory.iconvert.ui.home.presentation;
 
 import com.aleengo.peach.toolbox.commons.model.Response;
 import com.aleengo.peach.toolbox.commons.model.Result;
 import com.kimboofactory.iconvert.GetFavoriteEvent;
 import com.kimboofactory.iconvert.common.AbstractPresenter;
+import com.kimboofactory.iconvert.common.Constant;
 import com.kimboofactory.iconvert.domain.Repository;
 import com.kimboofactory.iconvert.domain.UseCase;
 import com.kimboofactory.iconvert.domain.UseCaseHandler;
@@ -20,7 +21,6 @@ import com.kimboofactory.iconvert.domain.usecases.SaveFavorite;
 import com.kimboofactory.iconvert.domain.usecases.SaveFavorites;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.persistence.repository.CurrencyRepository;
-import com.kimboofactory.iconvert.util.Helper;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -37,7 +37,7 @@ import javax.inject.Inject;
  * Created by CK_ALEENGO on 11/02/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public class MainPresenter extends AbstractPresenter<MainView>
+public class MainPresenter extends AbstractPresenter<MvpHomeView>
         implements FavoriteContract.Presenter {
 
     private Repository repository;
@@ -121,13 +121,13 @@ public class MainPresenter extends AbstractPresenter<MainView>
 
     @Override
     public void loadDefaultCurrency() {
-        mUseCaseHandler.setUseCase(Helper.DEFAULT_QUERY, mGetCurrencyUseCase);
+        mUseCaseHandler.setUseCase(Constant.DEFAULT_QUERY, mGetCurrencyUseCase);
         mUseCaseHandler.execute(result -> EventBus.getDefault().post(result));
     }
 
     @Override
     public void loadCurrencies() {
-        mUseCaseHandler.setUseCase(Helper.NO_QUERY, mGetCurrenciesUseCase);
+        mUseCaseHandler.setUseCase(Constant.NO_QUERY, mGetCurrenciesUseCase);
         mUseCaseHandler.execute(new UseCase.Callback() {
             @Override
             public void onResult(Result result) {
@@ -175,9 +175,9 @@ public class MainPresenter extends AbstractPresenter<MainView>
                 final CurrencyIHM source = new CurrencyIHM(f.getSource());
                 if (f.getComputedRate() != null) {
                     final Float cachedAmount = Float.valueOf(f.getComputedAmount()) / Float.valueOf(f.getComputedRate());
-                    source.setAmount(String.format(Locale.US, Helper.FORMAT_AMOUNT, cachedAmount.floatValue()));
+                    source.setAmount(String.format(Locale.US, Constant.FORMAT_AMOUNT, cachedAmount.floatValue()));
                 } else {
-                    source.setAmount(Helper.DEFAULT_AMOUNT);
+                    source.setAmount(Constant.DEFAULT_AMOUNT);
                 }
                 EventBus.getDefault().post(new GetFavoriteEvent(source, currencies));
             }
@@ -186,7 +186,7 @@ public class MainPresenter extends AbstractPresenter<MainView>
 
     @Override
     public void saveFavorites(List<CurrencyIHM> currencies) {
-        final CurrencyIHM source = getMvpView().getActivity().getCurrencySource();
+        final CurrencyIHM source = getMvpView().getCurrencySource();
 
         final List<FavoriteEntity> favorites = currencies.stream()
                 .map(currencyIHM ->  new FavoriteEntity(source.getEntity(),
@@ -201,7 +201,7 @@ public class MainPresenter extends AbstractPresenter<MainView>
 
     @Override
     public void saveFavorite(CurrencyIHM currencyIHM) {
-        final CurrencyIHM source = getMvpView().getActivity().getCurrencySource();
+        final CurrencyIHM source = getMvpView().getCurrencySource();
 
         final FavoriteEntity favorite = new FavoriteEntity(source.getEntity(),
                 currencyIHM.getEntity(), currencyIHM.getComputeRate(), currencyIHM.getAmount());

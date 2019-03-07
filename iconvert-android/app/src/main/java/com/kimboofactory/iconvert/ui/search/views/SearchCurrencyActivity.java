@@ -1,41 +1,28 @@
-package com.kimboofactory.iconvert.ui.search;
+package com.kimboofactory.iconvert.ui.search.views;
 
-import android.app.SearchManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.aleengo.peach.toolbox.commons.common.PeachConfig;
 import com.aleengo.peach.toolbox.ui.BaseActivity;
-import com.aleengo.peach.toolbox.widget.PeachToolbar;
-import com.google.android.material.snackbar.Snackbar;
-import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.application.IConvertApplication;
-import com.kimboofactory.iconvert.di.modules.SearchActivityModule;
-import com.kimboofactory.iconvert.dto.CurrencyIHM;
-import com.kimboofactory.iconvert.ui.main.MainActivity;
-import com.kimboofactory.iconvert.util.Helper;
-
-import org.greenrobot.eventbus.EventBus;
+import com.kimboofactory.iconvert.ui.search.dagger.SearchModule;
+import com.kimboofactory.iconvert.ui.search.presentation.MvpSearchView;
+import com.kimboofactory.iconvert.ui.search.presentation.SearchPresenter;
 
 import javax.inject.Inject;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import butterknife.BindView;
 import lombok.Getter;
 
-public class SearchCurrencyActivity extends BaseActivity implements SearchView.OnQueryTextListener {
+public class SearchCurrencyActivity extends BaseActivity
+//        implements SearchView.OnQueryTextListener
+{
 
     public static final int NO_EXTRA = -1;
 
-    @Getter
+    /*@Getter
     @BindView(R.id.coordinator_layout)
     CoordinatorLayout coordinatorLayout;
 
@@ -51,20 +38,23 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
     @BindView(R.id.sv_search)
     SearchView mSearchView;
     @BindView(R.id.lv_currencies)
-    ListView searchCurrencyLV;
+    ListView searchCurrencyLV;*/
 
-    @Getter
-    private Snackbar snackbar;
+    //@Getter
+    //private Snackbar snackbar;
+
+    /*@Inject
+    SearchCurrencyView mMvpView;*/
 
     @Inject
-    SearchCurrencyView mMvpView;
+    MvpSearchView mMvpView;
+
     @Inject @Getter
     SearchPresenter presenter;
-    @Inject @Getter
-    SearchCurrencyAdapter adapter;
+    /*@Inject @Getter
+    SearchCurrencyAdapter adapter;*/
     @Getter @Inject
     Integer requestCode;
-
 
     @Override
     public String logTag() {
@@ -72,8 +62,8 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
     }
 
     @Override
-    public int getLayoutResId() {
-        return R.layout.activity_search_list;
+    public View getLayoutView() {
+        return mMvpView;
     }
 
     @Override
@@ -82,14 +72,18 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
         IConvertApplication.getApplication(this)
                 .daggerAppComponent()
                 .searchComponentBuilder()
-                .searchActivityModule(new SearchActivityModule(this))
+                .searchActivityModule(new SearchModule(this))
                 .build()
                 .inject(this);
     }
 
     @Override
     protected void initialize(@Nullable Bundle savedInstanceState) {
-        setSupportActionBar(toolbar);
+       /* setSupportActionBar(toolbar);
+
+        if (savedInstanceState != null) {
+
+        }
 
         searchCurrencyLV.setAdapter(adapter);
         searchCurrencyLV.setOnItemClickListener(this::OnItemClick);
@@ -102,40 +96,45 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
         presenter.attach(mMvpView);
 
         // setting SwipeRefresh
-        setupSwipeRefreshContainer();
+        setupSwipeRefreshContainer();*/
+       mMvpView.init(savedInstanceState);
+       presenter.attach(mMvpView);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        EventBus.getDefault().register(mMvpView);
-        swipeRefreshLayout.setRefreshing(true);
-        presenter.loadCurrencies();
+        /*EventBus.getDefault().register(mMvpView);
+        swipeRefreshLayout.setRefreshing(true);*/
+        mMvpView.swipeRefresh(true);
+        mMvpView.connect2EventBus();
+        //presenter.loadCurrencies();
+        presenter.start();
     }
 
     @Override
     protected void onStop() {
+        mMvpView.disconnect2EventBus();
         super.onStop();
-        EventBus.getDefault().unregister(mMvpView);
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        snackbar = null;
+        mMvpView.clear();
         presenter.detach();
 
         if(PeachConfig.isDebug()) {
             IConvertApplication.getRefWatcher(this).watch(this);
         }
+        super.onDestroy();
     }
 
-    @Override
+   /* @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
-
-    @Override
+*/
+   /* @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
     }
@@ -145,9 +144,9 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
         //adapter.getFilter().filter(newText);
         presenter.filter(newText);
         return false;
-    }
+    }*/
 
-    private void setupSwipeRefreshContainer() {
+  /*  private void setupSwipeRefreshContainer() {
 
         final Runnable runnable = presenter::loadCurrencies;
 
@@ -161,15 +160,15 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-    }
+    }*/
 
-    private void setupSearchView() {
+  /*  private void setupSearchView() {
         final SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         mSearchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         mSearchView.setOnQueryTextListener(this);
-    }
+    }*/
 
     private void OnItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
@@ -182,7 +181,7 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
         checkBox.setChecked(!checkBox.isChecked());
         radioButton.setChecked(!radioButton.isChecked());*/
 
-        final SearchItemView itemView = (SearchItemView) view;
+      /*  final SearchItemView itemView = (SearchItemView) view;
         itemView.getCheckBox().setChecked(!itemView.getCheckBox().isChecked());
         itemView.getRadioButton().setChecked(!itemView.getRadioButton().isChecked());
 
@@ -201,7 +200,7 @@ public class SearchCurrencyActivity extends BaseActivity implements SearchView.O
                 break;
             default:
                 break;
-        }
+        }*/
 
     }
 }

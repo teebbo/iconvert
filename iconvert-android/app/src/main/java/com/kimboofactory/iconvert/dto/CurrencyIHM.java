@@ -1,8 +1,8 @@
 package com.kimboofactory.iconvert.dto;
 
+import com.kimboofactory.iconvert.common.Constant;
 import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
 import com.kimboofactory.iconvert.model.Model;
-import com.kimboofactory.iconvert.util.Helper;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +25,7 @@ public class CurrencyIHM implements Model, Cloneable {
     private Boolean checkboxChecked = false;
     private Boolean radioButtonChecked = false;
     private String computeRate;
-    private String amount = Helper.DEFAULT_AMOUNT;
+    private String amount = Constant.DEFAULT_AMOUNT;
 
     @Override
     public CurrencyIHM clone() throws CloneNotSupportedException {

@@ -1,4 +1,4 @@
-package com.kimboofactory.iconvert.ui.search;
+package com.kimboofactory.iconvert.ui.search.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.aleengo.peach.toolbox.adapter.ItemView;
 import com.kimboofactory.iconvert.R;
+import com.kimboofactory.iconvert.common.Constant;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
-import com.kimboofactory.iconvert.ui.main.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,8 +22,7 @@ import lombok.Setter;
  * Created by CK_ALEENGO on 06/03/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public class SearchItemView extends RelativeLayout
-        implements ItemView<CurrencyIHM> {
+public class SearchItemView extends RelativeLayout implements ItemView<CurrencyIHM> {
 
     @BindView(R.id.code_devise_textview)
     @Getter TextView codeTV;
@@ -57,8 +56,8 @@ public class SearchItemView extends RelativeLayout
         codeTV.setText(item.getEntity().getCode());
         libelleTV.setText(item.getEntity().getLibelle());
 
-        checkBox.setVisibility(item.getCode() == MainActivity.SEARCH_CURRENCY_REQUEST_CODE ? View.VISIBLE : View.GONE);
-        radioButton.setVisibility(item.getCode() == MainActivity.CHOOSE_CURRENCY_REQUEST_CODE ? View.VISIBLE : View.GONE);
+        checkBox.setVisibility(item.getCode() == Constant.SEARCH_CURRENCY_REQUEST_CODE ? View.VISIBLE : View.GONE);
+        radioButton.setVisibility(item.getCode() == Constant.CHOOSE_CURRENCY_REQUEST_CODE ? View.VISIBLE : View.GONE);
         checkBox.setChecked(item.getCheckboxChecked());
         radioButton.setChecked(item.getRadioButtonChecked());
     }

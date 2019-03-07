@@ -2,6 +2,7 @@ package com.kimboofactory.iconvert.util;
 
 import android.os.AsyncTask;
 
+import com.kimboofactory.iconvert.common.Constant;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 
 import java.text.DecimalFormat;
@@ -33,8 +34,8 @@ public class ComputeTask extends AsyncTask<Void, Void, CurrencyIHM> {
 
         final float amount = Helper.computeAmount(Float.valueOf(src.getAmount()), computedRate);
 
-        realCurrency.setComputeRate(String.format(Locale.US, Helper.FORMAT_COMPUTED_RATE, computedRate));
-        realCurrency.setAmount(String.format(Locale.US, Helper.FORMAT_AMOUNT, amount));
+        realCurrency.setComputeRate(String.format(Locale.US, Constant.FORMAT_COMPUTED_RATE, computedRate));
+        realCurrency.setAmount(String.format(Locale.US, Constant.FORMAT_AMOUNT, amount));
         return realCurrency;
     }
 }

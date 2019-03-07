@@ -1,8 +1,7 @@
-package com.kimboofactory.iconvert.di.component;
+package com.kimboofactory.iconvert.application.dagger;
 
-import com.kimboofactory.iconvert.di.modules.AppModule;
-import com.kimboofactory.iconvert.di.modules.NetworkModule;
-import com.kimboofactory.iconvert.di.scope.ApplicationScope;
+import com.kimboofactory.iconvert.ui.home.dagger.HomeComponent;
+import com.kimboofactory.iconvert.ui.search.dagger.SearchComponent;
 
 import dagger.Component;
 
@@ -18,7 +17,7 @@ import dagger.Component;
 public interface AppComponent {
 
     HomeComponent.Builder homeComponentBuilder();
-    SearchActivityComponent.Builder searchComponentBuilder();
+    SearchComponent.Builder searchComponentBuilder();
 
     @Component.Builder
     interface Builder {

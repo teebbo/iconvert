@@ -1,7 +1,7 @@
 package com.kimboofactory.iconvert.net;
 
 
-import com.kimboofactory.iconvert.util.Helper;
+import com.kimboofactory.iconvert.common.Constant;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,7 +45,7 @@ public class KFYRequest {
         }
 
         if (endpoint == null) {
-            endpoint = Helper.EMPTY_STRING;
+            endpoint = Constant.EMPTY_STRING;
         }
 
         final HttpUrl url = HttpUrl.parse(baseUrl + endpoint);
