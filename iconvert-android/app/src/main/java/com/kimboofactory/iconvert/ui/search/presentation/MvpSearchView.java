@@ -49,9 +49,6 @@ import static android.content.Context.SEARCH_SERVICE;
  */
 public class MvpSearchView extends FrameLayout implements SearchContract.View, SearchView.OnQueryTextListener {
 
-        /*implements SearchContract.View, SearchView.OnQueryTextListener
-        extends FrameLayo{
-*/
     public static final int NO_EXTRA = -1;
 
     @Getter
@@ -74,31 +71,49 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
 
     @Inject @Getter
     SearchCurrencyAdapter adapter;
-    @Getter @Inject
+    @Inject
     Integer requestCode;
+    @Inject @Getter
+    SearchPresenter presenter;
 
     private SearchCurrencyActivity activity;
 
+    @Inject
     public MvpSearchView(SearchCurrencyActivity activity) {
         super(activity);
         this.activity = activity;
-
         inflate(getContext(), R.layout.activity_search_list, this);
+
+        presenter.attach(this);
     }
 
     public void swipeRefresh(boolean refresh) {
         swipeRefreshLayout.setRefreshing(refresh);
     }
+
+    public void start() {
+        swipeRefresh(true);
+        connect2EventBus();
+        presenter.start();
+    }
+
     // free resources
     public void clear() {
         snackbar = null;
+        adapter = null;
+        presenter.clear();
     }
 
     public void init(@Nullable Bundle savedInstanceState) {
 
+        // dagger init
         ButterKnife.bind(this);
 
         activity.setSupportActionBar(toolbar);
+
+        requestCode = activity.getIntent().getIntExtra(Constant.REQUEST_CODE, NO_EXTRA);
+
+        //adapter = new SearchCurrencyAdapter(activity, new LinkedList<>(), requestCode);
         searchCurrencyLV.setAdapter(adapter);
         searchCurrencyLV.setOnItemClickListener(this::OnItemClick);
 
@@ -111,12 +126,22 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
         setupSwipeRefreshContainer();
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(Result event) {
         if (event.getError() != null) {
             // show an error message
             showMessage(R.string.error_message_load_currencies);
-            getSwipeRefreshLayout().setRefreshing(false);
+            swipeRefresh(false);
             return;
         }
 
@@ -126,13 +151,13 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
                 currenciesEntity.stream()
                         .map(entity -> {
                             final CurrencyIHM item = new CurrencyIHM(entity);
-                            item.setCode(activity.getRequestCode());
+                            item.setCode(requestCode);
                             return item;
                         })
                         .collect(Collectors.toList())
         );
         // stop the refresh
-        getSwipeRefreshLayout().setRefreshing(false);
+        swipeRefresh(false);
     }
 
     @Override
@@ -142,7 +167,7 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
 
         snackbar.setActionTextColor(Color.CYAN)
                 .setAction(R.string.snackbar_retry_action, (View v) -> {
-                    activity.getPresenter().loadCurrencies();
+                    presenter.loadCurrencies();
                     snackbar.dismiss();
                 }).show();
     }
@@ -182,18 +207,6 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
         activity.finish();
     }
 
-    private void performedClick(List<CurrencyIHM> items) {
-        final Intent data = new Intent();
-
-        final HashMap<Integer, CurrencyIHM> finalItems = (HashMap<Integer, CurrencyIHM>)
-                items.stream()
-                        .collect(Collectors.toMap(item -> items.indexOf(item), item -> item));
-
-        data.putExtra(Constant.EXTRA_SELECTED_ITEMS, finalItems);
-        activity.setResult(Activity.RESULT_OK, data);
-        activity.finish();
-    }
-
     @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
@@ -201,14 +214,13 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        //adapter.getFilter().filter(newText);
-        activity.getPresenter().filter(newText);
+        adapter.getFilter().filter(newText);
         return false;
     }
 
     private void setupSwipeRefreshContainer() {
 
-        final Runnable runnable = activity.getPresenter()::loadCurrencies;
+        final Runnable runnable = presenter::loadCurrencies;
 
         final SwipeRefreshLayout.OnRefreshListener onRefreshListener =
                 () -> (new Handler()).postDelayed(runnable, Constant.DELAY_MILLIS_2000);
@@ -230,16 +242,19 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
         mSearchView.setOnQueryTextListener(this);
     }
 
+    private void performedClick(List<CurrencyIHM> items) {
+        final Intent data = new Intent();
+
+        final HashMap<Integer, CurrencyIHM> finalItems = (HashMap<Integer, CurrencyIHM>)
+                items.stream()
+                        .collect(Collectors.toMap(items::indexOf, item -> item));
+
+        data.putExtra(Constant.EXTRA_SELECTED_ITEMS, finalItems);
+        activity.setResult(Activity.RESULT_OK, data);
+        activity.finish();
+    }
+
     private void OnItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
-        /*final SearchCurrencyAdapter.ViewHolder viewHolder =
-                (SearchCurrencyAdapter.ViewHolder) view.getTag();
-
-        final CheckBox checkBox = viewHolder.getCheckBox();
-        final RadioButton radioButton = viewHolder.getRadioButton();
-
-        checkBox.setChecked(!checkBox.isChecked());
-        radioButton.setChecked(!radioButton.isChecked());*/
 
         final SearchItemView itemView = (SearchItemView) view;
         itemView.getCheckBox().setChecked(!itemView.getCheckBox().isChecked());
@@ -253,14 +268,13 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
 
         switch (requestCode) {
             case Constant.SEARCH_CURRENCY_REQUEST_CODE:
-                activity.getPresenter().itemSelectedCheckbox(currencyIHM);
+                presenter.itemSelectedCheckbox(currencyIHM);
                 break;
             case Constant.CHOOSE_CURRENCY_REQUEST_CODE:
-                activity.getPresenter().itemSelectedRadioButton(currencyIHM);
+                presenter.itemSelectedRadioButton(currencyIHM);
                 break;
             default:
                 break;
         }
-
     }
 }

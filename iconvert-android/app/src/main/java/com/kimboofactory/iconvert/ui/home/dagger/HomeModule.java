@@ -1,5 +1,7 @@
 package com.kimboofactory.iconvert.ui.home.dagger;
 
+import com.kimboofactory.iconvert.persistence.repository.CurrencyRepository;
+import com.kimboofactory.iconvert.ui.home.presentation.MainPresenter;
 import com.kimboofactory.iconvert.ui.home.presentation.MvpHomeView;
 import com.kimboofactory.iconvert.ui.home.views.FavoritesAdapter;
 import com.kimboofactory.iconvert.ui.home.views.HomeViewListener;
@@ -27,6 +29,12 @@ public class HomeModule {
     @HomeScope
     public MvpHomeView view() {
         return new MvpHomeView(activity);
+    }
+
+    @Provides
+    @HomeScope
+    public MainPresenter presenter(CurrencyRepository repository) {
+        return new MainPresenter(repository);
     }
 
     @Provides

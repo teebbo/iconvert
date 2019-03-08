@@ -9,7 +9,7 @@ import javax.inject.Scope;
  * Created by CK_ALEENGO on 07/03/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.SOURCE)
 @Scope
 public @interface HomeScope {
 }

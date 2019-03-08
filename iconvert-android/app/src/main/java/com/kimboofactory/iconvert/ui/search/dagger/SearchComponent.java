@@ -13,6 +13,7 @@ import dagger.Subcomponent;
 public interface SearchComponent {
 
     void inject(SearchCurrencyActivity activity);
+    SearchViewComponent.Builder searchViewComponentBuilder();
 
     @Subcomponent.Builder
     interface Builder {
