@@ -26,7 +26,6 @@ import com.kimboofactory.iconvert.util.ComputeTask;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,7 +65,8 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
     HomeViewListener listener;
     @Getter @Setter
     private CurrencyIHM currencySource;
-
+    @Inject @Getter
+    MainPresenter presenter;
     private MainActivity activity;
     private boolean mFirstLoad = true;
 
@@ -93,17 +93,17 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
 
         activity.setSupportActionBar(toolbar);
 
-        listener = new HomeViewListener(this);
+        //listener = new HomeViewListener(this);
 
-        favoritesAdapter = new FavoritesAdapter(activity, new LinkedList<>());
+        //favoritesAdapter = new FavoritesAdapter(activity, new LinkedList<>());
         favoritesLV.setAdapter(favoritesAdapter);
         favoritesLV.setOnItemClickListener(listener);
         favoritesLV.setOnItemLongClickListener(listener);
 
-        fab.setOnClickListener((View v) -> activity.getPresenter().addFavorite(Constant.SEARCH_CURRENCY_REQUEST_CODE));
+        fab.setOnClickListener((View v) -> presenter.addFavorite(Constant.SEARCH_CURRENCY_REQUEST_CODE));
         amountET.addTextChangedListener(listener);
 
-        currencyRL.setOnClickListener(v -> activity.getPresenter().addFavorite(Constant.CHOOSE_CURRENCY_REQUEST_CODE));
+        currencyRL.setOnClickListener(v -> presenter.addFavorite(Constant.CHOOSE_CURRENCY_REQUEST_CODE));
     }
 
     public void start() {
@@ -116,6 +116,12 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
 
             mFirstLoad = false;
         }
+        presenter.loadFavorites();
+    }
+
+    @Override
+    public void clear() {
+        presenter.detach();
     }
 
     @Override

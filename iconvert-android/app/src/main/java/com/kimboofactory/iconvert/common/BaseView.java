@@ -9,6 +9,8 @@ import org.greenrobot.eventbus.EventBus;
 public interface BaseView {
     void attachUi(Object activity);
 
+    void clear();
+
     default void connect2EventBus() {
         EventBus.getDefault().register(this);
     }
