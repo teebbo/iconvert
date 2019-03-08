@@ -1,4 +1,4 @@
-package com.kimboofactory.iconvert.di.scope;
+package com.kimboofactory.iconvert.application.dagger;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -6,10 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import javax.inject.Scope;
 
 /**
- * Created by CK_ALEENGO on 04/03/2019.
+ * Created by CK_ALEENGO on 07/03/2019.
  * Copyright (c) 2019. All rights reserved.
  */
+@Retention(RetentionPolicy.SOURCE)
 @Scope
-@Retention(RetentionPolicy.RUNTIME)
-public @interface ActivityScope {
+public @interface PerActivity {
 }

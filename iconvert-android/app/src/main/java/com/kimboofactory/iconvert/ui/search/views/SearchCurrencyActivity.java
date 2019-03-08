@@ -6,8 +6,10 @@ import android.view.View;
 import com.aleengo.peach.toolbox.commons.common.PeachConfig;
 import com.aleengo.peach.toolbox.ui.BaseActivity;
 import com.kimboofactory.iconvert.application.IConvertApplication;
-import com.kimboofactory.iconvert.ui.search.dagger.SearchModule;
+import com.kimboofactory.iconvert.di.Injector;
 import com.kimboofactory.iconvert.ui.search.presentation.MvpSearchView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
 
@@ -17,8 +19,6 @@ public class SearchCurrencyActivity extends BaseActivity {
 
     @Inject
     MvpSearchView mMvpView;
-    /*@Inject @Getter
-    SearchPresenter presenter;*/
 
     @Override
     public String logTag() {
@@ -33,30 +33,25 @@ public class SearchCurrencyActivity extends BaseActivity {
     @Override
     public void daggerConfiguration() {
         // Dagger config
-        IConvertApplication.getApplication(this)
-                .daggerAppComponent()
-                .searchComponentBuilder()
-                .searchActivityModule(new SearchModule(this))
-                //.searchViewModule(new SearchViewModule(mMvpView))
-                .build()
-                .inject(this);
+        Injector.instance().inject(this);
     }
 
     @Override
     protected void initialize(@Nullable Bundle savedInstanceState) {
-       mMvpView.init(savedInstanceState);
-       //presenter.attach(mMvpView);
+        //ButterKnife.bind(mMvpView);
+        mMvpView.init(savedInstanceState);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        EventBus.getDefault().register(mMvpView);
         mMvpView.start();
     }
 
     @Override
     protected void onStop() {
-        mMvpView.disconnect2EventBus();
+        EventBus.getDefault().unregister(mMvpView);
         super.onStop();
     }
 

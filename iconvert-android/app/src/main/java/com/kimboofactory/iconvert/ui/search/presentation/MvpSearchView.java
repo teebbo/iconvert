@@ -13,13 +13,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.aleengo.peach.toolbox.commons.model.Result;
 import com.aleengo.peach.toolbox.widget.PeachToolbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.Constant;
-import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
+import com.kimboofactory.iconvert.di.Injector;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
+import com.kimboofactory.iconvert.events.CurrenciesEvent;
 import com.kimboofactory.iconvert.ui.search.views.SearchCurrencyActivity;
 import com.kimboofactory.iconvert.ui.search.views.SearchCurrencyAdapter;
 import com.kimboofactory.iconvert.ui.search.views.SearchItemView;
@@ -33,12 +33,14 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import lombok.Getter;
 
 import static android.content.Context.SEARCH_SERVICE;
@@ -71,10 +73,12 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
 
     @Inject @Getter
     SearchCurrencyAdapter adapter;
-    @Inject
+    @Inject @Getter
     Integer requestCode;
     @Inject @Getter
     SearchPresenter presenter;
+
+    Unbinder binder;
 
     private SearchCurrencyActivity activity;
 
@@ -82,9 +86,17 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
     public MvpSearchView(SearchCurrencyActivity activity) {
         super(activity);
         this.activity = activity;
-        inflate(getContext(), R.layout.activity_search_list, this);
+        inflate(getContext(), layout(), this);
+    }
 
-        presenter.attach(this);
+    @LayoutRes
+    public int layout() {
+        return R.layout.activity_search_list;
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
     }
 
     public void swipeRefresh(boolean refresh) {
@@ -92,26 +104,33 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
     }
 
     public void start() {
-        swipeRefresh(true);
-        connect2EventBus();
-        presenter.start();
+        presenter.loadCurrencies();
+    }
+
+    public void stop() {
+        //disconnect2EventBus(this);
     }
 
     // free resources
     public void clear() {
         snackbar = null;
-        adapter = null;
         presenter.clear();
     }
 
     public void init(@Nullable Bundle savedInstanceState) {
-
         // dagger init
-        ButterKnife.bind(this);
+        Injector.instance().inject(this);
+        presenter.attach(this);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        binder = ButterKnife.bind(this);
 
         activity.setSupportActionBar(toolbar);
 
-        requestCode = activity.getIntent().getIntExtra(Constant.REQUEST_CODE, NO_EXTRA);
+        //requestCode = activity.getIntent().getIntExtra(Constant.REQUEST_CODE, NO_EXTRA);
 
         //adapter = new SearchCurrencyAdapter(activity, new LinkedList<>(), requestCode);
         searchCurrencyLV.setAdapter(adapter);
@@ -124,20 +143,18 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
 
         // setting SwipeRefresh
         setupSwipeRefreshContainer();
-    }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
+        swipeRefresh(true);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        binder.unbind();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(Result event) {
+    public void onEvent(CurrenciesEvent event) {
         if (event.getError() != null) {
             // show an error message
             showMessage(R.string.error_message_load_currencies);
@@ -145,17 +162,9 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
             return;
         }
 
-        final List<CurrencyEntity> currenciesEntity = (List<CurrencyEntity>) event.getValue();
+        //final List<CurrencyEntity> currenciesEntity = event.getData();
         adapter.clear();
-        adapter.updateItems(
-                currenciesEntity.stream()
-                        .map(entity -> {
-                            final CurrencyIHM item = new CurrencyIHM(entity);
-                            item.setCode(requestCode);
-                            return item;
-                        })
-                        .collect(Collectors.toList())
-        );
+        adapter.updateItems(event.getData());
         // stop the refresh
         swipeRefresh(false);
     }

@@ -1,7 +1,6 @@
 package com.kimboofactory.iconvert.application.dagger;
 
-import com.kimboofactory.iconvert.ui.home.dagger.HomeComponent;
-import com.kimboofactory.iconvert.ui.search.dagger.SearchComponent;
+import com.kimboofactory.iconvert.persistence.repository.CurrencyRepository;
 
 import dagger.Component;
 
@@ -16,12 +15,11 @@ import dagger.Component;
 })
 public interface AppComponent {
 
-    HomeComponent.Builder homeComponentBuilder();
-    SearchComponent.Builder searchComponentBuilder();
+    CurrencyRepository repository();
 
     @Component.Builder
     interface Builder {
-        AppComponent build();
         Builder appModule(AppModule module);
+        AppComponent build();
     }
 }

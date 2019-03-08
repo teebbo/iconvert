@@ -12,21 +12,23 @@ import com.aleengo.peach.toolbox.ui.BaseActivity;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.application.IConvertApplication;
 import com.kimboofactory.iconvert.common.Constant;
-import com.kimboofactory.iconvert.ui.home.dagger.HomeModule;
+import com.kimboofactory.iconvert.di.Injector;
 import com.kimboofactory.iconvert.ui.home.presentation.MvpHomeView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 
 import javax.inject.Inject;
 
 import androidx.annotation.Nullable;
+import butterknife.ButterKnife;
 
 
 public class MainActivity extends BaseActivity {
 
     @Inject
     MvpHomeView mMvpView;
-
 
     @Override
     public String logTag() {
@@ -35,12 +37,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void daggerConfiguration() {
-        IConvertApplication.getApplication(this)
-                .daggerAppComponent()
-                .homeComponentBuilder()
-                .homeModule(new HomeModule(this))
-                .build()
-                .inject(this);
+        Injector.instance().inject(this);
     }
 
     @Override
@@ -50,6 +47,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initialize(@Nullable Bundle savedInstanceState) {
+        ButterKnife.bind(mMvpView);
         mMvpView.init(savedInstanceState);
         //presenter.attach(mMvpView);
     }
@@ -70,29 +68,18 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //presenter.loadRatesAndCurrencies(false);
-        mMvpView.connect2EventBus();
+        EventBus.getDefault().register(mMvpView);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-       /* if (mFirstLoad) {
-            currencySource = mMvpView.getDefaultCurrency();
-
-            final String codeLibelle = getResources().getString(R.string.label_code_libelle,
-                    currencySource.getEntity().getCode(), currencySource.getEntity().getLibelle());
-            textViewCodeSrc.setText(codeLibelle);
-
-            mFirstLoad = false;
-        }*/
-       mMvpView.start();
-       //presenter.loadFavorites();
+        mMvpView.start();
     }
 
     @Override
     protected void onStop() {
-        mMvpView.disconnect2EventBus();
+        EventBus.getDefault().unregister(mMvpView);
         super.onStop();
     }
 

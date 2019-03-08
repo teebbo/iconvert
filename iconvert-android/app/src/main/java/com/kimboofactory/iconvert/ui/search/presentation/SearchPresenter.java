@@ -6,12 +6,14 @@ import com.kimboofactory.iconvert.common.AbstractPresenter;
 import com.kimboofactory.iconvert.domain.Repository;
 import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
+import com.kimboofactory.iconvert.events.CurrenciesEvent;
 import com.kimboofactory.iconvert.persistence.repository.CurrencyRepository;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -67,13 +69,28 @@ public class SearchPresenter extends AbstractPresenter<MvpSearchView>
            final Result<List<CurrencyEntity>> result = new Result<>(null, null);
 
            if (response.getError() != null) {
-               result.setError(response.getError());
-               EventBus.getDefault().post(result);
+               //result.setError(response.getError());
+               EventBus.getDefault().post(new CurrenciesEvent(null, response.getError()));
                return;
            }
+
+
            final List<CurrencyEntity> data = (List<CurrencyEntity>) response.getValue();
-           result.setValue(data);
-           EventBus.getDefault().post(result);
+           //final List<CurrencyEntity> currenciesEntity = event.getData();
+           //adapter.clear();
+           //adapter.updateItems(
+
+           //);
+           //result.setValue(data);
+           final List<CurrencyIHM> list =  data.stream()
+                   .map(entity -> {
+                       final CurrencyIHM item = new CurrencyIHM(entity);
+                       item.setCode(getMvpView().getRequestCode());
+                       return item;
+                   })
+                   .collect(Collectors.toList());
+           EventBus.getDefault().post(new CurrenciesEvent(list, null));
+
        });
     }
 

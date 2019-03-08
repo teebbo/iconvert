@@ -15,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kimboofactory.iconvert.GetFavoriteEvent;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.Constant;
+import com.kimboofactory.iconvert.di.Injector;
 import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.ui.home.views.FavoritesAdapter;
@@ -34,7 +35,6 @@ import javax.inject.Inject;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -79,7 +79,6 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.bind(this);
     }
 
     @LayoutRes
@@ -88,8 +87,8 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
     }
 
     public void init(@Nullable Bundle savedInstanceState) {
-
-        ButterKnife.bind(this);
+        Injector.instance().inject(this);
+        presenter.attach(this);
 
         activity.setSupportActionBar(toolbar);
 
@@ -117,6 +116,10 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
             mFirstLoad = false;
         }
         presenter.loadFavorites();
+    }
+
+    public void stop() {
+//        disconnect2EventBus(this);
     }
 
     @Override

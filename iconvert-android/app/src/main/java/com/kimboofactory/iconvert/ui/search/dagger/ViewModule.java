@@ -1,5 +1,6 @@
 package com.kimboofactory.iconvert.ui.search.dagger;
 
+import com.kimboofactory.iconvert.application.dagger.PerView;
 import com.kimboofactory.iconvert.common.Constant;
 import com.kimboofactory.iconvert.ui.search.presentation.MvpSearchView;
 import com.kimboofactory.iconvert.ui.search.views.SearchCurrencyActivity;
@@ -13,30 +14,26 @@ import dagger.Provides;
  * Copyright (c) 2019. All rights reserved.
  */
 @Module
-public class SearchViewModule {
+public class ViewModule {
 
-    private final MvpSearchView view;
+    //private final MvpSearchView view;
 
-    public SearchViewModule(MvpSearchView view) {
-        this.view = view;
+    public ViewModule() {
     }
+    /*public ViewModule(MvpSearchView view) {
+        this.view = view;
+    }*/
 
     @Provides
-    @SubSearchScope
-    public Integer requestCode(SearchCurrencyActivity activity) {
+    @PerView
+    public static Integer requestCode(SearchCurrencyActivity activity) {
         return activity.getIntent()
                 .getIntExtra(Constant.REQUEST_CODE, MvpSearchView.NO_EXTRA);
     }
 
     @Provides
-    @SubSearchScope
-    public SearchCurrencyAdapter adapter(SearchCurrencyActivity activity, Integer requestCode) {
+    @PerView
+    public static SearchCurrencyAdapter adapter(SearchCurrencyActivity activity, Integer requestCode) {
         return new SearchCurrencyAdapter(activity, Constant.CURRENCY_IHMS_EMPTY_LIST, requestCode);
     }
-
-   /* @Provides
-    @SubSearchScope
-    public SearchPresenter presenter(CurrencyRepository repository) {
-        return new SearchPresenter(repository);
-    }*/
 }
