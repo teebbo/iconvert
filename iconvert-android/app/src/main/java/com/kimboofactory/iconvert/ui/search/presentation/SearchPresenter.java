@@ -76,4 +76,10 @@ public class SearchPresenter extends AbstractPresenter<MvpSearchView>
            EventBus.getDefault().post(result);
        });
     }
+
+    // free resources
+    public void clear() {
+        detach();
+        selectedItems = null;
+    }
 }
