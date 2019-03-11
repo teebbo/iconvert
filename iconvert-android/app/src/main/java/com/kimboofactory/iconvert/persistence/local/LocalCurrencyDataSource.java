@@ -4,6 +4,7 @@ import com.aleengo.peach.toolbox.commons.common.NamedCallable;
 import com.aleengo.peach.toolbox.commons.common.NamedRunnable;
 import com.aleengo.peach.toolbox.commons.model.Response;
 import com.aleengo.peach.toolbox.commons.util.AppExecutors;
+import com.kimboofactory.iconvert.common.Constant;
 import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
 import com.kimboofactory.iconvert.domain.model.FavoriteEntity;
 import com.kimboofactory.iconvert.persistence.CurrencyDataSource;
@@ -75,11 +76,10 @@ public class LocalCurrencyDataSource implements CurrencyDataSource {
     }
 
     public boolean isEmpty() {
-        final String BASE_CODE = "USD";
         final NamedCallable<Boolean> callable = new NamedCallable<Boolean>("%s", "LocalDataSource.isEmpty") {
             @Override
             protected Boolean execute() {
-                return dao.getCurrency(BASE_CODE) == null;
+                return dao.getCurrency(Constant.USD_CODE) == null;
             }
         };
         return appExecutors.diskIO().execute(callable);

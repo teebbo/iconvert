@@ -8,17 +8,21 @@ import com.aleengo.peach.toolbox.ui.BaseActivity;
 import com.kimboofactory.iconvert.application.IConvertApplication;
 import com.kimboofactory.iconvert.di.Injector;
 import com.kimboofactory.iconvert.ui.search.presentation.MvpSearchView;
+import com.kimboofactory.iconvert.ui.search.presentation.SearchPresenter;
 
 import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
 
 import androidx.annotation.Nullable;
+import lombok.Getter;
 
 public class SearchCurrencyActivity extends BaseActivity {
 
     @Inject
     MvpSearchView mMvpView;
+    @Inject @Getter
+    SearchPresenter presenter;
 
     @Override
     public String logTag() {
@@ -40,13 +44,14 @@ public class SearchCurrencyActivity extends BaseActivity {
     protected void initialize(@Nullable Bundle savedInstanceState) {
         //ButterKnife.bind(mMvpView);
         mMvpView.init(savedInstanceState);
+        presenter.attach(mMvpView);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(mMvpView);
-        mMvpView.start();
+        presenter.loadCurrencies();
     }
 
     @Override
@@ -58,6 +63,7 @@ public class SearchCurrencyActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         mMvpView.clear();
+        presenter.clear();
         if(PeachConfig.isDebug()) {
             IConvertApplication.getRefWatcher(this).watch(this);
         }

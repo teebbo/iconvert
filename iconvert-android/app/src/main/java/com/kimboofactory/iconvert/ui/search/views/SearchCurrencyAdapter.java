@@ -1,10 +1,10 @@
 package com.kimboofactory.iconvert.ui.search.views;
 
+import android.view.View;
 import android.widget.Filter;
 import android.widget.Filterable;
 
 import com.aleengo.peach.toolbox.adapter.ListViewAdapter;
-import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.util.Helper;
 
@@ -24,6 +24,7 @@ import lombok.Getter;
 public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchItemView>
         implements Filterable {
 
+    private SearchCurrencyActivity activity;
     private SearchCurrencyFilter mFilter;
     @Getter
     private List<CurrencyIHM> originalList;
@@ -35,20 +36,23 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchIt
                                  List<CurrencyIHM> currencies,
                                  Integer requestCode) {
       super(activity, currencies);
+      this.activity = activity;
       this.originalList = new LinkedList<>();
       this.requestCode = requestCode;
     }
 
     @Override
-    public int getLayoutResId() {
-        return R.layout.activity_search_item;
+    protected View onNewViewItem() {
+        return new SearchItemView(activity);
     }
 
     /*@Override
-    protected ViewHolder onNewViewHolder(View view) {
-        return new ViewHolder(view);
-    }
-*/
+        protected ViewHolder onNewViewHolder(View view) {
+            return new ViewHolder(view);
+        }
+
+
+    */
     @Override
     public void updateItems(List<CurrencyIHM> newItems) {
         if (newItems != null && newItems.size() > 0) {
