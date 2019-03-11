@@ -1,7 +1,6 @@
 package com.kimboofactory.iconvert.ui.search.views;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
@@ -38,10 +37,7 @@ public class SearchItemView extends RelativeLayout implements ItemView<CurrencyI
 
     public SearchItemView(Context context) {
         super(context);
-    }
-
-    public SearchItemView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        inflate(context, R.layout.activity_search_item, this);
     }
 
     @Override

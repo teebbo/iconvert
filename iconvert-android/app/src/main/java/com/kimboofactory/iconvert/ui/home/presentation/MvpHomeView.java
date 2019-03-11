@@ -35,6 +35,8 @@ import javax.inject.Inject;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -60,25 +62,24 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
     FloatingActionButton fab;
 
     @Getter @Inject
-    FavoritesAdapter favoritesAdapter;
+    FavoritesAdapter adapter;
     @Inject
     HomeViewListener listener;
     @Getter @Setter
     private CurrencyIHM currencySource;
-    @Inject @Getter
-    MainPresenter presenter;
+
     private MainActivity activity;
     private boolean mFirstLoad = true;
+
+    private Unbinder binder;
 
     public MvpHomeView(MainActivity activity) {
         super(activity);
         this.activity = activity;
-        inflate(getContext(), layout(), this);
-    }
 
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
+        inflate(getContext(), layout(), this);
+
+        binder = ButterKnife.bind(this);
     }
 
     @LayoutRes
@@ -87,35 +88,34 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
     }
 
     public void init(@Nullable Bundle savedInstanceState) {
+//        Injector.instance().inject(this);
+
+        if (savedInstanceState == null) {
+
+        }
         Injector.instance().inject(this);
-        presenter.attach(this);
 
+        favoritesLV.setAdapter(adapter);
         activity.setSupportActionBar(toolbar);
-
         //listener = new HomeViewListener(this);
-
-        //favoritesAdapter = new FavoritesAdapter(activity, new LinkedList<>());
-        favoritesLV.setAdapter(favoritesAdapter);
+        //adapter = new FavoritesAdapter(activity, new LinkedList<>());
         favoritesLV.setOnItemClickListener(listener);
         favoritesLV.setOnItemLongClickListener(listener);
 
-        fab.setOnClickListener((View v) -> presenter.addFavorite(Constant.SEARCH_CURRENCY_REQUEST_CODE));
+        fab.setOnClickListener((View v) -> activity.getPresenter().addFavorite(Constant.SEARCH_CURRENCY_REQUEST_CODE));
         amountET.addTextChangedListener(listener);
 
-        currencyRL.setOnClickListener(v -> presenter.addFavorite(Constant.CHOOSE_CURRENCY_REQUEST_CODE));
+        currencyRL.setOnClickListener(v -> activity.getPresenter().addFavorite(Constant.CHOOSE_CURRENCY_REQUEST_CODE));
     }
 
     public void start() {
         if (mFirstLoad) {
             currencySource = getDefaultCurrency();
-
             final String codeLibelle = getResources().getString(R.string.label_code_libelle,
                     currencySource.getEntity().getCode(), currencySource.getEntity().getLibelle());
             textViewCodeSrc.setText(codeLibelle);
-
             mFirstLoad = false;
         }
-        presenter.loadFavorites();
     }
 
     public void stop() {
@@ -124,7 +124,7 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
 
     @Override
     public void clear() {
-        presenter.detach();
+        binder.unbind();
     }
 
     @Override
@@ -145,9 +145,11 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
                     })
                     .collect(Collectors.toList());
             // update the adapter
-            updateAdapterItems(newCurrencies);
+            adapter.clear();
+            adapter.updateItems(newCurrencies);
         } else {
-            updateAdapterItems(currencies);
+            adapter.clear();
+            adapter.updateItems(currencies);
         }
     }
 
@@ -162,24 +164,9 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
         setCurrencySource(item);
 
         // update the favorite according to the new currency source
-        updateFavoritesList(getAdapterItems());
+        updateFavoritesList(adapter.getItems());
     }
 
-    @Override
-    public List<CurrencyIHM> getAdapterItems() {
-        return favoritesAdapter.getItems();
-    }
-
-    @Override
-    public void updateAdapterItems(List<CurrencyIHM> newFavorites) {
-        clearAdapterItems();
-        favoritesAdapter.updateItems(newFavorites);
-    }
-
-    @Override
-    public void clearAdapterItems() {
-        favoritesAdapter.clear();
-    }
 
     @Override
     public CurrencyIHM getDefaultCurrency() {
@@ -194,8 +181,8 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
 
     @Override
     public CurrencyIHM removeFavoriteAt(int position) {
-        final CurrencyIHM itemDeleted = getAdapterItems().remove(position);
-        getFavoritesAdapter().notifyDataSetChanged();
+        final CurrencyIHM itemDeleted = adapter.getItems().remove(position);
+        getAdapter().notifyDataSetChanged();
         return itemDeleted;
     }
 
@@ -245,7 +232,9 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
                         task.execute();
                         return task.getRealCurrency();
                     }).collect(Collectors.toList());
-            updateAdapterItems(newItems);
+
+            adapter.clear();
+            adapter.updateItems(newItems);
         }
     }
 }

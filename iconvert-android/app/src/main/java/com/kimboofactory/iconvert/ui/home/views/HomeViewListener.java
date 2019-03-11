@@ -86,8 +86,8 @@ public final class HomeViewListener implements
             final NamedRunnable task = new NamedRunnable("%s", "OnTextChanged") {
                 @Override
                 protected void execute() {
-                    final List<CurrencyIHM> oldItems = Helper.copy(viewRef.get().getFavoritesAdapter().getItems());
-                    viewRef.get().getFavoritesAdapter().clear();
+                    final List<CurrencyIHM> oldItems = Helper.copy(viewRef.get().getAdapter().getItems());
+                    viewRef.get().getAdapter().clear();
                     viewRef.get().updateFavoritesList(oldItems);
                 }
             };

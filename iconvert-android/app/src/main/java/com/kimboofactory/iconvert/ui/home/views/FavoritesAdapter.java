@@ -1,7 +1,8 @@
 package com.kimboofactory.iconvert.ui.home.views;
 
+import android.view.View;
+
 import com.aleengo.peach.toolbox.adapter.ListViewAdapter;
-import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 
 import java.util.List;
@@ -15,14 +16,11 @@ import javax.inject.Inject;
 public class FavoritesAdapter
         extends ListViewAdapter<CurrencyIHM, FavoriteItemView> {
 
+    private MainActivity activity;
     @Inject
-    public FavoritesAdapter(MainActivity context, List<CurrencyIHM> favorites) {
-        super(context, favorites);
-    }
-
-    @Override
-    public int getLayoutResId() {
-        return R.layout.favorite_item;
+    public FavoritesAdapter(MainActivity activity, List<CurrencyIHM> favorites) {
+        super(activity, favorites);
+        this.activity = activity;
     }
 
     @Override
@@ -31,5 +29,10 @@ public class FavoritesAdapter
             getItems().addAll(newItems);
             notifyDataSetChanged();
         }
+    }
+
+    @Override
+    protected View onNewViewItem() {
+        return new FavoriteItemView(activity);
     }
 }

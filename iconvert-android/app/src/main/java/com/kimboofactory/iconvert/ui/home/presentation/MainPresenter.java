@@ -94,11 +94,11 @@ public class MainPresenter extends AbstractPresenter<MvpHomeView>
 
         final List<CurrencyIHM> list = new ArrayList<>(currencies.values());
 
-        list.addAll(list.size(), getMvpView().getAdapterItems());
+        list.addAll(list.size(), getMvpView().getAdapter().getItems());
         getMvpView().updateFavoritesList(list);
 
         // save the new ones
-        saveFavorites(getMvpView().getAdapterItems());
+        saveFavorites(getMvpView().getAdapter().getItems());
     }
 
     @Override
@@ -109,7 +109,7 @@ public class MainPresenter extends AbstractPresenter<MvpHomeView>
         getMvpView().updateSourceCurrency(item);
 
         // update the database based on the new source
-        saveFavorites(getMvpView().getAdapterItems());
+        saveFavorites(getMvpView().getAdapter().getItems());
     }
 
     @Override

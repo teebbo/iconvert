@@ -75,8 +75,7 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
     SearchCurrencyAdapter adapter;
     @Inject @Getter
     Integer requestCode;
-    @Inject @Getter
-    SearchPresenter presenter;
+
 
     Unbinder binder;
 
@@ -87,6 +86,7 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
         super(activity);
         this.activity = activity;
         inflate(getContext(), layout(), this);
+        binder = ButterKnife.bind(this);
     }
 
     @LayoutRes
@@ -103,10 +103,6 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
         swipeRefreshLayout.setRefreshing(refresh);
     }
 
-    public void start() {
-        presenter.loadCurrencies();
-    }
-
     public void stop() {
         //disconnect2EventBus(this);
     }
@@ -114,19 +110,11 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
     // free resources
     public void clear() {
         snackbar = null;
-        presenter.clear();
     }
 
     public void init(@Nullable Bundle savedInstanceState) {
         // dagger init
         Injector.instance().inject(this);
-        presenter.attach(this);
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        binder = ButterKnife.bind(this);
 
         activity.setSupportActionBar(toolbar);
 
@@ -145,6 +133,11 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
         setupSwipeRefreshContainer();
 
         swipeRefresh(true);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
     }
 
     @Override
@@ -176,7 +169,7 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
 
         snackbar.setActionTextColor(Color.CYAN)
                 .setAction(R.string.snackbar_retry_action, (View v) -> {
-                    presenter.loadCurrencies();
+                    activity.getPresenter().loadCurrencies();
                     snackbar.dismiss();
                 }).show();
     }
@@ -229,7 +222,7 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
 
     private void setupSwipeRefreshContainer() {
 
-        final Runnable runnable = presenter::loadCurrencies;
+        final Runnable runnable = activity.getPresenter()::loadCurrencies;
 
         final SwipeRefreshLayout.OnRefreshListener onRefreshListener =
                 () -> (new Handler()).postDelayed(runnable, Constant.DELAY_MILLIS_2000);
@@ -277,10 +270,10 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
 
         switch (requestCode) {
             case Constant.SEARCH_CURRENCY_REQUEST_CODE:
-                presenter.itemSelectedCheckbox(currencyIHM);
+                activity.getPresenter().itemSelectedCheckbox(currencyIHM);
                 break;
             case Constant.CHOOSE_CURRENCY_REQUEST_CODE:
-                presenter.itemSelectedRadioButton(currencyIHM);
+                activity.getPresenter().itemSelectedRadioButton(currencyIHM);
                 break;
             default:
                 break;

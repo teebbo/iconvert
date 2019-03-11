@@ -1,7 +1,6 @@
 package com.kimboofactory.iconvert.ui.home.views;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,10 +35,8 @@ public class FavoriteItemView extends RelativeLayout implements ItemView<Currenc
 
     public FavoriteItemView(Context context) {
         super(context);
-    }
 
-    public FavoriteItemView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        inflate(context, R.layout.favorite_item, this);
     }
 
     @Override

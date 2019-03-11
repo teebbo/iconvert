@@ -39,9 +39,9 @@ public interface FavoriteContract {
         void updateFavoritesList(List<CurrencyIHM> currencies);
         void updateSourceCurrency(CurrencyIHM item);
 
-        List<CurrencyIHM> getAdapterItems();
+   /*     List<CurrencyIHM> getAdapterItems();
         void updateAdapterItems(List<CurrencyIHM> newFavorites);
-        void clearAdapterItems();
+        void clearAdapterItems();*/
 
         CurrencyIHM getDefaultCurrency();
 

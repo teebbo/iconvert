@@ -35,7 +35,25 @@ public class CurrencyRepository implements Repository {
     // favorite
     @Override
     public void getFavorites(GetCallback callback) {
-        List<FavoriteEntity> favoriteEntities = localDataSource.getFavorites();
+
+        if (localDataSource.isEmpty()) {
+            final Mapper mapper = new Mapper();
+            remoteDataSource.getRatesAndCurrencies(response -> {
+                if (response.getError() != null) {
+                    throw new RuntimeException(response.getError());
+                }
+
+                final Map<String, String> map = (Map<String, String>) response.getValue();
+                map.keySet().forEach(key -> {
+                    if (OpenXchangeRateAPI.REQUEST_CURRENCY.equals(key)) {
+                        localDataSource.saveAllCurrencies(mapper.map2Currencies(map.get(key)));
+                    } else if (OpenXchangeRateAPI.REQUEST_RATE.equals(key)) {
+                        localDataSource.saveAllRates(mapper.map2Rates(map.get(key)));
+                    }
+                });
+            });
+        }
+        final List<FavoriteEntity> favoriteEntities = localDataSource.getFavorites();
         callback.onReceived(new Response(favoriteEntities, null));
     }
 
@@ -98,25 +116,23 @@ public class CurrencyRepository implements Repository {
 
     @Override
     public void addRatesAndCurrencies() {
-        if (localDataSource.isEmpty()) {
 
-            final Mapper mapper = new Mapper();
+        final Mapper mapper = new Mapper();
 
-            remoteDataSource.getRatesAndCurrencies(response -> {
+        remoteDataSource.getRatesAndCurrencies(response -> {
 
-                if (response.getError() != null) {
-                    throw new RuntimeException(response.getError());
+            if (response.getError() != null) {
+                throw new RuntimeException(response.getError());
+            }
+
+            final Map<String, String> map = (Map<String, String>) response.getValue();
+            map.keySet().forEach(key -> {
+                if (OpenXchangeRateAPI.REQUEST_CURRENCY.equals(key)) {
+                    localDataSource.saveAllCurrencies(mapper.map2Currencies(map.get(key)));
+                } else if (OpenXchangeRateAPI.REQUEST_RATE.equals(key)) {
+                    localDataSource.saveAllRates(mapper.map2Rates(map.get(key)));
                 }
-
-                final Map<String, String> map = (Map<String, String>) response.getValue();
-                map.keySet().forEach(key -> {
-                    if (OpenXchangeRateAPI.REQUEST_CURRENCY.equals(key)) {
-                        localDataSource.saveAllCurrencies(mapper.map2Currencies(map.get(key)));
-                    } else if (OpenXchangeRateAPI.REQUEST_RATE.equals(key)) {
-                        localDataSource.saveAllRates(mapper.map2Rates(map.get(key)));
-                    }
-                });
             });
-        }
+        });
     }
 }

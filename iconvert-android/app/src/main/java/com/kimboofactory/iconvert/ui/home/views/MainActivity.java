@@ -13,6 +13,7 @@ import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.application.IConvertApplication;
 import com.kimboofactory.iconvert.common.Constant;
 import com.kimboofactory.iconvert.di.Injector;
+import com.kimboofactory.iconvert.ui.home.presentation.MainPresenter;
 import com.kimboofactory.iconvert.ui.home.presentation.MvpHomeView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -22,13 +23,15 @@ import java.io.Serializable;
 import javax.inject.Inject;
 
 import androidx.annotation.Nullable;
-import butterknife.ButterKnife;
+import lombok.Getter;
 
 
 public class MainActivity extends BaseActivity {
 
     @Inject
     MvpHomeView mMvpView;
+    @Inject @Getter
+    MainPresenter presenter;
 
     @Override
     public String logTag() {
@@ -47,9 +50,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initialize(@Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(mMvpView);
+        //ButterKnife.bind(mMvpView);
         mMvpView.init(savedInstanceState);
-        //presenter.attach(mMvpView);
+        presenter.attach(mMvpView);
     }
 
     @Override
@@ -57,11 +60,11 @@ public class MainActivity extends BaseActivity {
         if (requestCode == Constant.SEARCH_CURRENCY_REQUEST_CODE &&
                 resultCode == Activity.RESULT_OK) {
             final Serializable extras = data.getSerializableExtra(Constant.EXTRA_SELECTED_ITEMS);
-            //presenter.updateFavorites(resultCode, extras);
+            presenter.updateFavorites(resultCode, extras);
         } else if (requestCode == Constant.CHOOSE_CURRENCY_REQUEST_CODE &&
                 resultCode == Activity.RESULT_OK) {
             final Serializable extra = data.getSerializableExtra(Constant.EXTRA_SELECTED_ITEM);
-            //presenter.updateSourceCurrency(resultCode, extra);
+            presenter.updateSourceCurrency(resultCode, extra);
         }
     }
 
@@ -75,6 +78,7 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         mMvpView.start();
+        presenter.loadFavorites();
     }
 
     @Override
@@ -86,6 +90,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         mMvpView.clear();
+        presenter.detach();
 
         if (PeachConfig.isDebug()) {
             IConvertApplication.getRefWatcher(MainActivity.this).watch(MainActivity.this);
@@ -113,7 +118,7 @@ public class MainActivity extends BaseActivity {
                 final String appId = getString(R.string.openexchangerates_app_id);
                 return true;
             case R.id.action_clear:
-                //presenter.removeFavorites();
+                presenter.removeFavorites();
                 return true;
             default:
                 break;

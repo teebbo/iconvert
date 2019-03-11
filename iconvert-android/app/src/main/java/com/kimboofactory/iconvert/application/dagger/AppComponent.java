@@ -9,10 +9,7 @@ import dagger.Component;
  * Copyright (c) 2019. All rights reserved.
  */
 @ApplicationScope
-@Component(modules = {
-        AppModule.class,
-        NetworkModule.class
-})
+@Component(modules = {AppModule.class, NetworkModule.class})
 public interface AppComponent {
 
     CurrencyRepository repository();

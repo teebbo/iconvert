@@ -73,24 +73,24 @@ public class MainView
     @Override
     public CurrencyIHM removeFavoriteAt(int position) {
         final CurrencyIHM itemDeleted = getAdapterItems().remove(position);
-        activity.getFavoritesAdapter().notifyDataSetChanged();
+        activity.getAdapter().notifyDataSetChanged();
         return itemDeleted;
     }
 
     @Override
     public List<CurrencyIHM> getAdapterItems() {
-        return activity.getFavoritesAdapter().getItems();
+        return activity.getAdapter().getItems();
     }
 
     @Override
     public void clearAdapterItems() {
-        activity.getFavoritesAdapter().clear();
+        activity.getAdapter().clear();
     }
 
     @Override
     public void updateAdapterItems(List<CurrencyIHM> newFavoriteItems) {
         clearAdapterItems();
-        activity.getFavoritesAdapter().updateItems(newFavoriteItems);
+        activity.getAdapter().updateItems(newFavoriteItems);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
