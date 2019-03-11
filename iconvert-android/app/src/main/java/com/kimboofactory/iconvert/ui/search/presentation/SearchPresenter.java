@@ -35,10 +35,6 @@ public class SearchPresenter extends AbstractPresenter<MvpSearchView>
         this.repository = repository;
     }
 
-    public void start() {
-        loadCurrencies();
-    }
-
     @Override
     public void itemSelectedCheckbox(final CurrencyIHM item) {
 
@@ -47,9 +43,7 @@ public class SearchPresenter extends AbstractPresenter<MvpSearchView>
         } else {
             selectedItems.remove(item);
         }
-
-        final boolean show = selectedItems.size() > 0;
-        getMvpView().toggleSnackbar(show, selectedItems);
+        getMvpView().toggleSnackbar(selectedItems.size() > 0, selectedItems);
     }
 
     @Override
@@ -76,12 +70,6 @@ public class SearchPresenter extends AbstractPresenter<MvpSearchView>
 
 
            final List<CurrencyEntity> data = (List<CurrencyEntity>) response.getValue();
-           //final List<CurrencyEntity> currenciesEntity = event.getData();
-           //adapter.clear();
-           //adapter.updateItems(
-
-           //);
-           //result.setValue(data);
            final List<CurrencyIHM> list =  data.stream()
                    .map(entity -> {
                        final CurrencyIHM item = new CurrencyIHM(entity);

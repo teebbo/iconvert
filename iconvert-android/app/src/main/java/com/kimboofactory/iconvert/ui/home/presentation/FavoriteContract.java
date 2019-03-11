@@ -34,17 +34,9 @@ public interface FavoriteContract {
 
     interface View extends BaseView {
         void showSearchActivity(int requestCode);
-        //void chooseSourceCurrency();
-
         void updateFavoritesList(List<CurrencyIHM> currencies);
         void updateSourceCurrency(CurrencyIHM item);
-
-   /*     List<CurrencyIHM> getAdapterItems();
-        void updateAdapterItems(List<CurrencyIHM> newFavorites);
-        void clearAdapterItems();*/
-
         CurrencyIHM getDefaultCurrency();
-
-        CurrencyIHM removeFavoriteAt(int position);
+        CurrencyIHM removeItem(int position);
     }
 }

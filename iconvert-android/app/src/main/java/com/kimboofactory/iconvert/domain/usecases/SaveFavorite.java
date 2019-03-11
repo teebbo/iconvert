@@ -2,13 +2,10 @@ package com.kimboofactory.iconvert.domain.usecases;
 
 import com.aleengo.peach.toolbox.commons.model.Response;
 import com.aleengo.peach.toolbox.commons.model.Result;
-import com.kimboofactory.iconvert.common.ListViewAdapter;
 import com.kimboofactory.iconvert.domain.Repository;
 import com.kimboofactory.iconvert.domain.UseCase;
 import com.kimboofactory.iconvert.domain.common.QueryValue;
 import com.kimboofactory.iconvert.domain.model.FavoriteEntity;
-
-import java.util.List;
 
 import javax.inject.Inject;
 

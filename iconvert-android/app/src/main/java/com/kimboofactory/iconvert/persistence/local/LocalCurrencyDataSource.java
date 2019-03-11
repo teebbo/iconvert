@@ -79,7 +79,7 @@ public class LocalCurrencyDataSource implements CurrencyDataSource {
         final NamedCallable<Boolean> callable = new NamedCallable<Boolean>("%s", "LocalDataSource.isEmpty") {
             @Override
             protected Boolean execute() {
-                return dao.getCurrency(Constant.USD_CODE) == null;
+                return dao.getCurrency(Constant.DEFAULT_RATE_CODE) == null;
             }
         };
         return appExecutors.diskIO().execute(callable);

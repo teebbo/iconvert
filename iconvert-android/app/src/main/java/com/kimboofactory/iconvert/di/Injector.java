@@ -36,7 +36,7 @@ public final class Injector {
 
     public void inject(MainActivity activity) {
         setHomeComponent(DaggerMainActivityComponent.builder()
-                .plusAppComponent(getAppComponent())
+                .plus(getAppComponent())
                 .mainActivityModule(new MainActivityModule(activity))
                 .build());
         getHomeComponent().inject(activity);
@@ -44,7 +44,7 @@ public final class Injector {
 
     public void inject(SearchCurrencyActivity activity) {
         setSearchComponent(DaggerSearchActivityComponent.builder()
-                .plusAppComponent(getAppComponent())
+                .plus(getAppComponent())
                 .searchActivityModule(new SearchActivityModule(activity))
                 .build());
         getSearchComponent().inject(activity);

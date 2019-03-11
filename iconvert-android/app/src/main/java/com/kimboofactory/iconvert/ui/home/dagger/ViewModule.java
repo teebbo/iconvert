@@ -1,9 +1,10 @@
 package com.kimboofactory.iconvert.ui.home.dagger;
 
 import com.kimboofactory.iconvert.application.dagger.PerView;
-import com.kimboofactory.iconvert.common.Constant;
 import com.kimboofactory.iconvert.ui.home.views.FavoritesAdapter;
 import com.kimboofactory.iconvert.ui.home.views.MainActivity;
+
+import java.util.LinkedList;
 
 import dagger.Module;
 import dagger.Provides;
@@ -15,13 +16,11 @@ import dagger.Provides;
 @Module
 public class ViewModule {
 
-    //private final MvpHomeView view;
-
     public ViewModule() {}
 
     @Provides
     @PerView
     public static FavoritesAdapter adapter(MainActivity activity) {
-        return new FavoritesAdapter(activity, Constant.CURRENCY_IHMS_EMPTY_LIST);
+        return new FavoritesAdapter(activity, new LinkedList<>());
     }
 }

@@ -50,7 +50,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initialize(@Nullable Bundle savedInstanceState) {
-        //ButterKnife.bind(mMvpView);
         mMvpView.init(savedInstanceState);
         presenter.attach(mMvpView);
     }
@@ -100,7 +99,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }

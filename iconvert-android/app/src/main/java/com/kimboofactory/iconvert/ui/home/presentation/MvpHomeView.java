@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.aleengo.peach.toolbox.commons.model.Result;
 import com.aleengo.peach.toolbox.widget.PeachToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.kimboofactory.iconvert.GetFavoriteEvent;
+import com.kimboofactory.iconvert.events.GetFavoriteEvent;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.Constant;
 import com.kimboofactory.iconvert.di.Injector;
@@ -32,11 +32,8 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
-import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -71,34 +68,21 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
     private MainActivity activity;
     private boolean mFirstLoad = true;
 
-    private Unbinder binder;
-
     public MvpHomeView(MainActivity activity) {
         super(activity);
         this.activity = activity;
-
-        inflate(getContext(), layout(), this);
-
-        binder = ButterKnife.bind(this);
-    }
-
-    @LayoutRes
-    public int layout() {
-     return R.layout.activity_main;
+        inflate(getContext(), R.layout.activity_main, this);
     }
 
     public void init(@Nullable Bundle savedInstanceState) {
-//        Injector.instance().inject(this);
 
         if (savedInstanceState == null) {
-
         }
+
         Injector.instance().inject(this);
 
         favoritesLV.setAdapter(adapter);
         activity.setSupportActionBar(toolbar);
-        //listener = new HomeViewListener(this);
-        //adapter = new FavoritesAdapter(activity, new LinkedList<>());
         favoritesLV.setOnItemClickListener(listener);
         favoritesLV.setOnItemLongClickListener(listener);
 
@@ -124,7 +108,7 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
 
     @Override
     public void clear() {
-        binder.unbind();
+        //binder.unbind();
     }
 
     @Override
@@ -141,7 +125,7 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
                     .map(dst -> {
                         final ComputeTask task = new ComputeTask(getCurrencySource(), dst);
                         task.execute();
-                        return task.getRealCurrency();
+                        return task.getFinalCurrency();
                     })
                     .collect(Collectors.toList());
             // update the adapter
@@ -171,7 +155,7 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
     @Override
     public CurrencyIHM getDefaultCurrency() {
         final CurrencyEntity entity =
-                new CurrencyEntity(Constant.USD_CODE, Constant.USD_LIBELLE, Constant.DEFAULT_AMOUNT);
+                new CurrencyEntity(Constant.DEFAULT_RATE_CODE, Constant.DEFAULT_RATE_LIBELLE, Constant.DEFAULT_AMOUNT);
 
         final CurrencyIHM source  = new CurrencyIHM();
         source.setEntity(entity);
@@ -180,15 +164,8 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
     }
 
     @Override
-    public CurrencyIHM removeFavoriteAt(int position) {
-        final CurrencyIHM itemDeleted = adapter.getItems().remove(position);
-        getAdapter().notifyDataSetChanged();
-        return itemDeleted;
-    }
-
-    @Override
-    public void attachUi(Object activity) {
-
+    public CurrencyIHM removeItem(int position) {
+        return adapter.removeItem(position);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -230,7 +207,7 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
                     .map(currencyIHM -> {
                         final ComputeTask task = new ComputeTask(ihm, currencyIHM);
                         task.execute();
-                        return task.getRealCurrency();
+                        return task.getFinalCurrency();
                     }).collect(Collectors.toList());
 
             adapter.clear();

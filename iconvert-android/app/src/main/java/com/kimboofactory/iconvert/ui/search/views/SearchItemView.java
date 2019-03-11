@@ -3,8 +3,8 @@ package com.kimboofactory.iconvert.ui.search.views;
 import android.content.Context;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aleengo.peach.toolbox.adapter.ItemView;
@@ -14,6 +14,7 @@ import com.kimboofactory.iconvert.dto.CurrencyIHM;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +22,7 @@ import lombok.Setter;
  * Created by CK_ALEENGO on 06/03/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public class SearchItemView extends RelativeLayout implements ItemView<CurrencyIHM> {
+public class SearchItemView extends FrameLayout implements ItemView<CurrencyIHM> {
 
     @BindView(R.id.code_devise_textview)
     @Getter TextView codeTV;
@@ -32,19 +33,19 @@ public class SearchItemView extends RelativeLayout implements ItemView<CurrencyI
     @BindView(R.id.rb_choose_currency)
     @Getter @Setter RadioButton radioButton;
 
-    @Getter @Setter
-    private Integer requestCode;
+    Unbinder unbinder;
 
     public SearchItemView(Context context) {
         super(context);
         inflate(context, R.layout.activity_search_item, this);
+        unbinder = ButterKnife.bind(this);
     }
 
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        ButterKnife.bind(this);
-    }
+   /* @Override
+    protected void onDetachedFromWindow() {
+        unbinder.unbind();
+        super.onDetachedFromWindow();
+    }*/
 
     @Override
     public void bind(CurrencyIHM item) {

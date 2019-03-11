@@ -19,7 +19,7 @@ public interface SearchActivityComponent {
 
     @Component.Builder
     interface Builder {
-        Builder plusAppComponent(AppComponent component);
+        Builder plus(AppComponent component);
         Builder searchActivityModule(SearchActivityModule module);
         SearchActivityComponent build();
     }

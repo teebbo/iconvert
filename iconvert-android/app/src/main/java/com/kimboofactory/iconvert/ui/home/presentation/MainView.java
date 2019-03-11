@@ -24,7 +24,7 @@ public class MainView
     @Override
     public CurrencyIHM getDefaultCurrency() {
         final CurrencyEntity entity =
-                new CurrencyEntity(Helper.USD_CODE, Helper.USD_LIBELLE, Helper.DEFAULT_AMOUNT);
+                new CurrencyEntity(Helper.DEFAULT_RATE_CODE, Helper.DEFAULT_RATE_LIBELLE, Helper.DEFAULT_AMOUNT);
 
         final CurrencyIHM source  = new CurrencyIHM();
         source.setEntity(entity);
@@ -46,7 +46,7 @@ public class MainView
                     .map(dst -> {
                         final ComputeTask task = new ComputeTask(activity.getCurrencySource(), dst);
                         task.execute();
-                        return task.getRealCurrency();
+                        return task.getFinalCurrency();
                     })
                     .collect(Collectors.toList());
             // update the adapter
@@ -132,7 +132,7 @@ public class MainView
                     .map(currencyIHM -> {
                         final ComputeTask task = new ComputeTask(ihm, currencyIHM);
                         task.execute();
-                        return task.getRealCurrency();
+                        return task.getFinalCurrency();
                     }).collect(Collectors.toList());
             updateAdapterItems(newItems);
         }

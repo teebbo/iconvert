@@ -20,7 +20,7 @@ public interface MainActivityComponent {
 
     @Component.Builder
     interface Builder {
-        Builder plusAppComponent(AppComponent component);
+        Builder plus(AppComponent component);
         Builder mainActivityModule(MainActivityModule module);
         MainActivityComponent build();
     }

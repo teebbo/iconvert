@@ -33,14 +33,11 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
-import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import lombok.Getter;
 
 import static android.content.Context.SEARCH_SERVICE;
@@ -49,16 +46,14 @@ import static android.content.Context.SEARCH_SERVICE;
  * Created by CK_ALEENGO on 07/03/2019.
  * Copyright (c) 2019. All rights reserved.
  */
-public class MvpSearchView extends FrameLayout implements SearchContract.View, SearchView.OnQueryTextListener {
+public class MvpSearchView extends FrameLayout
+        implements SearchContract.View, SearchView.OnQueryTextListener {
 
-    public static final int NO_EXTRA = -1;
 
-    @Getter
     @BindView(R.id.coordinator_layout)
-    CoordinatorLayout coordinatorLayout;
-    @Getter
+    @Getter CoordinatorLayout coordinatorLayout;
     @BindView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout swipeRefreshLayout;
+    @Getter SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.search_toolbar)
     PeachToolbar toolbar;
     @BindView(R.id.iv_back)
@@ -76,35 +71,17 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
     @Inject @Getter
     Integer requestCode;
 
-
-    Unbinder binder;
-
     private SearchCurrencyActivity activity;
 
     @Inject
     public MvpSearchView(SearchCurrencyActivity activity) {
         super(activity);
         this.activity = activity;
-        inflate(getContext(), layout(), this);
-        binder = ButterKnife.bind(this);
-    }
-
-    @LayoutRes
-    public int layout() {
-        return R.layout.activity_search_list;
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
+        inflate(getContext(), R.layout.activity_search_list, this);
     }
 
     public void swipeRefresh(boolean refresh) {
         swipeRefreshLayout.setRefreshing(refresh);
-    }
-
-    public void stop() {
-        //disconnect2EventBus(this);
     }
 
     // free resources
@@ -118,9 +95,6 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
 
         activity.setSupportActionBar(toolbar);
 
-        //requestCode = activity.getIntent().getIntExtra(Constant.REQUEST_CODE, NO_EXTRA);
-
-        //adapter = new SearchCurrencyAdapter(activity, new LinkedList<>(), requestCode);
         searchCurrencyLV.setAdapter(adapter);
         searchCurrencyLV.setOnItemClickListener(this::OnItemClick);
 
@@ -135,17 +109,6 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
         swipeRefresh(true);
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        binder.unbind();
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(CurrenciesEvent event) {
         if (event.getError() != null) {
@@ -154,8 +117,6 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
             swipeRefresh(false);
             return;
         }
-
-        //final List<CurrencyEntity> currenciesEntity = event.getData();
         adapter.clear();
         adapter.updateItems(event.getData());
         // stop the refresh
@@ -172,11 +133,6 @@ public class MvpSearchView extends FrameLayout implements SearchContract.View, S
                     activity.getPresenter().loadCurrencies();
                     snackbar.dismiss();
                 }).show();
-    }
-
-    @Override
-    public void attachUi(Object activity) {
-        this.activity = (SearchCurrencyActivity) activity;
     }
 
     @Override

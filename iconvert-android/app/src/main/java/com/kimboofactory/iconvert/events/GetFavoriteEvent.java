@@ -1,4 +1,4 @@
-package com.kimboofactory.iconvert;
+package com.kimboofactory.iconvert.events;
 
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 

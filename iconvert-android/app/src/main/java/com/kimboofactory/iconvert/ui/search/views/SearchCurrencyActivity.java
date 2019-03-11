@@ -42,7 +42,6 @@ public class SearchCurrencyActivity extends BaseActivity {
 
     @Override
     protected void initialize(@Nullable Bundle savedInstanceState) {
-        //ButterKnife.bind(mMvpView);
         mMvpView.init(savedInstanceState);
         presenter.attach(mMvpView);
     }

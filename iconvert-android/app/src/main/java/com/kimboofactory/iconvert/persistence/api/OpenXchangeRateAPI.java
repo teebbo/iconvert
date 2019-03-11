@@ -6,6 +6,7 @@ import com.aleengo.peach.toolbox.commons.concurrent.HTTPService;
 import com.aleengo.peach.toolbox.commons.concurrent.ResponseCallback;
 import com.aleengo.peach.toolbox.commons.net.RequestConfig;
 import com.aleengo.peach.toolbox.commons.net.RequestWrapper;
+import com.kimboofactory.iconvert.common.Constant;
 
 import java.util.Arrays;
 
@@ -16,10 +17,6 @@ import okhttp3.OkHttpClient;
  * Copyright (c) 2019. All rights reserved.
  */
 public class OpenXchangeRateAPI implements API {
-
-    public static final String BASE_URL = "https://openexchangerates.org/api/";
-    public static final String RATE_END_POINT = "latest.json";
-    public static final String CURRENCIES_END_POINT = "currencies.json";
 
     public static final String REQUEST_RATE = "REQUEST_RATE";
     public static final String REQUEST_CURRENCY = "REQUEST_CURRENCY";
@@ -34,11 +31,11 @@ public class OpenXchangeRateAPI implements API {
         this.client = client;
 
         final RequestConfig.Builder builder = new RequestConfig.Builder(new ResponseCallback())
-                .baseUrl(BASE_URL);
-        rateConfig = builder.endPoint(RATE_END_POINT)
+                .baseUrl(Constant.BASE_URL);
+        rateConfig = builder.endPoint(Constant.LATEST)
                 .callback(new ResponseCallback())
                 .build();
-        currencyConfig = builder.endPoint(CURRENCIES_END_POINT)
+        currencyConfig = builder.endPoint(Constant.CURRENCIES)
                 .callback(new ResponseCallback())
                 .build();
     }

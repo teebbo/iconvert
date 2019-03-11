@@ -6,7 +6,6 @@ import android.content.Context;
 
 import com.aleengo.peach.toolbox.commons.common.PeachConfig;
 import com.facebook.stetho.Stetho;
-import com.kimboofactory.iconvert.application.dagger.AppComponent;
 import com.kimboofactory.iconvert.application.dagger.AppModule;
 import com.kimboofactory.iconvert.application.dagger.DaggerAppComponent;
 import com.kimboofactory.iconvert.di.Injector;
@@ -46,33 +45,14 @@ public class IConvertApplication extends Application {
         Stetho.initialize(stethoInitializer);
 
         // Dagger initialization
-        daggerInit();
+        Injector.instance().setAppComponent(DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
+                .build());
 
     }
 
     public static RefWatcher getRefWatcher(Context context) {
         IConvertApplication application = (IConvertApplication) context.getApplicationContext();
         return application.refWatcher;
-    }
-
-
-    private void daggerInit() {
-        final AppComponent appComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
-                .build();
-
-        Injector.instance().setAppComponent(appComponent);
-
-        /*final MainActivityComponent homeComponent = DaggerMainActivityComponent.builder()
-                .plusAppComponent(appComponent)
-                .build();
-
-        Injector.instance().setHomeComponent(homeComponent);
-
-        final SearchActivityComponent searchComponent = DaggerSearchActivityComponent.builder()
-                .plusAppComponent(appComponent)
-                .build();
-
-        Injector.instance().setSearchComponent(searchComponent);*/
     }
 }
