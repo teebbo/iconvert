@@ -32,7 +32,8 @@ public class FavoritesAdapter
     }
 
     @Override
-    protected View onNewViewItem() {
+    protected View onNewItemView() {
         return new FavoriteItemView(activity);
     }
+
 }

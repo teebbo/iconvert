@@ -12,12 +12,12 @@ import android.widget.TextView;
 import com.aleengo.peach.toolbox.commons.model.Result;
 import com.aleengo.peach.toolbox.widget.PeachToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.kimboofactory.iconvert.events.GetFavoriteEvent;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.Constant;
 import com.kimboofactory.iconvert.di.Injector;
 import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
+import com.kimboofactory.iconvert.events.GetFavoriteEvent;
 import com.kimboofactory.iconvert.ui.home.views.FavoritesAdapter;
 import com.kimboofactory.iconvert.ui.home.views.HomeViewListener;
 import com.kimboofactory.iconvert.ui.home.views.MainActivity;
@@ -83,8 +83,8 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
 
         favoritesLV.setAdapter(adapter);
         activity.setSupportActionBar(toolbar);
-        favoritesLV.setOnItemClickListener(listener);
-        favoritesLV.setOnItemLongClickListener(listener);
+        /*favoritesLV.setOnItemClickListener(listener);
+        favoritesLV.setOnItemLongClickListener(listener);*/
 
         fab.setOnClickListener((View v) -> activity.getPresenter().addFavorite(Constant.SEARCH_CURRENCY_REQUEST_CODE));
         amountET.addTextChangedListener(listener);

@@ -49,7 +49,8 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void initialize(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mMvpView.init(savedInstanceState);
         presenter.attach(mMvpView);
     }

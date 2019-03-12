@@ -48,7 +48,7 @@ public class SearchItemView extends FrameLayout implements ItemView<CurrencyIHM>
     }*/
 
     @Override
-    public void bind(CurrencyIHM item) {
+    public void bind(CurrencyIHM item, int position) {
 
         codeTV.setText(item.getEntity().getCode());
         libelleTV.setText(item.getEntity().getLibelle());

@@ -2,13 +2,14 @@ package com.kimboofactory.iconvert.ui.home.presentation;
 
 import com.aleengo.peach.toolbox.commons.model.Response;
 import com.aleengo.peach.toolbox.commons.model.Result;
-import com.kimboofactory.iconvert.events.GetFavoriteEvent;
 import com.kimboofactory.iconvert.common.AbstractPresenter;
 import com.kimboofactory.iconvert.common.Constant;
 import com.kimboofactory.iconvert.domain.Repository;
 import com.kimboofactory.iconvert.domain.model.FavoriteEntity;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
+import com.kimboofactory.iconvert.events.GetFavoriteEvent;
 import com.kimboofactory.iconvert.persistence.repository.CurrencyRepository;
+import com.kimboofactory.iconvert.util.Helper;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -84,26 +85,14 @@ public class MainPresenter extends AbstractPresenter<MvpHomeView>
 
     @Override
     public void loadCurrency(CurrencyIHM currencyIHM) {
-        /*final QueryValue<String> query = new QueryValue<>(currencyIHM.getEntity().getCode());
-        mUseCaseHandler.setUseCase(query, mGetCurrencyUseCase);
-        mUseCaseHandler.execute(result -> EventBus.getDefault().post(result));*/
     }
 
     @Override
     public void loadDefaultCurrency() {
-       /* mUseCaseHandler.setUseCase(Constant.DEFAULT_QUERY, mGetCurrencyUseCase);
-        mUseCaseHandler.execute(result -> EventBus.getDefault().post(result));*/
     }
 
     @Override
     public void loadCurrencies() {
-       /* mUseCaseHandler.setUseCase(Constant.NO_QUERY, mGetCurrenciesUseCase);
-        mUseCaseHandler.execute(new UseCase.Callback() {
-            @Override
-            public void onResult(Result result) {
-
-            }
-        });*/
     }
 
     @Override
@@ -130,7 +119,7 @@ public class MainPresenter extends AbstractPresenter<MvpHomeView>
                 final FavoriteEntity f = list.get(0);
                 final CurrencyIHM source = new CurrencyIHM(f.getSource());
                 if (f.getComputedRate() != null) {
-                    final Float cachedAmount = Float.valueOf(f.getComputedAmount()) / Float.valueOf(f.getComputedRate());
+                    final Float cachedAmount = Float.valueOf(Helper.unformatNumber(f.getComputedAmount())) / Float.valueOf(f.getComputedRate());
                     source.setAmount(String.format(Locale.US, Constant.FORMAT_AMOUNT, cachedAmount.floatValue()));
                 } else {
                     source.setAmount(Constant.DEFAULT_AMOUNT);

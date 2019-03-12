@@ -42,17 +42,17 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchIt
     }
 
     @Override
-    protected View onNewViewItem() {
+    protected View onNewItemView() {
         return new SearchItemView(activity);
     }
 
     /*@Override
-        protected ViewHolder onNewViewHolder(View view) {
-            return new ViewHolder(view);
-        }
+            protected ViewHolder onNewViewHolder(View view) {
+                return new ViewHolder(view);
+            }
 
 
-    */
+        */
     @Override
     public void updateItems(List<CurrencyIHM> newItems) {
         if (newItems != null && newItems.size() > 0) {

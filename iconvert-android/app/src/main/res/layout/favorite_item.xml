@@ -11,8 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_delete_black_24dp"
+        android:tint="@android:color/holo_red_dark"
         android:layout_centerVertical="true"
-        android:padding="@dimen/dim_4dp"/>
+        android:padding="@dimen/dim_4dp"
+        android:layout_marginRight="@dimen/dim_4dp"/>
 
     <RelativeLayout
         android:id="@+id/rl_side_view"
@@ -38,7 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/iv_currency_logo"
-            android:paddingLeft="@dimen/dim_2dp"
+            android:layout_marginLeft="@dimen/dim_4dp"
+            android:padding="@dimen/dim_2dp"
             android:layout_centerVertical="true"
             android:textStyle="bold"
             tools:text="@string/label_code"/>
@@ -49,15 +52,17 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_currency_logo"
             android:layout_alignParentLeft="true"
-            android:paddingTop="@dimen/dim_12dp"
+            android:layout_marginTop="@dimen/dim_16dp"
+            android:padding="@dimen/dim_2dp"
             tools:text="@string/label_libelle"/>
 
         <TextView
             android:id="@+id/tv_rate"
-            android:layout_width="@dimen/dim_75dp"
+            android:layout_width="@dimen/dim_100dp"
             android:layout_height="@dimen/dim_56dp"
             android:layout_centerInParent="true"
-            android:padding="@dimen/dim_12dp"
+            android:gravity="center"
+            android:padding="@dimen/dim_8dp"
             tools:text="Rate 1.9999"/>
 
         <TextView

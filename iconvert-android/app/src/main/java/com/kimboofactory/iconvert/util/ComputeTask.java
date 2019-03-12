@@ -32,7 +32,7 @@ public class ComputeTask extends AsyncTask<Void, Void, CurrencyIHM> {
         final float amount = Helper.computeAmount(Float.valueOf(src.getAmount()), computedRate);
 
         finalCurrency.setComputeRate(String.format(Locale.US, Constant.FORMAT_COMPUTED_RATE, computedRate));
-        finalCurrency.setAmount(String.format(Locale.US, Constant.FORMAT_AMOUNT, amount));
+        finalCurrency.setAmount(Helper.formatNumber(String.format(Locale.US, Constant.FORMAT_AMOUNT, amount)));
         return finalCurrency;
     }
 }

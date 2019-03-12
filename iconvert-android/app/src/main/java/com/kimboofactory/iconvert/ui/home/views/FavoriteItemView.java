@@ -51,7 +51,7 @@ public class FavoriteItemView extends FrameLayout implements ItemView<CurrencyIH
     }*/
 
     @Override
-    public void bind(CurrencyIHM item) {
+    public void bind(CurrencyIHM item, int position) {
 
         final String rate = Constant.RATE + "\n" + item.getComputeRate();
 
@@ -59,6 +59,6 @@ public class FavoriteItemView extends FrameLayout implements ItemView<CurrencyIH
         libelleTV.setText(item.getEntity().getLibelle());
         rateTV.setText(rate);
         resultTV.setText(item.getAmount());
-        //deleteFavorite.setOnClickListener(v -> activity.getPresenter().removeFavorite());
+        deleteFavorite.setOnClickListener(v -> activity.getPresenter().removeFavorite(position));
     }
 }

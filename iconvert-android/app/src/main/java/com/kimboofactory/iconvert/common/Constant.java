@@ -22,9 +22,9 @@ public final class Constant {
 
     public static final String EMPTY_STRING = "";
 
+    public static final long DELAY_MILLIS_250 = 250;
     public static final long DELAY_MILLIS_500 = 500;
     public static final long DELAY_MILLIS_2000 = 2000;
-    public static final long DELAY_MILLIS_4000 = 4000;
     public static final long DELAY_MILLIS_5000 = 5000;
 
     public static final String DEFAULT_RATE_CODE = "USD";
