@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aleengo.peach.toolbox.adapter.ItemView;
+import com.aleengo.peach.toolbox.commons.common.Pair;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.Constant;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
@@ -44,17 +45,13 @@ public class FavoriteItemView extends FrameLayout implements ItemView<CurrencyIH
         binder = ButterKnife.bind(this);
     }
 
-    /*@Override
-    protected void onDetachedFromWindow() {
-        binder.unbind();
-        super.onDetachedFromWindow();
-    }*/
-
     @Override
-    public void bind(CurrencyIHM item, int position) {
+    public void bind(Pair<CurrencyIHM, Integer> pair) {
+
+        final CurrencyIHM item = pair.getFirst();
+        final Integer position = pair.getSecond();
 
         final String rate = Constant.RATE + "\n" + item.getComputeRate();
-
         codeTV.setText(item.getEntity().getCode());
         libelleTV.setText(item.getEntity().getLibelle());
         rateTV.setText(rate);
