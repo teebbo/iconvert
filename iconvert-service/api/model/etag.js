@@ -8,7 +8,8 @@ let opts = {
 let def = {
     lastModified: String,
     etag: String,
-    endpoint: String
+    endpoint: String,
+    timestamp: Number
 };
 
 let ETagSchema = new Schema(def, opts);
