@@ -6,7 +6,9 @@ import android.view.View;
 import com.aleengo.peach.toolbox.commons.common.PeachConfig;
 import com.aleengo.peach.toolbox.ui.BaseActivity;
 import com.kimboofactory.iconvert.application.IConvertApplication;
-import com.kimboofactory.iconvert.di.Injector;
+import com.kimboofactory.iconvert.ui.search.dagger.DaggerSearchActivityComponent;
+import com.kimboofactory.iconvert.ui.search.dagger.SearchActivityComponent;
+import com.kimboofactory.iconvert.ui.search.dagger.SearchActivityModule;
 import com.kimboofactory.iconvert.ui.search.presentation.MvpSearchView;
 import com.kimboofactory.iconvert.ui.search.presentation.SearchPresenter;
 
@@ -24,6 +26,9 @@ public class SearchCurrencyActivity extends BaseActivity {
     @Inject @Getter
     SearchPresenter presenter;
 
+    @Getter
+    private SearchActivityComponent daggerComponent;
+
     @Override
     public String logTag() {
         return "SearchCurrencyActivity";
@@ -37,14 +42,18 @@ public class SearchCurrencyActivity extends BaseActivity {
     @Override
     public void daggerConfiguration() {
         // Dagger config
-        Injector.instance().inject(this);
+        daggerComponent = DaggerSearchActivityComponent.builder()
+                .plus(IConvertApplication.getApplication(this).appComponent())
+                .searchActivityModule(new SearchActivityModule(this))
+                .build();
+        daggerComponent.inject(this);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mMvpView.init(savedInstanceState);
+        mMvpView.init();
         presenter.attach(mMvpView);
     }
 
@@ -63,11 +72,12 @@ public class SearchCurrencyActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         mMvpView.clear();
         presenter.clear();
+        daggerComponent = null;
         if(PeachConfig.isDebug()) {
             IConvertApplication.getRefWatcher(this).watch(this);
         }
-        super.onDestroy();
     }
 }

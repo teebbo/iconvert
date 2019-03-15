@@ -1,14 +1,13 @@
 package com.kimboofactory.iconvert.application;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
 import com.aleengo.peach.toolbox.commons.common.PeachConfig;
 import com.facebook.stetho.Stetho;
+import com.kimboofactory.iconvert.application.dagger.AppComponent;
 import com.kimboofactory.iconvert.application.dagger.AppModule;
 import com.kimboofactory.iconvert.application.dagger.DaggerAppComponent;
-import com.kimboofactory.iconvert.di.Injector;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -19,9 +18,10 @@ import com.squareup.leakcanary.RefWatcher;
 public class IConvertApplication extends Application {
 
     private RefWatcher refWatcher;
+    private AppComponent appComponent;
 
-    public static IConvertApplication getApplication(Activity activity) {
-        return (IConvertApplication) activity.getApplication();
+    public static IConvertApplication getApplication(Context context) {
+        return (IConvertApplication) context.getApplicationContext();
     }
 
     @Override
@@ -45,14 +45,17 @@ public class IConvertApplication extends Application {
         Stetho.initialize(stethoInitializer);
 
         // Dagger initialization
-        Injector.instance().setAppComponent(DaggerAppComponent.builder()
+        appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
-                .build());
+                .build();
 
     }
 
+    public AppComponent appComponent() {
+        return appComponent;
+    }
+
     public static RefWatcher getRefWatcher(Context context) {
-        IConvertApplication application = (IConvertApplication) context.getApplicationContext();
-        return application.refWatcher;
+        return getApplication(context).refWatcher;
     }
 }

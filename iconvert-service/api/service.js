@@ -19,21 +19,25 @@ mongoose.connect(db.MONGO_URI, db.options, function(e) {
 
 const opera = new Opera(appID);
 
-async function getAllCurrencies() {
+async function saveCurrencies() {
     try {
         // get all currencies
         let res =  await opera.currencies({
             show_alternative: true, 
             show_inactive: true
         });
+
+        console.log('response', res);
         
         let json = JSON.parse(res.body);
         let currencies = [];
         for ( key in json) {
             currencies.push(new Currency(key, json[key]));
         }
+        console.log('currencies list', currencies);
+        //saveEtag(res.headers, 'currencies');
         // insert elements to MongoDB database
-        return await Currency.create(currencies);
+        //return await Currency.create(currencies);
     } catch (e) {
         throw e;
     }
@@ -51,7 +55,8 @@ async function saveEtag(headers, endpoint) {
     const query = {
         lastModified: etag['last-modified'],
         etag: etag['etag'],
-        timestamp: etag['timestamp']
+        timestamp: etag['timestamp'],
+        endpoint: 'rates'
     };
 
     Etag.findOneAndUpdate(query, doc, {upsert: true}, (err, doc, res) => {
@@ -62,17 +67,19 @@ async function saveEtag(headers, endpoint) {
 
 async function saveRates() {
     try {
-        const res = await opera.latest({show_alternative: true})
-        const json = JSON.parse(res.body);
+        const res = await opera.latest({show_alternative: true});
+        
+        console.log('response', res);
 
+        const json = JSON.parse(res.body);
+    
         const rates = [];
         for (key in json.rates) {
             rates.push(new rates(key, json.rates[key]));
         }
-
-        saveEtag(JSON.parse(res.headers), 'rates');
-
-        return await Rate.create(rates);
+        console.log('rates', rates);
+        //saveEtag(JSON.parse(res.headers), 'rates');
+        //return await Rate.create(rates);
     } catch (e) {
         throw e;
     }
@@ -108,3 +115,5 @@ function updateCurrencies() {
     // etag collection for 'endpoint == 'currencies'
 
 }
+
+saveCurrencies();

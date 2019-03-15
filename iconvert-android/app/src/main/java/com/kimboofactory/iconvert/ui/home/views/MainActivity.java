@@ -12,7 +12,9 @@ import com.aleengo.peach.toolbox.ui.BaseActivity;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.application.IConvertApplication;
 import com.kimboofactory.iconvert.common.Constant;
-import com.kimboofactory.iconvert.di.Injector;
+import com.kimboofactory.iconvert.ui.home.dagger.DaggerMainActivityComponent;
+import com.kimboofactory.iconvert.ui.home.dagger.MainActivityComponent;
+import com.kimboofactory.iconvert.ui.home.dagger.MainActivityModule;
 import com.kimboofactory.iconvert.ui.home.presentation.MainPresenter;
 import com.kimboofactory.iconvert.ui.home.presentation.MvpHomeView;
 
@@ -33,6 +35,9 @@ public class MainActivity extends BaseActivity {
     @Inject @Getter
     MainPresenter presenter;
 
+    @Getter
+    private MainActivityComponent daggerComponent;
+
     @Override
     public String logTag() {
         return "MainActivity";
@@ -40,7 +45,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void daggerConfiguration() {
-        Injector.instance().inject(this);
+        daggerComponent = DaggerMainActivityComponent.builder()
+                .plus(IConvertApplication.getApplication(this).appComponent())
+                .mainActivityModule(new MainActivityModule(this))
+                .build();
+        daggerComponent.inject(this);
     }
 
     @Override
@@ -51,7 +60,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMvpView.init(savedInstanceState);
+        mMvpView.init();
         presenter.attach(mMvpView);
     }
 
@@ -89,13 +98,15 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         mMvpView.clear();
         presenter.detach();
+        daggerComponent = null;
 
         if (PeachConfig.isDebug()) {
             IConvertApplication.getRefWatcher(MainActivity.this).watch(MainActivity.this);
         }
-        super.onDestroy();
+
     }
 
     @Override

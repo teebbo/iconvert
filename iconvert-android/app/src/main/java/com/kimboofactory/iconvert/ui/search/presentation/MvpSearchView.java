@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -17,9 +16,9 @@ import com.aleengo.peach.toolbox.widget.PeachToolbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.Constant;
-import com.kimboofactory.iconvert.di.Injector;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.events.CurrenciesEvent;
+import com.kimboofactory.iconvert.ui.search.dagger.ViewModule;
 import com.kimboofactory.iconvert.ui.search.views.SearchCurrencyActivity;
 import com.kimboofactory.iconvert.ui.search.views.SearchCurrencyAdapter;
 import com.kimboofactory.iconvert.ui.search.views.SearchItemView;
@@ -33,7 +32,6 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -89,9 +87,12 @@ public class MvpSearchView extends FrameLayout
         snackbar = null;
     }
 
-    public void init(@Nullable Bundle savedInstanceState) {
+    public void init() {
         // dagger init
-        Injector.instance().inject(this);
+        activity.getDaggerComponent().viewComponentBuilder()
+                .viewModule(new ViewModule())
+                .build()
+                .inject(this);
 
         activity.setSupportActionBar(toolbar);
 

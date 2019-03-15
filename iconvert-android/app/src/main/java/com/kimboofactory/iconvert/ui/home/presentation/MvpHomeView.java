@@ -1,7 +1,6 @@
 package com.kimboofactory.iconvert.ui.home.presentation;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -14,10 +13,10 @@ import com.aleengo.peach.toolbox.widget.PeachToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kimboofactory.iconvert.R;
 import com.kimboofactory.iconvert.common.Constant;
-import com.kimboofactory.iconvert.di.Injector;
 import com.kimboofactory.iconvert.domain.model.CurrencyEntity;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.events.GetFavoriteEvent;
+import com.kimboofactory.iconvert.ui.home.dagger.ViewModule;
 import com.kimboofactory.iconvert.ui.home.views.FavoritesAdapter;
 import com.kimboofactory.iconvert.ui.home.views.HomeViewListener;
 import com.kimboofactory.iconvert.ui.home.views.MainActivity;
@@ -32,7 +31,6 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
-import androidx.annotation.Nullable;
 import butterknife.BindView;
 import lombok.Getter;
 import lombok.Setter;
@@ -62,11 +60,12 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
     FavoritesAdapter adapter;
     @Inject
     HomeViewListener listener;
+
     @Getter @Setter
     private CurrencyIHM currencySource;
-
     private MainActivity activity;
     private boolean mFirstLoad = true;
+
 
     public MvpHomeView(MainActivity activity) {
         super(activity);
@@ -74,17 +73,14 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
         inflate(getContext(), R.layout.activity_main, this);
     }
 
-    public void init(@Nullable Bundle savedInstanceState) {
-
-        if (savedInstanceState == null) {
-        }
-
-        Injector.instance().inject(this);
+    public void init() {
+        activity.getDaggerComponent().viewComponentBuilder()
+                .viewModule(new ViewModule())
+                .build()
+                .inject(this);
 
         favoritesLV.setAdapter(adapter);
         activity.setSupportActionBar(toolbar);
-        /*favoritesLV.setOnItemClickListener(listener);
-        favoritesLV.setOnItemLongClickListener(listener);*/
 
         fab.setOnClickListener((View v) -> activity.getPresenter().addFavorite(Constant.SEARCH_CURRENCY_REQUEST_CODE));
         amountET.addTextChangedListener(listener);
@@ -108,7 +104,8 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
 
     @Override
     public void clear() {
-        //binder.unbind();
+        currencySource = null;
+        activity = null;
     }
 
     @Override

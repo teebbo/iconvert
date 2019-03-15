@@ -11,7 +11,7 @@ const _db = (mode) => {
 
         const db = config.parsed;
         return {
-            MONGO_URI: `mongodb+srv://${db.USERNAME}:${db.PASSWORD}@${db.SERVER}/${db.NAME}?retryWrites=true`,
+            MONGO_URI: `mongodb+srv://${db.USERNAME}:${db.PASSWORD}@${db.SERVER}/${db.DBNAME}?retryWrites=true`,
             options: {
                 useNewUrlParser: true,
                 useCreateIndex: true,

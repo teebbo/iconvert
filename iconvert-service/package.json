@@ -19,5 +19,8 @@
   "dependencies": {
     "@aleengo/opera": "^1.3.0",
     "mongoose": "^5.4.1"
+  },
+  "devDependencies": {
+    "dotenv": "^7.0.0"
   }
 }
