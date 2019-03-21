@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import com.aleengo.peach.toolbox.adapter.ItemView;
 import com.aleengo.peach.toolbox.commons.common.Pair;
+import com.aleengo.peach.toolbox.commons.common.PeachConfig;
 import com.kimboofactory.iconvert.R;
+import com.kimboofactory.iconvert.application.IConvertApplication;
 import com.kimboofactory.iconvert.common.Constant;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 
@@ -34,7 +36,7 @@ public class SearchItemView extends FrameLayout implements ItemView<CurrencyIHM>
     @BindView(R.id.rb_choose_currency)
     @Getter @Setter RadioButton radioButton;
 
-    Unbinder unbinder;
+    private Unbinder unbinder;
 
     public SearchItemView(Context context) {
         super(context);
@@ -54,5 +56,14 @@ public class SearchItemView extends FrameLayout implements ItemView<CurrencyIHM>
         radioButton.setVisibility(item.getCode() == Constant.CHOOSE_CURRENCY_REQUEST_CODE ? View.VISIBLE : View.GONE);
         checkBox.setChecked(item.getCheckboxChecked());
         radioButton.setChecked(item.getRadioButtonChecked());
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        if (PeachConfig.isDebug()) {
+            IConvertApplication.getRefWatcher().watch(this, "SearchItemView");
+        }
     }
 }

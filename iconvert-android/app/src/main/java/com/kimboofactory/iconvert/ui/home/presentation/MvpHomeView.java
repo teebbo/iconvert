@@ -26,6 +26,7 @@ import com.kimboofactory.iconvert.util.ComputeTask;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,29 +64,29 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
 
     @Getter @Setter
     private CurrencyIHM currencySource;
-    private MainActivity activity;
+    private WeakReference<MainActivity> activityWeakRef;
     private boolean mFirstLoad = true;
 
 
     public MvpHomeView(MainActivity activity) {
         super(activity);
-        this.activity = activity;
+        this.activityWeakRef = new WeakReference<>(activity);
         inflate(getContext(), R.layout.activity_main, this);
     }
 
     public void init() {
-        activity.getDaggerComponent().viewComponentBuilder()
+        activityWeakRef.get().getDaggerComponent().viewComponentBuilder()
                 .viewModule(new ViewModule())
                 .build()
                 .inject(this);
 
         favoritesLV.setAdapter(adapter);
-        activity.setSupportActionBar(toolbar);
+        activityWeakRef.get().setSupportActionBar(toolbar);
 
-        fab.setOnClickListener((View v) -> activity.getPresenter().addFavorite(Constant.SEARCH_CURRENCY_REQUEST_CODE));
+        fab.setOnClickListener((View v) -> activityWeakRef.get().getPresenter().addFavorite(Constant.SEARCH_CURRENCY_REQUEST_CODE));
         amountET.addTextChangedListener(listener);
 
-        currencyRL.setOnClickListener(v -> activity.getPresenter().addFavorite(Constant.CHOOSE_CURRENCY_REQUEST_CODE));
+        currencyRL.setOnClickListener(v -> activityWeakRef.get().getPresenter().addFavorite(Constant.CHOOSE_CURRENCY_REQUEST_CODE));
     }
 
     public void start() {
@@ -105,14 +106,14 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
     @Override
     public void clear() {
         currencySource = null;
-        activity = null;
+        activityWeakRef.clear();
     }
 
     @Override
     public void showSearchActivity(int requestCode) {
-        final Intent intent = new Intent(this.activity, SearchCurrencyActivity.class);
+        final Intent intent = new Intent(this.activityWeakRef.get(), SearchCurrencyActivity.class);
         intent.putExtra(Constant.REQUEST_CODE, requestCode);
-        this.activity.startActivityForResult(intent, requestCode);
+        this.activityWeakRef.get().startActivityForResult(intent, requestCode);
     }
 
     @Override
@@ -136,7 +137,7 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
 
     @Override
     public void updateSourceCurrency(CurrencyIHM item) {
-        final String codeLibelle = activity.getResources().getString(R.string.label_code_libelle,
+        final String codeLibelle = activityWeakRef.get().getResources().getString(R.string.label_code_libelle,
                 item.getEntity().getCode(), item.getEntity().getLibelle());
 
         item.setAmount(Constant.DEFAULT_AMOUNT);
@@ -176,7 +177,7 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
         final CurrencyIHM ihm = new CurrencyIHM(entity);
         ihm.setAmount(Constant.DEFAULT_AMOUNT);
 
-        final String codeLibelle = activity.getResources().getString(R.string.label_code_libelle,
+        final String codeLibelle = activityWeakRef.get().getResources().getString(R.string.label_code_libelle,
                 ihm.getEntity().getCode(), ihm.getEntity().getLibelle());
 
         getTextViewCodeSrc().setText(codeLibelle);
@@ -191,7 +192,7 @@ public class MvpHomeView extends FrameLayout implements FavoriteContract.View {
             final CurrencyIHM ihm = event.getSource();
             ihm.setAmount(Constant.DEFAULT_AMOUNT);
 
-            final String codeLibelle = activity.getResources().getString(R.string.label_code_libelle,
+            final String codeLibelle = activityWeakRef.get().getResources().getString(R.string.label_code_libelle,
                     ihm.getEntity().getCode(), ihm.getEntity().getLibelle());
 
             getTextViewCodeSrc().setText(codeLibelle);

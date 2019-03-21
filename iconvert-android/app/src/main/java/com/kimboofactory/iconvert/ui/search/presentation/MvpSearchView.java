@@ -26,6 +26,7 @@ import com.kimboofactory.iconvert.ui.search.views.SearchItemView;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,12 +70,12 @@ public class MvpSearchView extends FrameLayout
     @Inject @Getter
     Integer requestCode;
 
-    private SearchCurrencyActivity activity;
+    private WeakReference<SearchCurrencyActivity> activityWeakRef;
 
     @Inject
     public MvpSearchView(SearchCurrencyActivity activity) {
         super(activity);
-        this.activity = activity;
+        this.activityWeakRef = new WeakReference<>(activity);
         inflate(getContext(), R.layout.activity_search_list, this);
     }
 
@@ -85,23 +86,25 @@ public class MvpSearchView extends FrameLayout
     // free resources
     public void clear() {
         snackbar = null;
+        activityWeakRef.clear();
+        activityWeakRef = null;
     }
 
     public void init() {
         // dagger init
-        activity.getDaggerComponent().viewComponentBuilder()
+        activityWeakRef.get().getDaggerComponent().viewComponentBuilder()
                 .viewModule(new ViewModule())
                 .build()
                 .inject(this);
 
-        activity.setSupportActionBar(toolbar);
+        activityWeakRef.get().setSupportActionBar(toolbar);
 
         searchCurrencyLV.setAdapter(adapter);
         searchCurrencyLV.setOnItemClickListener(this::OnItemClick);
 
         setupSearchView();
 
-        mBack.setOnClickListener( (View v) -> activity.onBackPressed());
+        mBack.setOnClickListener( (View v) -> activityWeakRef.get().onBackPressed());
         snackbar = Snackbar.make(coordinatorLayout, Constant.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE);
 
         // setting SwipeRefresh
@@ -131,7 +134,7 @@ public class MvpSearchView extends FrameLayout
 
         snackbar.setActionTextColor(Color.CYAN)
                 .setAction(R.string.snackbar_retry_action, (View v) -> {
-                    activity.getPresenter().loadCurrencies();
+                    activityWeakRef.get().getPresenter().loadCurrencies();
                     snackbar.dismiss();
                 }).show();
     }
@@ -145,7 +148,7 @@ public class MvpSearchView extends FrameLayout
     public void toggleSnackbar(boolean show, final List<CurrencyIHM> items) {
 
         if (show) {
-            final String message = activity.getResources()
+            final String message = activityWeakRef.get().getResources()
                     .getString(R.string.snackbar_message, "" + items.size());
 
             snackbar.setText(message);
@@ -162,8 +165,8 @@ public class MvpSearchView extends FrameLayout
         final Intent data = new Intent();
         data.putExtra(Constant.EXTRA_SELECTED_ITEM, item);
 
-        activity.setResult(Activity.RESULT_OK, data);
-        activity.finish();
+        activityWeakRef.get().setResult(Activity.RESULT_OK, data);
+        activityWeakRef.get().finish();
     }
 
     @Override
@@ -179,7 +182,7 @@ public class MvpSearchView extends FrameLayout
 
     private void setupSwipeRefreshContainer() {
 
-        final Runnable runnable = activity.getPresenter()::loadCurrencies;
+        final Runnable runnable = activityWeakRef.get().getPresenter()::loadCurrencies;
 
         final SwipeRefreshLayout.OnRefreshListener onRefreshListener =
                 () -> (new Handler()).postDelayed(runnable, Constant.DELAY_MILLIS_2000);
@@ -195,7 +198,7 @@ public class MvpSearchView extends FrameLayout
 
     private void setupSearchView() {
         final SearchManager searchManager = (SearchManager) getContext().getSystemService(SEARCH_SERVICE);
-        mSearchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));
+        mSearchView.setSearchableInfo(searchManager.getSearchableInfo(activityWeakRef.get().getComponentName()));
 
         mSearchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         mSearchView.setOnQueryTextListener(this);
@@ -209,8 +212,8 @@ public class MvpSearchView extends FrameLayout
                         .collect(Collectors.toMap(items::indexOf, item -> item));
 
         data.putExtra(Constant.EXTRA_SELECTED_ITEMS, finalItems);
-        activity.setResult(Activity.RESULT_OK, data);
-        activity.finish();
+        activityWeakRef.get().setResult(Activity.RESULT_OK, data);
+        activityWeakRef.get().finish();
     }
 
     private void OnItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -227,10 +230,10 @@ public class MvpSearchView extends FrameLayout
 
         switch (requestCode) {
             case Constant.SEARCH_CURRENCY_REQUEST_CODE:
-                activity.getPresenter().itemSelectedCheckbox(currencyIHM);
+                activityWeakRef.get().getPresenter().itemSelectedCheckbox(currencyIHM);
                 break;
             case Constant.CHOOSE_CURRENCY_REQUEST_CODE:
-                activity.getPresenter().itemSelectedRadioButton(currencyIHM);
+                activityWeakRef.get().getPresenter().itemSelectedRadioButton(currencyIHM);
                 break;
             default:
                 break;

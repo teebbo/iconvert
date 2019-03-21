@@ -21,6 +21,7 @@ import com.kimboofactory.iconvert.ui.home.presentation.MvpHomeView;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
 
 import javax.inject.Inject;
 
@@ -38,6 +39,8 @@ public class MainActivity extends BaseActivity {
     @Getter
     private MainActivityComponent daggerComponent;
 
+    private static WeakReference<MainActivity> activityWeakRef;
+
     @Override
     public String logTag() {
         return "MainActivity";
@@ -45,11 +48,14 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void daggerConfiguration() {
+
+        activityWeakRef = new WeakReference<>(this);
+
         daggerComponent = DaggerMainActivityComponent.builder()
-                .plus(IConvertApplication.getApplication(this).appComponent())
-                .mainActivityModule(new MainActivityModule(this))
+                .plus(IConvertApplication.getApplication(activityWeakRef.get()).appComponent())
+                .mainActivityModule(new MainActivityModule(activityWeakRef.get()))
                 .build();
-        daggerComponent.inject(this);
+        daggerComponent.inject(activityWeakRef.get());
     }
 
     @Override
@@ -60,17 +66,21 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mMvpView.init();
         presenter.attach(mMvpView);
     }
 
     @Override
     protected void onActivityResult (int requestCode, int resultCode, @Nullable Intent data) {
+
         if (requestCode == Constant.SEARCH_CURRENCY_REQUEST_CODE &&
                 resultCode == Activity.RESULT_OK) {
             final Serializable extras = data.getSerializableExtra(Constant.EXTRA_SELECTED_ITEMS);
             presenter.updateFavorites(resultCode, extras);
-        } else if (requestCode == Constant.CHOOSE_CURRENCY_REQUEST_CODE &&
+        }
+
+        if (requestCode == Constant.CHOOSE_CURRENCY_REQUEST_CODE &&
                 resultCode == Activity.RESULT_OK) {
             final Serializable extra = data.getSerializableExtra(Constant.EXTRA_SELECTED_ITEM);
             presenter.updateSourceCurrency(resultCode, extra);
@@ -99,14 +109,19 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        if (PeachConfig.isDebug()) {
+            IConvertApplication.getRefWatcher().watch(daggerComponent);
+            IConvertApplication.getRefWatcher().watch(mMvpView);
+            IConvertApplication.getRefWatcher().watch(presenter);
+            IConvertApplication.getRefWatcher().watch(activityWeakRef);
+        }
+
         mMvpView.clear();
         presenter.detach();
         daggerComponent = null;
-
-        if (PeachConfig.isDebug()) {
-            IConvertApplication.getRefWatcher(MainActivity.this).watch(MainActivity.this);
-        }
-
+        activityWeakRef.clear();
+        activityWeakRef = null;
     }
 
     @Override

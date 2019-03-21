@@ -8,6 +8,7 @@ import com.aleengo.peach.toolbox.adapter.ListViewAdapter;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 import com.kimboofactory.iconvert.util.Helper;
 
+import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ import lombok.Getter;
 public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchItemView>
         implements Filterable {
 
-    private SearchCurrencyActivity activity;
+    private WeakReference<SearchCurrencyActivity> activityWeakRef;
     private SearchCurrencyFilter mFilter;
     @Getter
     private List<CurrencyIHM> originalList;
@@ -36,23 +37,16 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchIt
                                  List<CurrencyIHM> currencies,
                                  Integer requestCode) {
       super(activity, currencies);
-      this.activity = activity;
+      this.activityWeakRef = new WeakReference<>(activity);
       this.originalList = new LinkedList<>();
       this.requestCode = requestCode;
     }
 
     @Override
     protected View onNewItemView() {
-        return new SearchItemView(activity);
+        return new SearchItemView(activityWeakRef.get());
     }
 
-    /*@Override
-            protected ViewHolder onNewViewHolder(View view) {
-                return new ViewHolder(view);
-            }
-
-
-        */
     @Override
     public void updateItems(List<CurrencyIHM> newItems) {
         if (newItems != null && newItems.size() > 0) {
@@ -67,20 +61,6 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchIt
         }
     }
 
-    /*@Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        final CurrencyIHM currencyIHM = (CurrencyIHM) getItem(position);
-
-        holder.codeTV.setText(currencyIHM.getEntity().getCode());
-        holder.libelleTV.setText(currencyIHM.getEntity().getLibelle());
-
-        holder.checkBox.setVisibility(requestCode.intValue() == MainActivity.SEARCH_CURRENCY_REQUEST_CODE ?
-                View.VISIBLE : View.GONE);
-        holder.radioButton.setVisibility(requestCode.intValue() == MainActivity.SEARCH_CURRENCY_REQUEST_CODE ?
-                View.GONE : View.VISIBLE);
-        holder.checkBox.setCheckboxChecked(currencyIHM.getCheckboxChecked());
-        holder.radioButton.setCheckboxChecked(currencyIHM.getCheckboxChecked());
-    }*/
 
     @Override
     public Filter getFilter() {
@@ -90,31 +70,12 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchIt
         return mFilter;
     }
 
-    /*public static class ViewHolder extends ListViewAdapter.ViewHolder {
-
-        @BindView(R.id.code_devise_textview)
-        TextView codeTV;
-        @BindView(R.id.libelle_devise_textview)
-        TextView libelleTV;
-        @Getter @Setter
-        @BindView(R.id.cb_choose_currency)
-        CheckBox checkBox;
-        @Getter @Setter
-        @BindView(R.id.rb_choose_currency)
-        RadioButton radioButton;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }*/
-
     public static class SearchCurrencyFilter extends Filter {
 
-        private SearchCurrencyAdapter adapter;
+        private WeakReference<SearchCurrencyAdapter> adapterWeakRef;
 
         public SearchCurrencyFilter(SearchCurrencyAdapter adapter) {
-            this.adapter = adapter;
+            this.adapterWeakRef = new WeakReference<>(adapter);
         }
 
         /* filter on both code and libelle */
@@ -133,11 +94,11 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchIt
             if (constraint != null && constraint.length() > 0) {
                 final String query = constraint.toString().toLowerCase().trim();
 
-                filteredList = adapter.getOriginalList().stream()
+                filteredList = adapterWeakRef.get().getOriginalList().stream()
                         .filter(currencyIHM -> accept(currencyIHM, query))
                         .collect(Collectors.toList());
             } else {
-                filteredList = Helper.copy(adapter.getOriginalList());
+                filteredList = Helper.copy(adapterWeakRef.get().getOriginalList());
             }
 
             final FilterResults results = new FilterResults();
@@ -148,8 +109,8 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchIt
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             // Method called in the UI thread
-            adapter.clear();
-            adapter.updateItems((List<CurrencyIHM>) results.values);
+            adapterWeakRef.get().clear();
+            adapterWeakRef.get().updateItems((List<CurrencyIHM>) results.values);
         }
     }
 }

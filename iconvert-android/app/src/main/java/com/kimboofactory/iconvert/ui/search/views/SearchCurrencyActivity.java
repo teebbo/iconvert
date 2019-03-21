@@ -14,6 +14,8 @@ import com.kimboofactory.iconvert.ui.search.presentation.SearchPresenter;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.lang.ref.WeakReference;
+
 import javax.inject.Inject;
 
 import androidx.annotation.Nullable;
@@ -29,6 +31,8 @@ public class SearchCurrencyActivity extends BaseActivity {
     @Getter
     private SearchActivityComponent daggerComponent;
 
+    private static WeakReference<SearchCurrencyActivity> activityWeakRef;
+
     @Override
     public String logTag() {
         return "SearchCurrencyActivity";
@@ -41,12 +45,15 @@ public class SearchCurrencyActivity extends BaseActivity {
 
     @Override
     public void daggerConfiguration() {
+
+        activityWeakRef = new WeakReference<>(this);
+
         // Dagger config
         daggerComponent = DaggerSearchActivityComponent.builder()
-                .plus(IConvertApplication.getApplication(this).appComponent())
-                .searchActivityModule(new SearchActivityModule(this))
+                .plus(IConvertApplication.getApplication(activityWeakRef.get()).appComponent())
+                .searchActivityModule(new SearchActivityModule(activityWeakRef.get()))
                 .build();
-        daggerComponent.inject(this);
+        daggerComponent.inject(activityWeakRef.get());
     }
 
     @Override
@@ -73,11 +80,18 @@ public class SearchCurrencyActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        if (PeachConfig.isDebug()) {
+            IConvertApplication.getRefWatcher().watch(daggerComponent);
+            IConvertApplication.getRefWatcher().watch(mMvpView);
+            IConvertApplication.getRefWatcher().watch(presenter);
+            IConvertApplication.getRefWatcher().watch(activityWeakRef);
+        }
+
         mMvpView.clear();
         presenter.clear();
         daggerComponent = null;
-        if(PeachConfig.isDebug()) {
-            IConvertApplication.getRefWatcher(this).watch(this);
-        }
+        activityWeakRef.clear();
+        activityWeakRef = null;
     }
 }

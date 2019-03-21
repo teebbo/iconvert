@@ -5,6 +5,7 @@ import android.view.View;
 import com.aleengo.peach.toolbox.adapter.ListViewAdapter;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,11 +17,12 @@ import javax.inject.Inject;
 public class FavoritesAdapter
         extends ListViewAdapter<CurrencyIHM, FavoriteItemView> {
 
-    private MainActivity activity;
+    private WeakReference<MainActivity> activityWeakRef;
+
     @Inject
     public FavoritesAdapter(MainActivity activity, List<CurrencyIHM> favorites) {
         super(activity, favorites);
-        this.activity = activity;
+        this.activityWeakRef = new WeakReference<>(activity);
     }
 
     @Override
@@ -33,7 +35,7 @@ public class FavoritesAdapter
 
     @Override
     protected View onNewItemView() {
-        return new FavoriteItemView(activity);
+        return new FavoriteItemView(activityWeakRef.get());
     }
 
 }

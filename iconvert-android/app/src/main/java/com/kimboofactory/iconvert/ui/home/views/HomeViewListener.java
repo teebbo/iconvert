@@ -27,12 +27,12 @@ public final class HomeViewListener implements TextWatcher {
 
     @Getter @Setter
     private List<FavoriteEntity> favoritesToDelete;
-    private WeakReference<MvpHomeView> viewRef;
+    private WeakReference<MvpHomeView> viewWeakRef;
     private Handler mHandler;
 
     @Inject
     public HomeViewListener(MvpHomeView view) {
-        this.viewRef = new WeakReference<>(view);
+        this.viewWeakRef = new WeakReference<>(view);
         mHandler = new Handler();
     }
 
@@ -43,16 +43,16 @@ public final class HomeViewListener implements TextWatcher {
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (s != null && s.length() > 0) {
-            viewRef.get().getCurrencySource().setAmount(s.toString());
+            viewWeakRef.get().getCurrencySource().setAmount(s.toString());
         } else {
-            viewRef.get().getCurrencySource().setAmount(Constant.DEFAULT_AMOUNT);
+            viewWeakRef.get().getCurrencySource().setAmount(Constant.DEFAULT_AMOUNT);
         }
         final NamedRunnable task = new NamedRunnable("%s", "OnTextChanged") {
             @Override
             protected void execute() {
-                final List<CurrencyIHM> oldItems = Helper.copy(viewRef.get().getAdapter().getItems());
-                viewRef.get().getAdapter().clear();
-                viewRef.get().updateFavoritesList(oldItems);
+                final List<CurrencyIHM> oldItems = Helper.copy(viewWeakRef.get().getAdapter().getItems());
+                viewWeakRef.get().getAdapter().clear();
+                viewWeakRef.get().updateFavoritesList(oldItems);
             }
         };
         mHandler.postDelayed(task, Constant.DELAY_MILLIS_500);

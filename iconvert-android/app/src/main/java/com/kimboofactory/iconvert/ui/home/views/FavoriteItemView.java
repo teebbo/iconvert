@@ -7,8 +7,11 @@ import android.widget.TextView;
 import com.aleengo.peach.toolbox.adapter.ItemView;
 import com.aleengo.peach.toolbox.commons.common.Pair;
 import com.kimboofactory.iconvert.R;
+import com.kimboofactory.iconvert.application.IConvertApplication;
 import com.kimboofactory.iconvert.common.Constant;
 import com.kimboofactory.iconvert.dto.CurrencyIHM;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,14 +38,21 @@ public class FavoriteItemView extends FrameLayout implements ItemView<CurrencyIH
     ImageView deleteFavorite;
 
     private Unbinder binder;
-    private MainActivity activity;
+
+    private WeakReference<MainActivity> activityWeakRef;
 
     public FavoriteItemView(MainActivity activity) {
         super(activity);
 
-        this.activity = activity;
+        this.activityWeakRef = new WeakReference<>(activity);
         inflate(getContext(), R.layout.favorite_item, this);
         binder = ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        IConvertApplication.getRefWatcher().watch(this, "FavoriteItemView");
     }
 
     @Override
@@ -56,6 +66,6 @@ public class FavoriteItemView extends FrameLayout implements ItemView<CurrencyIH
         libelleTV.setText(item.getEntity().getLibelle());
         rateTV.setText(rate);
         resultTV.setText(item.getAmount());
-        deleteFavorite.setOnClickListener(v -> activity.getPresenter().removeFavorite(position));
+        deleteFavorite.setOnClickListener(v -> activityWeakRef.get().getPresenter().removeFavorite(position));
     }
 }
