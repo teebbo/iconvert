@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion build_versions.target_sdk
     defaultConfig {
-        applicationId "com.kimboofactory.iconvert"
+        applicationId "com.aleengo.iconvert"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 1

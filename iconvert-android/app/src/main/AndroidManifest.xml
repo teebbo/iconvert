@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.kimboofactory.iconvert">
+    package="com.aleengo.iconvert">
 
     <!-- Permission to access Internet -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,15 +10,15 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:name=".application.IConvertApplication"
+        android:name="com.aleengo.iconvert.application.ConvertApp"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <service android:name=".debug.LeakLoggerService" />
+        <service android:name="com.aleengo.iconvert.debug.LeakLoggerService" />
 
         <activity
-            android:name=".ui.home.views.MainActivity"
+            android:name="com.aleengo.iconvert.ui.home.ActivityHome"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
@@ -28,7 +28,7 @@
         </activity>
 
         <activity
-            android:name=".ui.search.views.SearchCurrencyActivity"
+            android:name="com.aleengo.iconvert.ui.search.SearchCurrencyActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
