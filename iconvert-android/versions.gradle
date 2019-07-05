@@ -42,6 +42,8 @@ versions.toolbox= "04e436cb0b"
 versions.stetho = "1.5.0"
 versions.leakcanary="1.6.3"
 versions.dagger2 = "2.21"
+versions.retrofit2 = "2.6.0"
+versions.peank = '-SNAPSHOT'
 
 // android build versions
 def build_versions = [:]
@@ -63,11 +65,18 @@ deps.timber = "com.jakewharton.timber:timber:$versions.timber"
 deps.junit = "junit:junit:$versions.junit"
 deps.lombok = "org.projectlombok:lombok:$versions.lombok"
 
-
 def toolbox = [:]
 toolbox.android = "com.github.aleengo.peach-toolbox:toolbox:$versions.toolbox"
 toolbox.commons = "com.github.aleengo.peach-toolbox:commons:$versions.toolbox"
 deps.toolbox = toolbox
+
+def peank = [:]
+peank.uiadapters = "com.github.aleengo.peank:ui-adapters:$versions.peank"
+peank.uiresources = "com.github.aleengo.peank:ui-resources:$versions.peank"
+peank.uiutils = "com.github.aleengo.peank:ui-utils:$versions.peank"
+peank.core = "com.github.aleengo.peank:core:$versions.peank"
+deps.peank = peank
+
 
 // android support
 def support = [:]
@@ -83,6 +92,12 @@ def butterknife = [:]
 butterknife.compiler = "com.jakewharton:butterknife-compiler:$versions.butterknife"
 butterknife.runtime = "com.jakewharton:butterknife:$versions.butterknife"
 deps.butterknife = butterknife
+
+def retrofit2 = [:]
+retrofit2.runtime = "com.squareup.retrofit2:retrofit:$versions.retrofit2"
+retrofit2.converter = "com.squareup.retrofit2:converter-gson:$versions.retrofit2"
+retrofit2.adapter = "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit2"
+deps.retrofit2 = retrofit2
 
 // okhttp
 def okhttp = [:]
@@ -114,7 +129,6 @@ stetho.runtime = "com.facebook.stetho:stetho:$versions.stetho"
 stetho.network_helper = "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
 deps.stetho = stetho
 
-
 def leakcanary = [:]
 leakcanary.runtime = "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
 leakcanary.android_noop = "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
@@ -128,4 +142,10 @@ dagger2.android_support = "com.google.dagger:dagger-android-support:$versions.da
 //dagger2.android_processor = "com.google.com:dagger-android-processor:$versions.dagger2"
 deps.dagger2 = dagger2
 // adding the deps object to ext (extensions) object
+
+def rx = [:]
+rx.android = "io.reactivex.rxjava2:rxandroid:2.1.1"
+rx.java2 = "io.reactivex.rxjava2:rxjava:2.2.10"
+deps.rx = rx
+
 ext.deps = deps

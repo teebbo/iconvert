@@ -6,9 +6,9 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.aleengo.iconvert.domain.model.CurrencyEntity;
-import com.aleengo.iconvert.persistence.model.CurrencyData;
-import com.aleengo.iconvert.persistence.model.FavoriteData;
-import com.aleengo.iconvert.persistence.model.RateData;
+import com.aleengo.iconvert.persistence.model.db.CurrencyData;
+import com.aleengo.iconvert.persistence.model.db.FavoriteData;
+import com.aleengo.iconvert.persistence.model.db.RateData;
 
 import java.util.List;
 

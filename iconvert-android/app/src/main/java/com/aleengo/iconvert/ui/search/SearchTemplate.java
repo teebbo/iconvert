@@ -17,7 +17,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.aleengo.iconvert.R;
 import com.aleengo.iconvert.application.Constant;
-import com.aleengo.iconvert.di.search.ViewModule;
 import com.aleengo.iconvert.dto.CurrencyIHM;
 import com.aleengo.iconvert.events.CurrenciesEvent;
 import com.aleengo.iconvert.ui.base.MvpView;

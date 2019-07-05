@@ -90,6 +90,7 @@ public class ActivityHome extends BaseActivity {
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(mMvpView);
+        presenter.loadRatesAndCurrencies(false);
     }
 
     @Override

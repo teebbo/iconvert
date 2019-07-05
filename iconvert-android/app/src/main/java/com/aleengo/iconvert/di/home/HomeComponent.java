@@ -1,8 +1,8 @@
 package com.aleengo.iconvert.di.home;
 
-import com.aleengo.iconvert.di.common.PerActivity;
 import com.aleengo.iconvert.ui.home.ActivityHome;
 import com.aleengo.iconvert.ui.home.HomeTemplate;
+import com.aleengo.peank.core.annotations.dagger.Activity;
 
 import dagger.Subcomponent;
 
@@ -11,7 +11,7 @@ import dagger.Subcomponent;
  * Copyright (c) 2019. All rights reserved.
  */
 
-@PerActivity
+@Activity
 @Subcomponent(modules = {HomeModule.class})
 public interface HomeComponent {
 

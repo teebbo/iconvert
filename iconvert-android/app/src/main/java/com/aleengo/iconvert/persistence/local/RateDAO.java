@@ -1,6 +1,6 @@
 package com.aleengo.iconvert.persistence.local;
 
-import com.aleengo.iconvert.persistence.model.RateData;
+import com.aleengo.iconvert.persistence.model.db.RateData;
 
 import java.util.List;
 

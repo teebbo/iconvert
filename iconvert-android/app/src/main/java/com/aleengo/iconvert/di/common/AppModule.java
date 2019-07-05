@@ -2,6 +2,8 @@ package com.aleengo.iconvert.di.common;
 
 import android.content.Context;
 
+import com.aleengo.peank.core.annotations.dagger.Application;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -18,7 +20,7 @@ public class AppModule {
     }
 
     @Provides
-    @ApplicationScope
+    @Application
     public Context context() {
         return context;
     }

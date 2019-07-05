@@ -5,8 +5,8 @@ import com.aleengo.peach.toolbox.commons.strategy.RawJSONDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.aleengo.iconvert.persistence.model.CurrencyData;
-import com.aleengo.iconvert.persistence.model.RateData;
+import com.aleengo.iconvert.persistence.model.db.CurrencyData;
+import com.aleengo.iconvert.persistence.model.db.RateData;
 
 import java.util.List;
 import java.util.stream.Collectors;

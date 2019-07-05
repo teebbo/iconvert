@@ -25,6 +25,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
+    implementation deps.peank.core
+
     // android support
     implementation deps.support.app_compat
     implementation deps.constraint_layout
@@ -46,7 +48,15 @@ dependencies {
     // lombok
     compileOnly deps.lombok
     annotationProcessor deps.lombok
+
+    implementation deps.rx.android
+    implementation deps.rx.java2
+
     // okhttp
+    implementation deps.retrofit2.runtime
+    implementation deps.retrofit2.converter
+    implementation deps.retrofit2.adapter
+
     implementation deps.okhttp.runtime
     // room
     implementation deps.room.runtime

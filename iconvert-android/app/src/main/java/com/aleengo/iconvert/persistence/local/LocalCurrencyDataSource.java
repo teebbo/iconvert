@@ -8,9 +8,9 @@ import com.aleengo.iconvert.application.Constant;
 import com.aleengo.iconvert.domain.model.CurrencyEntity;
 import com.aleengo.iconvert.domain.model.FavoriteEntity;
 import com.aleengo.iconvert.persistence.CurrencyDataSource;
-import com.aleengo.iconvert.persistence.model.CurrencyData;
-import com.aleengo.iconvert.persistence.model.FavoriteData;
-import com.aleengo.iconvert.persistence.model.RateData;
+import com.aleengo.iconvert.persistence.model.db.CurrencyData;
+import com.aleengo.iconvert.persistence.model.db.FavoriteData;
+import com.aleengo.iconvert.persistence.model.db.RateData;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -93,7 +93,7 @@ public class LocalCurrencyDataSource implements CurrencyDataSource {
                     dao.saveAllCurrencies(currencies);
                 }
             };
-            appExecutors.diskIO().execute(command);
+            appExecutors.diskIO().execute(() -> dao.saveAllCurrencies(currencies));
         }
     }
 

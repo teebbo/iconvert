@@ -1,19 +1,22 @@
 package com.aleengo.iconvert.persistence.repository;
 
-import com.aleengo.peach.toolbox.commons.model.Response;
 import com.aleengo.iconvert.domain.Repository;
 import com.aleengo.iconvert.domain.model.FavoriteEntity;
 import com.aleengo.iconvert.persistence.api.OpenXchangeRateAPI;
 import com.aleengo.iconvert.persistence.local.LocalCurrencyDataSource;
-import com.aleengo.iconvert.persistence.model.CurrencyData;
+import com.aleengo.iconvert.persistence.model.db.CurrencyData;
 import com.aleengo.iconvert.persistence.remote.RemoteDataSource;
 import com.aleengo.iconvert.util.Mapper;
+import com.aleengo.peach.toolbox.commons.model.Response;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by CK_ALEENGO on 13/02/2019.
@@ -25,6 +28,8 @@ public class CurrencyRepository implements Repository {
 
     private LocalCurrencyDataSource localDataSource;
     private RemoteDataSource remoteDataSource;
+
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
     @Inject
     public CurrencyRepository(LocalCurrencyDataSource localDataSource, RemoteDataSource remoteDataSource) {
@@ -115,24 +120,16 @@ public class CurrencyRepository implements Repository {
 
 
     @Override
-    public void addRatesAndCurrencies() {
+    public void loadRatesAndCurrencies() {
 
-        final Mapper mapper = new Mapper();
+        disposables.add(remoteDataSource.getCurrencies()
+                .doOnSuccess(rateData -> System.out.println("success"))
+                .subscribeOn(Schedulers.io())
+                .subscribe(localDataSource::saveAllCurrencies));
 
-        remoteDataSource.getRatesAndCurrencies(response -> {
-
-            if (response.getError() != null) {
-                throw new RuntimeException(response.getError());
-            }
-
-            final Map<String, String> map = (Map<String, String>) response.getValue();
-            map.keySet().forEach(key -> {
-                if (OpenXchangeRateAPI.REQUEST_CURRENCY.equals(key)) {
-                    localDataSource.saveAllCurrencies(mapper.map2Currencies(map.get(key)));
-                } else if (OpenXchangeRateAPI.REQUEST_RATE.equals(key)) {
-                    localDataSource.saveAllRates(mapper.map2Rates(map.get(key)));
-                }
-            });
-        });
+       disposables.add(remoteDataSource.getRates()
+               .doOnSuccess(rateData -> System.out.println("success"))
+               .subscribeOn(Schedulers.io())
+               .subscribe(localDataSource::saveAllRates));
     }
 }

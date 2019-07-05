@@ -1,10 +1,10 @@
 package com.aleengo.iconvert.di.search;
 
 import com.aleengo.iconvert.application.Constant;
-import com.aleengo.iconvert.di.common.PerActivity;
 import com.aleengo.iconvert.ui.search.SearchCurrencyActivity;
 import com.aleengo.iconvert.ui.search.SearchCurrencyAdapter;
 import com.aleengo.iconvert.ui.search.SearchTemplate;
+import com.aleengo.peank.core.annotations.dagger.Activity;
 
 import java.util.LinkedList;
 
@@ -24,27 +24,27 @@ public class SearchModule {
         this.activity = activity;
     }
 
+    @Activity
     @Provides
-    @PerActivity
     public SearchCurrencyActivity activity() {
         return activity;
     }
 
+    @Activity
     @Provides
-    @PerActivity
     public static SearchTemplate view(SearchCurrencyActivity activity) {
         return new SearchTemplate(activity);
     }
 
+    @Activity
     @Provides
-    @PerActivity
     public static Integer requestCode(SearchCurrencyActivity activity) {
         return activity.getIntent()
                 .getIntExtra(Constant.RC_SEARCH, Constant.NO_EXTRA);
     }
 
+    @Activity
     @Provides
-    @PerActivity
     public static SearchCurrencyAdapter adapter(SearchCurrencyActivity activity, Integer requestCode) {
         return new SearchCurrencyAdapter(activity, new LinkedList<>(), requestCode);
     }

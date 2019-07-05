@@ -99,7 +99,7 @@ public class HomePresenter extends Presenter<HomeTemplate>
     @Override
     public void loadRatesAndCurrencies(boolean forceUpdate) {
         if (forceUpdate || mFirstLoad) {
-            repository.addRatesAndCurrencies();
+            repository.loadRatesAndCurrencies();
             mFirstLoad = false;
         }
     }

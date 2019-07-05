@@ -1,4 +1,4 @@
-package com.aleengo.iconvert.model;
+package com.aleengo.iconvert.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,12 +10,12 @@ import lombok.Setter;
 @Getter
 public final class Resource<T>{
 
-    private T data;
-    private Throwable e;
+    public T data;
+    public Throwable e;
 
     private Resource(Throwable e, T data) {
-        this.data = data;
         this.e = e;
+        this.data = data;
     }
 
     public static <T> Resource<T> success(T data) {
@@ -26,11 +26,11 @@ public final class Resource<T>{
         return new Resource<>(e, null);
     }
 
-    public boolean failed() {
+    public boolean hasError() {
         return e != null;
     }
 
-    public boolean succeed() {
+    public boolean isSuccess() {
         return data != null;
     }
 }

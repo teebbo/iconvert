@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.aleengo.iconvert.persistence.model.CurrencyData;
+import com.aleengo.iconvert.persistence.model.db.CurrencyData;
 
 import java.util.List;
 

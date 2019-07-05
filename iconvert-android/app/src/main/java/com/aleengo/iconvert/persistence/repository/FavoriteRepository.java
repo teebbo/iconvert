@@ -2,7 +2,7 @@ package com.aleengo.iconvert.persistence.repository;
 
 import com.aleengo.iconvert.domain.Repository;
 import com.aleengo.iconvert.domain.model.FavoriteEntity;
-import com.aleengo.iconvert.persistence.model.CurrencyData;
+import com.aleengo.iconvert.persistence.model.db.CurrencyData;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class FavoriteRepository implements Repository {
     }
 
     @Override
-    public void addRatesAndCurrencies() {
+    public void loadRatesAndCurrencies() {
 
     }
 

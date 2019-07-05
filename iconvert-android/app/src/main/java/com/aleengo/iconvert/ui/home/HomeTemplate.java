@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.aleengo.iconvert.R;
 import com.aleengo.iconvert.application.Constant;
-import com.aleengo.iconvert.di.home.ViewModule;
 import com.aleengo.iconvert.domain.model.CurrencyEntity;
 import com.aleengo.iconvert.dto.CurrencyIHM;
 import com.aleengo.iconvert.events.GetFavoriteEvent;

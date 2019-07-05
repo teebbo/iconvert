@@ -1,8 +1,8 @@
 package com.aleengo.iconvert.di.home;
 
-import com.aleengo.iconvert.di.common.PerActivity;
 import com.aleengo.iconvert.ui.home.ActivityHome;
 import com.aleengo.iconvert.ui.home.HomeTemplate;
+import com.aleengo.peank.core.annotations.dagger.Activity;
 
 import dagger.Module;
 import dagger.Provides;
@@ -21,13 +21,13 @@ public class HomeModule {
     }
 
     @Provides
-    @PerActivity
+    @Activity
     public ActivityHome activity() {
         return activity;
     }
 
     @Provides
-    @PerActivity
+    @Activity
     public static HomeTemplate view(ActivityHome activity) {
         return new HomeTemplate(activity);
     }

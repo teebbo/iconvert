@@ -21,7 +21,7 @@ public class GetRatesAndCurrencies extends UseCase<GetRatesAndCurrencies.QueryVa
     protected void executeUseCase() {
         final QueryVal queryValue = getQueryValue();
         if(queryValue.isForceUpdate()) {
-            getRepository().addRatesAndCurrencies();
+            getRepository().loadRatesAndCurrencies();
         }
     }
 

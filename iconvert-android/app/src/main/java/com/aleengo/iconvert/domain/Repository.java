@@ -1,8 +1,8 @@
 package com.aleengo.iconvert.domain;
 
-import com.aleengo.peach.toolbox.commons.model.Response;
 import com.aleengo.iconvert.domain.model.FavoriteEntity;
-import com.aleengo.iconvert.persistence.model.CurrencyData;
+import com.aleengo.iconvert.persistence.model.db.CurrencyData;
+import com.aleengo.peach.toolbox.commons.model.Response;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public interface Repository {
     void addAll(List<CurrencyData> currencies);
     void getCurrencies(GetCallback callback);
     void getRates(GetCallback callback);
-    void addRatesAndCurrencies();
+   void loadRatesAndCurrencies();
 
     // favorite
     void getFavorites(GetCallback callback);

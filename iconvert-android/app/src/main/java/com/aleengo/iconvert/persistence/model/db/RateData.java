@@ -1,11 +1,11 @@
-package com.aleengo.iconvert.persistence.model;
-
-import com.aleengo.iconvert.model.Model;
+package com.aleengo.iconvert.persistence.model.db;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+
+import com.aleengo.iconvert.model.Model;
 
 /**
  * Created by CK_ALEENGO on 29/10/2015..

@@ -1,4 +1,4 @@
-package com.aleengo.iconvert.persistence.model;
+package com.aleengo.iconvert.persistence.model.db;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
