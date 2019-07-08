@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
 import lombok.Getter;
@@ -74,7 +75,7 @@ public class RemoteDataSource implements CurrencyDataSource {
         appExecutors.networkIO().execute(command);
     }
 
-    public Single<List<CurrencyData>> getCurrencies() {
+    public Observable<List<CurrencyData>> getCurrencies() {
         return api.currencies()
                 .map(new MapListFunction<CurrencyData>() {
                     @Override

@@ -28,17 +28,17 @@
         </activity>
 
         <activity
-            android:name="com.aleengo.iconvert.ui.search.SearchCurrencyActivity"
+            android:name="com.aleengo.iconvert.ui.search.ActivitySearchCurrency"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-            <!-- Defines SearchCurrencyActivity as the searchable -->
+            <!-- Defines ActivitySearchCurrency as the searchable -->
             <meta-data
                 android:name="android.app.searchable"
                 android:value="@xml/searchable" />
             <!--
-                Defines SearchCurrencyActivity as the
+                Defines ActivitySearchCurrency as the
                 target for searches (it receives ACTION_SEARCH intent)
             -->
             <meta-data

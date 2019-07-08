@@ -15,6 +15,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -113,6 +114,10 @@ public class CurrencyRepository implements Repository {
         }
     }
 
+    public Observable<List<CurrencyData>> getCurrencies() {
+        return remoteDataSource.getCurrencies();
+    }
+
     @Override
     public void getRates(GetCallback callback) {
 
@@ -123,7 +128,6 @@ public class CurrencyRepository implements Repository {
     public void loadRatesAndCurrencies() {
 
         disposables.add(remoteDataSource.getCurrencies()
-                .doOnSuccess(rateData -> System.out.println("success"))
                 .subscribeOn(Schedulers.io())
                 .subscribe(localDataSource::saveAllCurrencies));
 

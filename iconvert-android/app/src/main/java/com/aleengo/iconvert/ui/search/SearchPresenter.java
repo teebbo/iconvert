@@ -26,6 +26,7 @@ import lombok.Getter;
 public class SearchPresenter extends Presenter<SearchTemplate> implements SearchContract.Presenter {
 
     private Repository repository;
+
     @Getter
     private List<CurrencyIHM> selectedItems = new LinkedList<>();
 

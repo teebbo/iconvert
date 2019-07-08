@@ -54,7 +54,7 @@ public abstract class NetworkModule {
 
     @Application
     @Provides
-    public static GsonConverterFactory converterFactory(Gson gson) {
+    public static Converter.Factory converterFactory(Gson gson) {
         return GsonConverterFactory.create(gson);
     }
 

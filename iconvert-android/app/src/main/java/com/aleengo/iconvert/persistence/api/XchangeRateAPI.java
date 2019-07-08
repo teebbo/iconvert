@@ -2,6 +2,7 @@ package com.aleengo.iconvert.persistence.api;
 
 import com.aleengo.iconvert.persistence.deserializer.CurrencyWrapperList;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import retrofit2.http.GET;
 
@@ -21,5 +22,5 @@ public interface XchangeRateAPI extends API{
     Single<CurrencyWrapperList> latestRates();
 
     @GET(value = "/currencies.json")
-    Single<CurrencyWrapperList> currencies();
+    Observable<CurrencyWrapperList> currencies();
 }

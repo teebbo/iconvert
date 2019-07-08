@@ -13,12 +13,14 @@ import com.aleengo.iconvert.persistence.repository.CurrencyRepository;
 import com.aleengo.peach.toolbox.commons.util.AppExecutors;
 import com.aleengo.peank.core.annotations.dagger.Application;
 
+import dagger.Module;
 import dagger.Provides;
 
 /**
  * Copyright (c) Aleengo, 2019. All rights reserved.
  * Created by bau.cj on 04/07/2019.
  */
+@Module
 public class DataModule {
 
     @Provides

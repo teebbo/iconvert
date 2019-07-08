@@ -9,13 +9,14 @@ import android.widget.TextView;
 
 import com.aleengo.iconvert.R;
 import com.aleengo.iconvert.application.Constant;
+import com.aleengo.iconvert.application.ConvertApp;
 import com.aleengo.iconvert.domain.model.CurrencyEntity;
 import com.aleengo.iconvert.dto.CurrencyIHM;
 import com.aleengo.iconvert.events.GetFavoriteEvent;
 import com.aleengo.iconvert.ui.base.MvpView;
 import com.aleengo.iconvert.ui.favorite.FavoriteContract;
 import com.aleengo.iconvert.ui.favorite.FavoritesAdapter;
-import com.aleengo.iconvert.ui.search.SearchCurrencyActivity;
+import com.aleengo.iconvert.ui.search.ActivitySearchCurrency;
 import com.aleengo.iconvert.util.ComputeTask;
 import com.aleengo.peach.toolbox.commons.model.Result;
 import com.aleengo.peach.toolbox.widget.PeachToolbar;
@@ -73,10 +74,6 @@ public class HomeTemplate extends MvpView implements FavoriteContract.Template {
     }
 
     public void init() {
-        activityWeakRef.get().getDaggerComponent().viewComponentBuilder()
-                .viewModule(new ViewModule())
-                .build()
-                .inject(this);
 
         favoritesLV.setAdapter(adapter);
         activityWeakRef.get().setSupportActionBar(toolbar);
@@ -88,17 +85,11 @@ public class HomeTemplate extends MvpView implements FavoriteContract.Template {
     }
 
     @Override
-    public void inflate(int resid) {
-        inflate(getContext(), resid, this);
-    }
-
-    @Override
     public void initialize() {
-        activityWeakRef.get().getDaggerComponent().viewComponentBuilder()
-                .viewModule(new ViewModule())
-                .build()
-                .inject(this);
 
+        ConvertApp.app(activityWeakRef.get())
+                .homeComponent(activityWeakRef.get())
+                .inject(this);
         favoritesLV.setAdapter(adapter);
         activityWeakRef.get().setSupportActionBar(toolbar);
 
@@ -131,7 +122,7 @@ public class HomeTemplate extends MvpView implements FavoriteContract.Template {
 
     @Override
     public void showSearchActivity(int requestCode) {
-        final Intent intent = new Intent(this.activityWeakRef.get(), SearchCurrencyActivity.class);
+        final Intent intent = new Intent(this.activityWeakRef.get(), ActivitySearchCurrency.class);
         intent.putExtra(Constant.RC_SEARCH, requestCode);
         this.activityWeakRef.get().startActivityForResult(intent, requestCode);
     }

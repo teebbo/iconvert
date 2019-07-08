@@ -34,7 +34,7 @@ public class MainView
 
     @Override
     public void showSearchActivity(int requestCode) {
-        final Intent intent = new Intent(this.activity, SearchCurrencyActivity.class);
+        final Intent intent = new Intent(this.activity, ActivitySearchCurrency.class);
         intent.putExtra(MainActivity.RC_SEARCH, requestCode);
         this.activity.startActivityForResult(intent, requestCode);
     }

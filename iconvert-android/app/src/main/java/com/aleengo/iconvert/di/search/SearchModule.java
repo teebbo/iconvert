@@ -1,7 +1,7 @@
 package com.aleengo.iconvert.di.search;
 
 import com.aleengo.iconvert.application.Constant;
-import com.aleengo.iconvert.ui.search.SearchCurrencyActivity;
+import com.aleengo.iconvert.ui.search.ActivitySearchCurrency;
 import com.aleengo.iconvert.ui.search.SearchCurrencyAdapter;
 import com.aleengo.iconvert.ui.search.SearchTemplate;
 import com.aleengo.peank.core.annotations.dagger.Activity;
@@ -18,34 +18,34 @@ import dagger.Provides;
 @Module
 public class SearchModule {
 
-    private final SearchCurrencyActivity activity;
+    private final ActivitySearchCurrency activity;
 
-    public SearchModule(SearchCurrencyActivity activity) {
+    public SearchModule(ActivitySearchCurrency activity) {
         this.activity = activity;
     }
 
     @Activity
     @Provides
-    public SearchCurrencyActivity activity() {
+    public ActivitySearchCurrency activity() {
         return activity;
     }
 
     @Activity
     @Provides
-    public static SearchTemplate view(SearchCurrencyActivity activity) {
+    public static SearchTemplate view(ActivitySearchCurrency activity) {
         return new SearchTemplate(activity);
     }
 
     @Activity
     @Provides
-    public static Integer requestCode(SearchCurrencyActivity activity) {
+    public static Integer requestCode(ActivitySearchCurrency activity) {
         return activity.getIntent()
                 .getIntExtra(Constant.RC_SEARCH, Constant.NO_EXTRA);
     }
 
     @Activity
     @Provides
-    public static SearchCurrencyAdapter adapter(SearchCurrencyActivity activity, Integer requestCode) {
+    public static SearchCurrencyAdapter adapter(ActivitySearchCurrency activity, Integer requestCode) {
         return new SearchCurrencyAdapter(activity, new LinkedList<>(), requestCode);
     }
 }

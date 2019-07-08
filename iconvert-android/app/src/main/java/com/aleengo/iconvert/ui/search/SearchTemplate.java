@@ -17,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.aleengo.iconvert.R;
 import com.aleengo.iconvert.application.Constant;
+import com.aleengo.iconvert.application.ConvertApp;
 import com.aleengo.iconvert.dto.CurrencyIHM;
 import com.aleengo.iconvert.events.CurrenciesEvent;
 import com.aleengo.iconvert.ui.base.MvpView;
@@ -68,13 +69,13 @@ public class SearchTemplate extends MvpView
     @Inject @Getter
     Integer requestCode;
 
-    private WeakReference<SearchCurrencyActivity> activityWeakRef;
+    private WeakReference<ActivitySearchCurrency> activityWeakRef;
 
     @Inject
-    public SearchTemplate(SearchCurrencyActivity activity) {
+    public SearchTemplate(ActivitySearchCurrency activity) {
         super(activity);
         this.activityWeakRef = new WeakReference<>(activity);
-        inflate(getContext(), R.layout.activity_search_list, this);
+
     }
 
     public void swipeRefresh(boolean refresh) {
@@ -91,38 +92,15 @@ public class SearchTemplate extends MvpView
     }
 
     @Override
-    public void initialize() {
-        activityWeakRef.get().getDaggerComponent().viewComponentBuilder()
-                .viewModule(new ViewModule())
-                .build()
-                .inject(this);
-
-        activityWeakRef.get().setSupportActionBar(toolbar);
-
-        searchCurrencyLV.setAdapter(adapter);
-        searchCurrencyLV.setOnItemClickListener(this::OnItemClick);
-
-        setupSearchView();
-
-        mBack.setOnClickListener( (View v) -> activityWeakRef.get().onBackPressed());
-        snackbar = Snackbar.make(coordinatorLayout, Constant.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE);
-
-        // setting SwipeRefresh
-        setupSwipeRefreshContainer();
-
-        swipeRefresh(true);
-    }
-
-    @Override
     public void inflate(int resid) {
         inflate(getContext(), resid, this);
     }
 
-    public void init() {
-        // dagger init
-        activityWeakRef.get().getDaggerComponent().viewComponentBuilder()
-                .viewModule(new ViewModule())
-                .build()
+    @Override
+    public void initialize() {
+
+        ConvertApp.app(activityWeakRef.get())
+                .searchComponent(activityWeakRef.get())
                 .inject(this);
 
         activityWeakRef.get().setSupportActionBar(toolbar);

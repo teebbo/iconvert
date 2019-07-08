@@ -10,11 +10,8 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.aleengo.iconvert.R;
-import com.aleengo.iconvert.application.ConvertApp;
 import com.aleengo.iconvert.application.Constant;
-import com.aleengo.iconvert.di.home.HomeComponent;
-import com.aleengo.iconvert.di.home.HomeModule;
-import com.aleengo.iconvert.ui.home.dagger.DaggerMainActivityComponent;
+import com.aleengo.iconvert.application.ConvertApp;
 import com.aleengo.peach.toolbox.commons.common.PeachConfig;
 import com.aleengo.peach.toolbox.ui.BaseActivity;
 
@@ -31,12 +28,9 @@ import lombok.Getter;
 public class ActivityHome extends BaseActivity {
 
     @Inject
-    HomeTemplate mMvpView;
+    HomeTemplate template;
     @Inject @Getter
     HomePresenter presenter;
-
-    @Getter
-    private HomeComponent daggerComponent;
 
     private static WeakReference<ActivityHome> activityWeakRef;
 
@@ -47,27 +41,23 @@ public class ActivityHome extends BaseActivity {
 
     @Override
     public void daggerConfiguration() {
-
-        activityWeakRef = new WeakReference<>(this);
-
-        daggerComponent = DaggerMainActivityComponent.builder()
-                .plus(ConvertApp.getApplication(activityWeakRef.get()).appComponent())
-                .mainActivityModule(new HomeModule(activityWeakRef.get()))
-                .build();
-        daggerComponent.inject(activityWeakRef.get());
+        ConvertApp.app(this)
+                .homeComponent(this)
+                .inject(this);
     }
 
     @Override
     public View getLayoutView() {
-        return mMvpView;
+        template.inflate(R.layout.activity_main);
+        return template;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mMvpView.init();
-        presenter.attach(mMvpView);
+        template.initialize();
+        presenter.attach(template);
     }
 
     @Override
@@ -89,20 +79,20 @@ public class ActivityHome extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        EventBus.getDefault().register(mMvpView);
+        EventBus.getDefault().register(template);
         presenter.loadRatesAndCurrencies(false);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mMvpView.start();
+        template.start();
         presenter.loadFavorites();
     }
 
     @Override
     protected void onStop() {
-        EventBus.getDefault().unregister(mMvpView);
+        EventBus.getDefault().unregister(template);
         super.onStop();
     }
 
@@ -111,17 +101,14 @@ public class ActivityHome extends BaseActivity {
         super.onDestroy();
 
         if (PeachConfig.isDebug()) {
-            ConvertApp.getRefWatcher().watch(daggerComponent);
-            ConvertApp.getRefWatcher().watch(mMvpView);
+            ConvertApp.getRefWatcher().watch(template);
             ConvertApp.getRefWatcher().watch(presenter);
             ConvertApp.getRefWatcher().watch(activityWeakRef);
         }
 
-        mMvpView.clear();
+        template.clear();
         presenter.clear();
-        daggerComponent = null;
-        activityWeakRef.clear();
-        activityWeakRef = null;
+        ConvertApp.app(this).releaseHomeComponent();
     }
 
     @Override

@@ -25,7 +25,7 @@ import lombok.Getter;
 public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchItemView>
         implements Filterable {
 
-    private WeakReference<SearchCurrencyActivity> activityWeakRef;
+    private WeakReference<ActivitySearchCurrency> activityWeakRef;
     private SearchCurrencyFilter mFilter;
     @Getter
     private List<CurrencyIHM> originalList;
@@ -33,7 +33,7 @@ public class SearchCurrencyAdapter extends ListViewAdapter<CurrencyIHM, SearchIt
     private boolean isOriginalListEmpty = true;
 
     @Inject
-    public SearchCurrencyAdapter(SearchCurrencyActivity activity,
+    public SearchCurrencyAdapter(ActivitySearchCurrency activity,
                                  List<CurrencyIHM> currencies,
                                  Integer requestCode) {
       super(activity, currencies);

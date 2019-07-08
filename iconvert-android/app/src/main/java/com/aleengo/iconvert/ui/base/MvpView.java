@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 import androidx.annotation.CallSuper;
+import androidx.annotation.LayoutRes;
 
 import butterknife.Unbinder;
 
@@ -28,5 +29,9 @@ public class MvpView extends FrameLayout {
     @CallSuper
     public void clear() {
         unbinder.unbind();
+    }
+
+    public void inflate(@LayoutRes int id) {
+        inflate(getContext(), id, this);
     }
 }
