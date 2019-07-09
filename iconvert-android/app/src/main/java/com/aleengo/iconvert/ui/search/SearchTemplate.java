@@ -75,7 +75,6 @@ public class SearchTemplate extends MvpView
     public SearchTemplate(ActivitySearchCurrency activity) {
         super(activity);
         this.activityWeakRef = new WeakReference<>(activity);
-
     }
 
     public void swipeRefresh(boolean refresh) {
@@ -89,11 +88,6 @@ public class SearchTemplate extends MvpView
         snackbar = null;
         activityWeakRef.clear();
         activityWeakRef = null;
-    }
-
-    @Override
-    public void inflate(int resid) {
-        inflate(getContext(), resid, this);
     }
 
     @Override
@@ -129,6 +123,14 @@ public class SearchTemplate extends MvpView
         }
         adapter.clear();
         adapter.updateItems(event.getData());
+        // stop the refresh
+        swipeRefresh(false);
+    }
+
+    @Override
+    public void updateAdapter(List<CurrencyIHM> entities) {
+        adapter.clear();
+        adapter.updateItems(entities);
         // stop the refresh
         swipeRefresh(false);
     }

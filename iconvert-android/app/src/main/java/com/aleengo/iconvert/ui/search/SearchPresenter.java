@@ -1,15 +1,11 @@
 package com.aleengo.iconvert.ui.search;
 
-import com.aleengo.peach.toolbox.commons.model.Response;
-import com.aleengo.peach.toolbox.commons.model.Result;
-import com.aleengo.iconvert.ui.base.Presenter;
+import com.aleengo.iconvert.R;
 import com.aleengo.iconvert.domain.Repository;
 import com.aleengo.iconvert.domain.model.CurrencyEntity;
 import com.aleengo.iconvert.dto.CurrencyIHM;
-import com.aleengo.iconvert.events.CurrenciesEvent;
 import com.aleengo.iconvert.persistence.repository.CurrencyRepository;
-
-import org.greenrobot.eventbus.EventBus;
+import com.aleengo.iconvert.ui.base.Presenter;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -17,6 +13,11 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import lombok.Getter;
 
 /**
@@ -26,6 +27,7 @@ import lombok.Getter;
 public class SearchPresenter extends Presenter<SearchTemplate> implements SearchContract.Presenter {
 
     private Repository repository;
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
     @Getter
     private List<CurrencyIHM> selectedItems = new LinkedList<>();
@@ -58,7 +60,13 @@ public class SearchPresenter extends Presenter<SearchTemplate> implements Search
 
     @Override
     public void loadCurrencies() {
-       repository.getCurrencies((Response response) -> {
+        final Disposable d = repository.getCurrencies()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new OnSuccess(), new OnError());
+        disposables.add(d);
+
+    /*   repository.getCurrencies((Response response) -> {
 
            final Result<List<CurrencyEntity>> result = new Result<>(null, null);
 
@@ -78,7 +86,7 @@ public class SearchPresenter extends Presenter<SearchTemplate> implements Search
                    .collect(Collectors.toList());
            EventBus.getDefault().post(new CurrenciesEvent(list, null));
 
-       });
+       });*/
     }
 
     // free resources
@@ -86,5 +94,30 @@ public class SearchPresenter extends Presenter<SearchTemplate> implements Search
     public void clear() {
         super.clear();
         selectedItems = null;
+        if (!disposables.isDisposed()) {
+            disposables.dispose();
+        }
+    }
+
+    private class OnSuccess implements Consumer<List<CurrencyEntity>> {
+        @Override
+        public void accept(List<CurrencyEntity> currencyEntities) {
+            final List<CurrencyIHM> _data = currencyEntities.stream()
+                    .map(entity -> {
+                        final CurrencyIHM item = new CurrencyIHM(entity);
+                        item.setCode(getTemplate().getRequestCode());
+                        return item;
+                    })
+                    .collect(Collectors.toList());
+            getTemplate().updateAdapter(_data);
+        }
+    }
+
+    private class OnError implements Consumer<Throwable> {
+        @Override
+        public void accept(Throwable throwable) throws Exception {
+            System.err.println("Error happened: " + throwable.getMessage());
+            getTemplate().showMessage(R.string.error_message_load_currencies);
+        }
     }
 }

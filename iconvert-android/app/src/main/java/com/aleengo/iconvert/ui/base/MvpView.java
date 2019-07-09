@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 import androidx.annotation.CallSuper;
 import androidx.annotation.LayoutRes;
 
+import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
@@ -33,5 +34,6 @@ public class MvpView extends FrameLayout {
 
     public void inflate(@LayoutRes int id) {
         inflate(getContext(), id, this);
+        unbinder = ButterKnife.bind(this);
     }
 }

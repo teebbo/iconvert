@@ -1,8 +1,8 @@
 package com.aleengo.iconvert.ui.search;
 
+import com.aleengo.iconvert.dto.CurrencyIHM;
 import com.aleengo.iconvert.ui.base.BasePresenter;
 import com.aleengo.iconvert.ui.base.BaseTemplate;
-import com.aleengo.iconvert.dto.CurrencyIHM;
 
 import java.util.List;
 
@@ -26,5 +26,7 @@ public interface SearchContract {
 
         default void showMessage(String message){}
         default void showMessage(int resId){}
+
+        void updateAdapter(List<CurrencyIHM> entities);
     }
 }

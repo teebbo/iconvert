@@ -21,7 +21,13 @@ public class CurrencyWrapperAdapter implements JsonDeserializer<CurrencyWrapperL
             throws JsonParseException {
 
         final List<CurrencyWrapper> data = new LinkedList<>();
-        final JsonObject jo = json.getAsJsonObject();
+
+        JsonObject jo = json.getAsJsonObject();
+
+        if (jo.has("rates")) {
+            jo = jo.getAsJsonObject("rates");
+        }
+
         jo.entrySet().forEach(e -> {
             final String k = e.getKey();
             final String v = e.getValue().getAsString();

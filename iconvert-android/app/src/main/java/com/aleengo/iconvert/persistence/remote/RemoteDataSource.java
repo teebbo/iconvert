@@ -15,7 +15,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import io.reactivex.functions.Function;
 import lombok.Getter;
 import lombok.Setter;
@@ -85,7 +84,7 @@ public class RemoteDataSource implements CurrencyDataSource {
                 });
     }
 
-    public Single<List<RateData>> getRates() {
+    public Observable<List<RateData>> getRates() {
         return api.latestRates()
                 .map(new MapListFunction<RateData>() {
                     @Override
@@ -105,12 +104,16 @@ public class RemoteDataSource implements CurrencyDataSource {
 
         @Override
         public List<D> apply(CurrencyWrapperList currencyWrapperList) throws Exception {
-            currencyWrapperList.get().forEach(currencyWrapper -> {
-                final String code = currencyWrapper.getKey();
-                final String value = currencyWrapper.getValue();
-                data.add(instantiate(code, value));
-            });
-            return data;
+            try {
+                currencyWrapperList.get().forEach(currencyWrapper -> {
+                    final String code = currencyWrapper.getKey();
+                    final String value = currencyWrapper.getValue();
+                    data.add(instantiate(code, value));
+                });
+                return data;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
 
         protected abstract D instantiate(String code, String value);

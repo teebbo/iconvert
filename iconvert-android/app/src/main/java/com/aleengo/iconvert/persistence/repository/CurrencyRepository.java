@@ -1,22 +1,23 @@
 package com.aleengo.iconvert.persistence.repository;
 
 import com.aleengo.iconvert.domain.Repository;
+import com.aleengo.iconvert.domain.model.CurrencyEntity;
 import com.aleengo.iconvert.domain.model.FavoriteEntity;
-import com.aleengo.iconvert.persistence.api.OpenXchangeRateAPI;
 import com.aleengo.iconvert.persistence.local.LocalCurrencyDataSource;
 import com.aleengo.iconvert.persistence.model.db.CurrencyData;
 import com.aleengo.iconvert.persistence.remote.RemoteDataSource;
-import com.aleengo.iconvert.util.Mapper;
 import com.aleengo.peach.toolbox.commons.model.Response;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -43,7 +44,8 @@ public class CurrencyRepository implements Repository {
     public void getFavorites(GetCallback callback) {
 
         if (localDataSource.isEmpty()) {
-            final Mapper mapper = new Mapper();
+            loadRatesAndCurrencies();
+            /*final Mapper mapper = new Mapper();
             remoteDataSource.getRatesAndCurrencies(response -> {
                 if (response.getError() != null) {
                     throw new RuntimeException(response.getError());
@@ -57,7 +59,7 @@ public class CurrencyRepository implements Repository {
                         localDataSource.saveAllRates(mapper.map2Rates(map.get(key)));
                     }
                 });
-            });
+            });*/
         }
         final List<FavoriteEntity> favoriteEntities = localDataSource.getFavorites();
         callback.onReceived(new Response(favoriteEntities, null));
@@ -114,8 +116,19 @@ public class CurrencyRepository implements Repository {
         }
     }
 
-    public Observable<List<CurrencyData>> getCurrencies() {
-        return remoteDataSource.getCurrencies();
+    public Observable<List<CurrencyEntity>> getCurrencies() {
+        return remoteDataSource.getCurrencies()
+                .flatMap(new Function<List<CurrencyData>, ObservableSource<List<CurrencyEntity>>>() {
+
+                    @Override
+                    public ObservableSource<List<CurrencyEntity>> apply(List<CurrencyData> currencyDataList) throws Exception {
+                        final List<CurrencyEntity> lstFinal = currencyDataList.stream()
+                                .map(cd -> new CurrencyEntity(cd.getCode(), cd.getLibelle(), "0"))
+                                .collect(Collectors.toList());
+
+                        return Observable.just(lstFinal);
+                    }
+                });
     }
 
     @Override
@@ -132,7 +145,6 @@ public class CurrencyRepository implements Repository {
                 .subscribe(localDataSource::saveAllCurrencies));
 
        disposables.add(remoteDataSource.getRates()
-               .doOnSuccess(rateData -> System.out.println("success"))
                .subscribeOn(Schedulers.io())
                .subscribe(localDataSource::saveAllRates));
     }
